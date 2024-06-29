@@ -4,11 +4,14 @@ import com.project24.bghelper.model.Companion;
 import com.project24.bghelper.repository.CompanionRepository;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CompanionService {
+
+  private final static Logger logger = LoggerFactory.getLogger(CompanionService.class);
 
   private CompanionRepository companionRepository;
 
@@ -31,5 +34,6 @@ public class CompanionService {
 
   public void deleteCompanion(String id) {
     companionRepository.deleteById(id);
+    logger.info("Deleted Companion with ID - {}", id);
   }
 }
