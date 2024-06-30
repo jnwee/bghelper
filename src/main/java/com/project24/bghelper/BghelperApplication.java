@@ -14,7 +14,6 @@ public class BghelperApplication {
 
 		// Testing
 		CompanionService companionService = applicationContext.getBean(CompanionService.class);
-		//companionService.addCompanion(new Companion("Imoen", 10));
 
 	}
 

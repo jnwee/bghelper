@@ -9,22 +9,29 @@ public class Companion {
   private String id;
   private String name;
   private Integer strength;
+  private String portraitId;
 
-  public Companion(String name,
-                   Integer strength) {
-    this.name = name;
-    this.strength = strength;
+  public String getPortraitId() {
+    return portraitId;
   }
 
-  public String getId() {
-    return id;
+  public void setPortraitId(String portraitId) {
+    this.portraitId = portraitId;
   }
 
   public String getName() {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public Integer getStrength() {
     return strength;
+  }
+
+  public void setStrength(Integer strength) {
+    this.strength = strength;
   }
 }

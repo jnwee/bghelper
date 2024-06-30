@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Companion</title>
+</head>
+<body>
+<h1>Add New Companion</h1>
+<form id="companionForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="portrait">Portrait:</label>
+    <input type="file" id="portrait" name="portrait" required><br>
+    <button type="submit">Add Companion</button>
+</form>
+<script>
+    document.getElementById('companionForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        fetch('/api/companions/create', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    alert('Companion created successfully!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+<a href="/">Home</a>
+</body>
+</html>

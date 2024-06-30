@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Companions List</title>
+</head>
+<body>
+<h1>Companions</h1>
+<ul id="companionsList"></ul>
+<script>
+    fetch('/api/companions')
+        .then(response => response.json())
+        .then(companions => {
+            const list = document.getElementById('companionsList');
+            companions.forEach(companion => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${companion.name}`;
+                const img = document.createElement('img');
+                img.src = `/api/companions/portrait/${companion.portraitId}`;
+                img.alt = "portrait";
+                listItem.appendChild(img);
+                list.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+</script>
+<a href="/">Home</a>
+</body>
+</html>

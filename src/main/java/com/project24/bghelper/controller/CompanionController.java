@@ -2,29 +2,36 @@ package com.project24.bghelper.controller;
 
 import com.project24.bghelper.model.Companion;
 import com.project24.bghelper.service.CompanionService;
+import com.project24.bghelper.service.FileService;
+import java.io.IOException;
 import java.util.List;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-/**
- * HTTP Controller for Companions.
- */
 @RestController
-@RequestMapping("/Home/Companions")
+@RequestMapping("/api/companions")
 public class CompanionController {
 
-  CompanionService companionService;
+  Logger logger = LoggerFactory.getLogger(CompanionController.class);
 
-  public CompanionController(CompanionService companionService) {
+  CompanionService companionService;
+  FileService fileService;
+
+  @Autowired
+  public CompanionController(CompanionService companionService, FileService fileService) {
     this.companionService = companionService;
+    this.fileService = fileService;
   }
 
   @GetMapping("")
@@ -38,10 +45,29 @@ public class CompanionController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("")
-  public Companion addCompanion(@RequestBody Companion companion) {
-    return companionService.addCompanion(companion);
+  @PostMapping("/create")
+  public ResponseEntity<Companion> addCompanion(@RequestParam("name") String name,
+                                                @RequestParam("portrait")MultipartFile image)
+      throws IOException {
+    String portraitId = fileService.saveFile(image);
+    Companion companion = new Companion();
+    companion.setName(name);
+    companion.setPortraitId(portraitId);
+    Companion savedCompanion = companionService.addCompanion(companion);
+    return ResponseEntity.status(201).body(savedCompanion);
+  }
+
+  @GetMapping("/portrait/{id}")
+  public ResponseEntity<byte[]> getPortrait(@PathVariable String id) {
+    try {
+      byte[] file = fileService.getFile(id);
+      return ResponseEntity.ok()
+          .contentType(MediaType.IMAGE_PNG)
+          .body(file);
+    } catch (Exception e) {
+      logger.error("Error retrieving portrait with id: {}", id, e);
+      return ResponseEntity.status(500).body(null);
+    }
   }
 
   @DeleteMapping("/{id}")
