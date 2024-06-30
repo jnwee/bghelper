@@ -1,0 +1,22 @@
+label {
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: 0.055rem;
+    font-style: normal;
+    text-transform: capitalize;
+    color: #62a0ea;
+    background-color: #f7f7f7;
+    border-radius: 0.5625rem;
+    -webkit-border-radius: 0.5625rem;
+    -moz-border-radius: 0.5625rem;
+    padding: 0.4375rem 0.875rem;
+    border-style: none;
+    border-width: 0.0625rem;
+    border-color: #EF2D56;
+    -webkit-box-shadow: -4px 12px 144px -4px rgba(51,51,51,0.36);
+    -moz-box-shadow: -4px 12px 144px -4px rgba(51,51,51,0.36);
+    -box-shadow: -4px 12px 144px -4px rgba(51,51,51,0.36);
+
+}
