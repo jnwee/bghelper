@@ -20,6 +20,10 @@ public class Companion {
   private boolean bg2;
   private boolean sod;
 
+  /* TODO
+  private List<String> spritePictureIds;
+   */
+
   public String getPortraitId() {
     return portraitId;
   }
