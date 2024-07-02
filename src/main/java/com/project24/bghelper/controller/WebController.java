@@ -27,6 +27,6 @@ public class WebController {
 
   @GetMapping("/companions/new")
   public String newCompanion() {
-    return "companion";
+    return "createCompanion";
   }
 }
