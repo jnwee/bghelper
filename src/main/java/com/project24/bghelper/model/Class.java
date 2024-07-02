@@ -12,4 +12,6 @@ public class Class {
   private boolean isFighter;
   private boolean isThief;
   private boolean isMage;
+  private boolean isMultiClass;
+  private boolean isDualClass;
 }
