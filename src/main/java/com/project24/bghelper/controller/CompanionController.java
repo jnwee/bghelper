@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/companions")
 public class CompanionController {
 
-  Logger logger = LoggerFactory.getLogger(CompanionController.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanionController.class);
 
   CompanionService companionService;
   FileService fileService;
