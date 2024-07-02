@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "kits")
 public class Kit {
   @Id
   private String id;
