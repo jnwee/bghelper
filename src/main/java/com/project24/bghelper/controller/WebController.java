@@ -29,4 +29,9 @@ public class WebController {
   public String newCompanion() {
     return "createCompanion";
   }
+
+  @GetMapping("/kits/new")
+  public String newKit() {
+    return "createKit";
+  }
 }
