@@ -61,4 +61,16 @@ public class Class {
     }
     isDualClass = dualClass;
   }
+
+  public boolean isMage() {
+    return isMage;
+  }
+
+  public boolean isThief() {
+    return isThief;
+  }
+
+  public boolean isFighter() {
+    return isFighter;
+  }
 }
