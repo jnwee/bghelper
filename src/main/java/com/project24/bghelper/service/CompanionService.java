@@ -29,7 +29,6 @@ public class CompanionService {
     return companionRepository.findById(id);
   }
 
-  // TODO reevaluate at some point if you want to pass an object
   public Companion addCompanion(Companion companion) {
     return companionRepository.save(companion);
   }
