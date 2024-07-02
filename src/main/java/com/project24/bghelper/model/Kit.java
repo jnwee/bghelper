@@ -9,7 +9,6 @@ public class Kit {
   @Id
   private String id;
   private String name;
-  private Integer level;
   private ArrayList<KitType> kitTypes;
 
   public String getName() {
@@ -20,11 +19,11 @@ public class Kit {
     this.name = name;
   }
 
-  public Integer getLevel() {
-    return level;
+  public ArrayList<KitType> getKitTypes() {
+    return kitTypes;
   }
 
-  public void setLevel(Integer level) {
-    this.level = level;
+  public void setKitTypes(ArrayList<KitType> kitTypes) {
+    this.kitTypes = kitTypes;
   }
 }
