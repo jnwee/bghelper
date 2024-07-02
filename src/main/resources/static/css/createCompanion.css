@@ -31,7 +31,7 @@ main {
     grid-template-columns: 1fr;
     gap: 0; /* This value controls the spacing between the grid items */
     background-color: #2a2a2a;
-    padding: 50px;
+    padding: 200px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -66,6 +66,19 @@ input[type="file"] {
 input[type="text"]:focus,
 input[type="file"]:focus {
     outline: none;
+}
+
+input[type="number"]  {
+    width: 60px;
+}
+
+select {
+    width: 200px; /* Set a fixed width */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
 }
 
 /* Button styles */

@@ -25,12 +25,12 @@
                     <span id="fileName"></span>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="dualClass">Dual-Class:</label>
+            <div class="form-group checkbox-group">
+                <label>Dual-Class:</label>
                 <input type="checkbox" id="dualClass" name="dualClass">
             </div>
-            <div class="form-group">
-                <label for="multiClass">Multi-Class:</label>
+            <div class="form-group checkbox-group">
+                <label>Multi-Class:</label>
                 <input type="checkbox" id="multiClass" name="multiClass">
             </div>
             <div id="dropdownContainer"></div>
@@ -44,6 +44,12 @@
     </div>
 </main>
 <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('dualClass').checked = false;
+        document.getElementById('multiClass').checked = false;
+        updateDropdowns();
+    });
+
     document.getElementById('dualClass').addEventListener('change', function () {
         document.getElementById('multiClass').checked = false;
         updateDropdowns();
@@ -59,8 +65,10 @@
         dropdownContainer.innerHTML = '';
         if (document.getElementById('dualClass').checked) {
             for (var i = 0; i < 3; i++) {
+                var dropdownDiv = document.createElement('div');
                 var dropdown = document.createElement('select');
                 dropdown.id = 'dropdown' + i;
+                dropdownDiv.appendChild(dropdown);
                 dropdownContainer.appendChild(dropdown);
                 var input = document.createElement('input');
                 input.type = 'number';
@@ -72,10 +80,12 @@
                 dropdown.id = 'dropdown' + i;
                 dropdownContainer.appendChild(dropdown);
             }
-        } else {
+        } else if (!document.getElementById('dualClass').checked && !document.getElementById('multiClass').checked) {
             var dropdown = document.createElement('select');
             dropdown.id = 'dropdown0';
+            dropdown.style.width = '300px';
             dropdownContainer.appendChild(dropdown);
+
         }
         updateDropdownOptions();
     }
@@ -93,6 +103,11 @@
                         option.textContent = kit.name;
                         dropdown.appendChild(option);
                     }
+                    var option = document.createElement('option');
+                    option.value = null;
+                    option.textContent = "None";
+                    dropdown.appendChild(option);
+                    dropdown.item(option);
                 }
             });
     }
