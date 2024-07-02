@@ -10,6 +10,7 @@ public class Companion {
   private String name;
   private String portraitId;
   private Alignment alignment;
+  private Class charClass;
   private Integer strength;
   private Integer dexterity;
   private Integer constitution;
@@ -112,6 +113,14 @@ public class Companion {
 
   public void setAlignment(Alignment alignment) {
     this.alignment = alignment;
+  }
+
+  public Class getCharClass() {
+    return charClass;
+  }
+
+  public void setCharClass(Class charClass) {
+    this.charClass = charClass;
   }
 
   public boolean isBg1() {
