@@ -44,11 +44,15 @@ public class KitController {
         .build());
   }
 
+  // false Booleans somehow arrive here as null, so I set defaultValue = false
   @PostMapping("/create")
   public ResponseEntity<Kit> addKit(@RequestParam("name") String name,
-                                    @RequestParam("isFighter") Boolean isFighter,
-                                    @RequestParam("isMage") Boolean isMage,
-                                    @RequestParam("isThief") Boolean isThief) {
+                                    @RequestParam(value = "isFighter", defaultValue = "false")
+                                    Boolean isFighter,
+                                    @RequestParam(value = "isMage", defaultValue = "false")
+                                    Boolean isMage,
+                                    @RequestParam(value = "isThief", defaultValue = "false")
+                                    Boolean isThief) {
     Kit kit = new Kit();
     kit.setName(name);
     ArrayList<KitType> kitTypes = new ArrayList<>();
