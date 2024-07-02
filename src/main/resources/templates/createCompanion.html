@@ -26,6 +26,15 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="dualClass">Dual-Class:</label>
+                <input type="checkbox" id="dualClass" name="dualClass">
+            </div>
+            <div class="form-group">
+                <label for="multiClass">Multi-Class:</label>
+                <input type="checkbox" id="multiClass" name="multiClass">
+            </div>
+            <div id="dropdownContainer"></div>
+            <div class="form-group">
                 <button type="submit">Add Companion</button>
             </div>
         </form>
@@ -34,6 +43,60 @@
         </div>
     </div>
 </main>
+<script>
+    document.getElementById('dualClass').addEventListener('change', function () {
+        document.getElementById('multiClass').checked = false;
+        updateDropdowns();
+    });
+
+    document.getElementById('multiClass').addEventListener('change', function () {
+        document.getElementById('dualClass').checked = false;
+        updateDropdowns();
+    });
+
+    function updateDropdowns() {
+        var dropdownContainer = document.getElementById('dropdownContainer');
+        dropdownContainer.innerHTML = '';
+        if (document.getElementById('dualClass').checked) {
+            for (var i = 0; i < 3; i++) {
+                var dropdown = document.createElement('select');
+                dropdown.id = 'dropdown' + i;
+                dropdownContainer.appendChild(dropdown);
+                var input = document.createElement('input');
+                input.type = 'number';
+                dropdownContainer.appendChild(input);
+            }
+        } else if (document.getElementById('multiClass').checked) {
+            for (var i = 0; i < 3; i++) {
+                var dropdown = document.createElement('select');
+                dropdown.id = 'dropdown' + i;
+                dropdownContainer.appendChild(dropdown);
+            }
+        } else {
+            var dropdown = document.createElement('select');
+            dropdown.id = 'dropdown0';
+            dropdownContainer.appendChild(dropdown);
+        }
+        updateDropdownOptions();
+    }
+
+    function updateDropdownOptions() {
+        fetch('/api/kits')
+            .then(response => response.json())
+            .then(data => {
+                var dropdowns = document.getElementById('dropdownContainer').getElementsByTagName('select');
+                for (var dropdown of dropdowns) {
+                    dropdown.innerHTML = '';
+                    for (var kit of data) {
+                        var option = document.createElement('option');
+                        option.value = kit.id;
+                        option.textContent = kit.name;
+                        dropdown.appendChild(option);
+                    }
+                }
+            });
+    }
+</script>
 <script>
     document.getElementById('browseButton').addEventListener('click', function () {
         document.getElementById('portrait').click();
