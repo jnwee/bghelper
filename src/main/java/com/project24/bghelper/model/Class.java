@@ -10,6 +10,7 @@ public class Class {
   @Id
   private String id;
   private HashMap<Kit, Integer> kitLevels;
+  private Kit mainKit;
   private boolean isFighter;
   private boolean isThief;
   private boolean isMage;
@@ -38,6 +39,14 @@ public class Class {
         isThief = true;
       }
     }
+  }
+
+  public Kit getMainKit() {
+    return mainKit;
+  }
+
+  public void setMainKit(Kit mainKit) {
+    this.mainKit = mainKit;
   }
 
   public boolean isMultiClass() {
