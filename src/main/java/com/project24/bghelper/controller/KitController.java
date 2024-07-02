@@ -46,9 +46,9 @@ public class KitController {
 
   @PostMapping("/create")
   public ResponseEntity<Kit> addKit(@RequestParam("name") String name,
-                                    @RequestParam("isFighter") boolean isFighter,
-                                    @RequestParam("isMage") boolean isMage,
-                                    @RequestParam("isThief") boolean isThief) {
+                                    @RequestParam("isFighter") Boolean isFighter,
+                                    @RequestParam("isMage") Boolean isMage,
+                                    @RequestParam("isThief") Boolean isThief) {
     Kit kit = new Kit();
     kit.setName(name);
     ArrayList<KitType> kitTypes = new ArrayList<>();
