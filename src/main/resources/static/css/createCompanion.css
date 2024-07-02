@@ -31,9 +31,12 @@ main {
     grid-template-columns: 1fr;
     gap: 0; /* This value controls the spacing between the grid items */
     background-color: #2a2a2a;
-    padding: 200px;
-    border-radius: 8px;
+    padding: 15px;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 1000px; /* Fixed width */
+    height: 750px; /* Fixed height */
+    overflow: auto; /* Adds scrollbars if content overflows */
 }
 
 /* Form group */
