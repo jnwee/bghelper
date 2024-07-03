@@ -25,15 +25,63 @@
                     <span id="fileName"></span>
                 </div>
             </div>
-            <div class="form-group checkbox-group">
-                <label>Dual-Class:</label>
-                <input type="checkbox" id="dualClass" name="dualClass">
+            <div class="form-group">
+                <label>Alignment:</label>
+                <div id="alignmentDropdownContainer"></div>
             </div>
-            <div class="form-group checkbox-group">
-                <label>Multi-Class:</label>
-                <input type="checkbox" id="multiClass" name="multiClass">
+            <div id="statsRow1" class="stats-row">
+                <div class="stat-item">
+                    <label>STR:</label>
+                    <input type="number" id="str" name="strength">
+                </div>
+                <div class="stat-item">
+                    <label>DEX:</label>
+                    <input type="number" id="dex" name="dexterity">
+                </div>
+                <div class="stat-item">
+                    <label>CON:</label>
+                    <input type="number" id="con" name="constitution">
+                </div>
+            </div>
+            <div id="statsRow2" class="stats-row">
+                <div class="stat-item">
+                    <label>INT:</label>
+                    <input type="number" id="int" name="intelligence">
+                </div>
+                <div class="stat-item">
+                    <label>WIS:</label>
+                    <input type="number" id="wis" name="wisdom">
+                </div>
+                <div class="stat-item">
+                    <label>CHA:</label>
+                    <input type="number" id="cha" name="charisma">
+                </div>
+            </div>
+            <div class="checkboxes-container">
+                <div class="form-group checkbox-group">
+                    <label>Dual-Class:</label>
+                    <input type="checkbox" id="dualClass" name="dualClass">
+                </div>
+                <div class="form-group checkbox-group">
+                    <label>Multi-Class:</label>
+                    <input type="checkbox" id="multiClass" name="multiClass">
+                </div>
             </div>
             <div id="dropdownContainer"></div>
+            <div class="checkboxes-container">
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="bg1Check" name="bg1Checkbox">
+                    <label for="bg1Check">BG1</label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="sodCheck" name="sodCheckbox">
+                    <label for="sodCheck">SoD</label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="bg2Check" name="bg2Checkbox">
+                    <label for="bg2Check">BG2</label>
+                </div>
+            </div>
             <div class="form-group">
                 <button type="submit">Add Companion</button>
             </div>
@@ -51,6 +99,7 @@
         document.getElementById('dualClass').checked = false;
         document.getElementById('multiClass').checked = false;
         updateDropdowns();
+        updateAlignmentDropDown();
     });
 
     document.getElementById('dualClass').addEventListener('change', function () {
@@ -63,8 +112,28 @@
         updateDropdowns();
     });
 
+    function updateAlignmentDropDown() {
+        var dropdownContainer = document.getElementById('alignmentDropdownContainer');
+        dropdownContainer.innerHTML = '';
+        var alignmentDropdown = document.createElement('select');
+        alignmentDropdown.id = 'alignmentDropdown';
+
+        fetch('/api/alignments')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(alignment => {
+                    var option = document.createElement('option');
+                    option.value = alignment;
+                    option.textContent = alignment.replace(/_/g, ' ');
+                    alignmentDropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        dropdownContainer.appendChild(alignmentDropdown);
+    }
+
     function updateDropdowns() {
-        var dropdownContainer = document.getElementById('dropdownContainer');
+        var dropdownContainer = document.getElementById("dropdownContainer");
         dropdownContainer.innerHTML = '';
         if (document.getElementById('dualClass').checked) {
             for (var i = 0; i < 3; i++) {
@@ -88,7 +157,6 @@
             dropdown.id = 'dropdown0';
             dropdown.style.width = '300px';
             dropdownContainer.appendChild(dropdown);
-
         }
         updateDropdownOptions();
     }
