@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Class {
   @Id
   private String id;
-  private HashMap<Kit, Integer> kitLevels;
+  private HashMap<String, Integer> kitLevels;
   private Kit mainKit;
   private boolean isFighter;
   private boolean isThief;
@@ -17,19 +17,23 @@ public class Class {
   private boolean isMultiClass;
   private boolean isDualClass;
 
-  public HashMap<Kit, Integer> getKitLevels() {
+  //Map for toString Method :/
+  private HashMap<String, String> kitNames = new HashMap<>();
+
+  public HashMap<String, Integer> getKitLevels() {
     return kitLevels;
   }
 
   public void setKitLevels(HashMap<Kit, Integer> kitLevels) {
-    if (this.kitLevels != null) {
+    if (this.kitLevels != null && kitNames != null) {
       this.kitLevels.clear();
+      this.kitNames.clear();
     }
     isFighter = false;
     isMage = false;
     isThief = false;
-    this.kitLevels = kitLevels;
-    for (Kit kit : this.kitLevels.keySet()) {
+
+    for (Kit kit : kitLevels.keySet()) {
       ArrayList<KitType> kits = kit.getKitTypes();
       if (kits.contains(KitType.FIGHTER)) {
         isFighter = true;
@@ -40,6 +44,8 @@ public class Class {
       if (kits.contains(KitType.THIEF)) {
         isThief = true;
       }
+      this.kitLevels.put(kit.getId(), kitLevels.get(kit));
+      this.kitNames.put(kit.getId(), kit.getName());
     }
   }
 
@@ -97,16 +103,16 @@ public class Class {
     StringBuilder str = new StringBuilder();
     if (isDualClass) {
       str.append("main-kit: ").append(mainKit.toString());
-      for (Kit kit : kitLevels.keySet()) {
-        if (kit != null && kit != mainKit) {
-          str.append(" - ").append(kit.toString()).append(" lvl: ").append(kitLevels.get(kit));
+      for (String kit : kitLevels.keySet()) {
+        if (kit != null && !kit.equals(mainKit.getId())) {
+          str.append(" - ").append(kitNames.get(kit)).append(" lvl: ").append(kitLevels.get(kit));
         }
       }
     }
     if (isMultiClass) {
-      for (Kit kit : kitLevels.keySet()) {
-        if (kit != null && kit != mainKit) {
-          str.append(kit.toString()).append(" / ");
+      for (String kit : kitLevels.keySet()) {
+        if (kit != null) {
+          str.append(kitNames.get(kit)).append(" / ");
         }
       }
     }
