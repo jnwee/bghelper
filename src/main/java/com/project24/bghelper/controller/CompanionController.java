@@ -1,6 +1,7 @@
 package com.project24.bghelper.controller;
 
 import com.project24.bghelper.model.Companion;
+import com.project24.bghelper.service.ClassService;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
 import java.io.IOException;
@@ -27,11 +28,14 @@ public class CompanionController {
 
   CompanionService companionService;
   FileService fileService;
+  ClassService classService;
 
   @Autowired
-  public CompanionController(CompanionService companionService, FileService fileService) {
+  public CompanionController(CompanionService companionService, FileService fileService,
+                             ClassService classService) {
     this.companionService = companionService;
     this.fileService = fileService;
+    this.classService = classService;
   }
 
   @GetMapping("")
