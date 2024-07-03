@@ -7,9 +7,11 @@ import com.project24.bghelper.model.Kit;
 import com.project24.bghelper.service.ClassService;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
+import com.project24.bghelper.service.KitService;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,15 @@ public class CompanionController {
   CompanionService companionService;
   FileService fileService;
   ClassService classService;
+  KitService kitService;
 
   @Autowired
   public CompanionController(CompanionService companionService, FileService fileService,
-                             ClassService classService) {
+                             ClassService classService, KitService kitService) {
     this.companionService = companionService;
     this.fileService = fileService;
     this.classService = classService;
+    this.kitService = kitService;
   }
 
   @GetMapping("")
@@ -85,7 +89,16 @@ public class CompanionController {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
     logger.info("alignment - {}", alignment);
-    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kitId1.toString(), kitId2, kitId3);
+    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kitId1, kitId2, kitId3);
+    Optional<Kit> optionalKit1 = kitService.getKitById(kitId1);
+    Kit kit1;
+    kit1 = optionalKit1.orElse(null);
+    Optional<Kit> optionalKit2 = kitService.getKitById(kitId2);
+    Kit kit2;
+    kit2 = optionalKit2.orElse(null);
+    Optional<Kit> optionalKit3 = kitService.getKitById(kitId3);
+    Kit kit3;
+    kit3 = optionalKit3.orElse(null);
     companion.setName(name);
     companion.setPortraitId(portraitId);
     companion.setAlignment(alignment);
@@ -95,7 +108,7 @@ public class CompanionController {
     companion.setIntelligence(inT);
     companion.setWisdom(wis);
     companion.setCharisma(cha);
-    //companion.setCharClassId(createClass(kit1, kit1lvl, kit2, kit2lvl, kit3, kit3lvl));
+    companion.setCharClassId(createClass(kit1, kit1lvl, kit2, kit2lvl, kit3, kit3lvl));
     companion.setBg1(bg1);
     companion.setSod(sod);
     companion.setBg2(bg2);
