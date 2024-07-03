@@ -11,6 +11,10 @@ public class Kit {
   private String name;
   private ArrayList<KitType> kitTypes;
 
+  public String getId() {
+    return id;
+  }
+
   public String getName() {
     return name;
   }

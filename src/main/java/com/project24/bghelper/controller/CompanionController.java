@@ -64,15 +64,15 @@ public class CompanionController {
                                                 @RequestParam("wis") Integer wis,
                                                 @RequestParam("cha") Integer cha,
                                                 @RequestParam(value = "kit1", defaultValue = "null")
-                                                Kit kit1,
+                                                String kitId1,
                                                 @RequestParam(value = "kit1lvl", defaultValue = "0")
                                                 Integer kit1lvl,
                                                 @RequestParam(value = "kit2", defaultValue = "null")
-                                                Kit kit2,
+                                                String kitId2,
                                                 @RequestParam(value = "kit2lvl", defaultValue = "0")
                                                 Integer kit2lvl,
                                                 @RequestParam(value = "kit3", defaultValue = "null")
-                                                Kit kit3,
+                                                String kitId3,
                                                 @RequestParam(value = "kit3lvl", defaultValue = "0")
                                                 Integer kit3lvl,
                                                 @RequestParam(value = "bg1", defaultValue = "false")
@@ -85,7 +85,7 @@ public class CompanionController {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
     logger.info("alignment - {}", alignment);
-    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kit1, kit2, kit3);
+    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kitId1.toString(), kitId2, kitId3);
     companion.setName(name);
     companion.setPortraitId(portraitId);
     companion.setAlignment(alignment);
@@ -95,7 +95,7 @@ public class CompanionController {
     companion.setIntelligence(inT);
     companion.setWisdom(wis);
     companion.setCharisma(cha);
-    companion.setCharClassId(createClass(kit1, kit1lvl, kit2, kit2lvl, kit3, kit3lvl));
+    //companion.setCharClassId(createClass(kit1, kit1lvl, kit2, kit2lvl, kit3, kit3lvl));
     companion.setBg1(bg1);
     companion.setSod(sod);
     companion.setBg2(bg2);
