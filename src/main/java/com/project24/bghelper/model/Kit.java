@@ -26,4 +26,9 @@ public class Kit {
   public void setKitTypes(ArrayList<KitType> kitTypes) {
     this.kitTypes = kitTypes;
   }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

@@ -86,4 +86,28 @@ public class Class {
   public String getId() {
     return id;
   }
+
+  @Override
+  public String toString() {
+    if (!isDualClass && !isMultiClass) {
+      return mainKit.toString();
+    }
+    StringBuilder str = new StringBuilder();
+    if (isDualClass) {
+      str.append("main-kit: ").append(mainKit.toString());
+      for (Kit kit : kitLevels.keySet()) {
+        if (kit != null && kit != mainKit) {
+          str.append(" - ").append(kit.toString()).append(" lvl: ").append(kitLevels.get(kit));
+        }
+      }
+    }
+    if (isMultiClass) {
+      for (Kit kit : kitLevels.keySet()) {
+        if (kit != null && kit != mainKit) {
+          str.append(kit.toString()).append(" / ");
+        }
+      }
+    }
+    return str.toString();
+  }
 }

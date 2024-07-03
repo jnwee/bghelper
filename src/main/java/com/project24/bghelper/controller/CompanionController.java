@@ -8,6 +8,7 @@ import com.project24.bghelper.service.ClassService;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +98,7 @@ public class CompanionController {
     companion.setSod(sod);
     companion.setBg2(bg2);
     Companion savedCompanion = companionService.addCompanion(companion);
+    logger.info("Character {} created", savedCompanion.getName());
     return ResponseEntity.status(201).body(savedCompanion);
   }
 
@@ -119,11 +121,33 @@ public class CompanionController {
     return ResponseEntity.noContent().build();
   }
 
-  // TODO
   private String createClass(Kit kit1, Integer kit1lvl, Kit kit2, Integer kit2lvl, Kit kit3,
                              Integer kit3lvl) {
     Class charClass = new Class();
-
-    return classService.addClass(charClass).getId();
+    HashMap<Kit, Integer> kitLevels = new HashMap<>();
+    charClass.setMultiClass(false);
+    charClass.setDualClass(false);
+    if (kit1lvl != 0 || kit2lvl != 0 || kit3lvl != 0) {
+      charClass.setDualClass(true);
+    }
+    if (kit3 != null) {
+      kitLevels.put(kit3, kit3lvl);
+      charClass.setMainKit(kit3);
+    }
+    if (kit2 != null) {
+      kitLevels.put(kit2, kit2lvl);
+      charClass.setMainKit(kit2);
+    }
+    if (kit1 != null) {
+      kitLevels.put(kit1, kit1lvl);
+      charClass.setMainKit(kit1);
+    }
+    if (kitLevels.keySet().size() != 1) {
+      charClass.setMultiClass(true);
+    }
+    charClass.setKitLevels(kitLevels);
+    Class savedCharClass = classService.addClass(charClass);
+    logger.info("Character class set to {}", savedCharClass.toString());
+    return savedCharClass.getId();
   }
 }
