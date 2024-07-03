@@ -84,6 +84,8 @@ public class CompanionController {
       throws IOException {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
+    logger.info("alignment - {}", alignment);
+    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kit1, kit2, kit3);
     companion.setName(name);
     companion.setPortraitId(portraitId);
     companion.setAlignment(alignment);
@@ -124,6 +126,7 @@ public class CompanionController {
   private String createClass(Kit kit1, Integer kit1lvl, Kit kit2, Integer kit2lvl, Kit kit3,
                              Integer kit3lvl) {
     Class charClass = new Class();
+    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kit1, kit2, kit3);
     HashMap<Kit, Integer> kitLevels = new HashMap<>();
     charClass.setMultiClass(false);
     charClass.setDualClass(false);

@@ -107,7 +107,7 @@
     document.getElementById('companionForm').addEventListener('submit', function (event) {
         event.preventDefault();
         var formData = new FormData(this);
-        formData.append('alignment', document.getElementById("alignmentDropdownContainer").value);
+        formData.append('alignment', document.getElementById("alignmentDropdown").value);
         formData.append('str', document.getElementById('str').value);
         formData.append('dex', document.getElementById('dex').value);
         formData.append('con', document.getElementById('con').value);

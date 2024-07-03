@@ -22,7 +22,9 @@ public class Class {
   }
 
   public void setKitLevels(HashMap<Kit, Integer> kitLevels) {
-    this.kitLevels.clear();
+    if (this.kitLevels != null) {
+      this.kitLevels.clear();
+    }
     isFighter = false;
     isMage = false;
     isThief = false;
