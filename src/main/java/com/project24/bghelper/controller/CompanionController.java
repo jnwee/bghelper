@@ -1,6 +1,9 @@
 package com.project24.bghelper.controller;
 
+import com.project24.bghelper.model.Alignment;
+import com.project24.bghelper.model.Class;
 import com.project24.bghelper.model.Companion;
+import com.project24.bghelper.model.Kit;
 import com.project24.bghelper.service.ClassService;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
@@ -51,12 +54,48 @@ public class CompanionController {
 
   @PostMapping("/create")
   public ResponseEntity<Companion> addCompanion(@RequestParam("name") String name,
-                                                @RequestParam("portrait")MultipartFile image)
+                                                @RequestParam("portrait") MultipartFile image,
+                                                @RequestParam("alignment") Alignment alignment,
+                                                @RequestParam("str") Integer str,
+                                                @RequestParam("dex") Integer dex,
+                                                @RequestParam("con") Integer con,
+                                                @RequestParam("int") Integer inT,
+                                                @RequestParam("wis") Integer wis,
+                                                @RequestParam("cha") Integer cha,
+                                                @RequestParam(value = "kit1", defaultValue = "null")
+                                                Kit kit1,
+                                                @RequestParam(value = "kit1lvl", defaultValue = "0")
+                                                Integer kit1lvl,
+                                                @RequestParam(value = "kit2", defaultValue = "null")
+                                                Kit kit2,
+                                                @RequestParam(value = "kit2lvl", defaultValue = "0")
+                                                Integer kit2lvl,
+                                                @RequestParam(value = "kit3", defaultValue = "null")
+                                                Kit kit3,
+                                                @RequestParam(value = "kit3lvl", defaultValue = "0")
+                                                Integer kit3lvl,
+                                                @RequestParam(value = "bg1", defaultValue = "false")
+                                                Boolean bg1,
+                                                @RequestParam(value = "sod", defaultValue = "false")
+                                                Boolean sod,
+                                                @RequestParam(value = "bg2", defaultValue = "false")
+                                                Boolean bg2)
       throws IOException {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
     companion.setName(name);
     companion.setPortraitId(portraitId);
+    companion.setAlignment(alignment);
+    companion.setStrength(str);
+    companion.setDexterity(dex);
+    companion.setConstitution(con);
+    companion.setIntelligence(inT);
+    companion.setWisdom(wis);
+    companion.setCharisma(cha);
+    companion.setCharClassId(createClass(kit1, kit1lvl, kit2, kit2lvl, kit3, kit3lvl));
+    companion.setBg1(bg1);
+    companion.setSod(sod);
+    companion.setBg2(bg2);
     Companion savedCompanion = companionService.addCompanion(companion);
     return ResponseEntity.status(201).body(savedCompanion);
   }
@@ -78,5 +117,13 @@ public class CompanionController {
   public ResponseEntity<Void> deleteCompanion(@PathVariable String id) {
     companionService.deleteCompanion(id);
     return ResponseEntity.noContent().build();
+  }
+
+  // TODO
+  private String createClass(Kit kit1, Integer kit1lvl, Kit kit2, Integer kit2lvl, Kit kit3,
+                             Integer kit3lvl) {
+    Class charClass = new Class();
+
+    return classService.addClass(charClass).getId();
   }
 }

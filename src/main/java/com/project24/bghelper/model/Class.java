@@ -82,4 +82,8 @@ public class Class {
   public boolean isFighter() {
     return isFighter;
   }
+
+  public String getId() {
+    return id;
+  }
 }
