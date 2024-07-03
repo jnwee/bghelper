@@ -95,6 +95,60 @@
     </div>
 </main>
 <script>
+    document.getElementById('browseButton').addEventListener('click', function () {
+        document.getElementById('portrait').click();
+    });
+
+    document.getElementById('portrait').addEventListener('change', function () {
+        var fileName = this.files[0].name;
+        document.getElementById('fileName').textContent = fileName;
+    });
+
+    document.getElementById('companionForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('alignment', document.getElementById("alignmentDropdownContainer").value);
+        formData.append('str', document.getElementById('str').value);
+        formData.append('dex', document.getElementById('dex').value);
+        formData.append('con', document.getElementById('con').value);
+        formData.append('int', document.getElementById('int').value);
+        formData.append('wis', document.getElementById('wis').value);
+        formData.append('cha', document.getElementById('cha').value);
+        if (!document.getElementById('dualClass').checked && !document.getElementById('multiClass').checked) {
+            formData.append('kit1', document.getElementById('dropdown0').value);
+        }
+        if (document.getElementById('multiClass').checked) {
+            formData.append('kit1', document.getElementById('dropdown0').value);
+            formData.append('kit2', document.getElementById('dropdown1').value);
+            formData.append('kit3', document.getElementById('dropdown2').value);
+        }
+        if (document.getElementById('dualClass').checked) {
+            formData.append('kit1', document.getElementById('dropdown0').value);
+            formData.append('kit1lvl', document.getElementById('lvlInput0').value);
+            formData.append('kit2', document.getElementById('dropdown1').value);
+            formData.append('kit2lvl', document.getElementById('lvlInput1').value);
+            formData.append('kit3', document.getElementById('dropdown2').value);
+            formData.append('kit3lvl', document.getElementById('lvlInput2').value);
+        }
+        formData.append('bg1', document.getElementById('bg1Check').checked);
+        formData.append('sod', document.getElementById('sodCheck').checked);
+        formData.append('bg2', document.getElementById('bg2Check').checked);
+        fetch('/api/companions/create', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    alert('Companion created successfully!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+<script>
     document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('dualClass').checked = false;
         document.getElementById('multiClass').checked = false;
@@ -144,6 +198,7 @@
                 dropdownContainer.appendChild(dropdown);
                 var input = document.createElement('input');
                 input.type = 'number';
+                input.id = 'lvlInput' + i;
                 dropdownContainer.appendChild(input);
             }
         } else if (document.getElementById('multiClass').checked) {
@@ -182,34 +237,6 @@
                 }
             });
     }
-</script>
-<script>
-    document.getElementById('browseButton').addEventListener('click', function () {
-        document.getElementById('portrait').click();
-    });
-
-    document.getElementById('portrait').addEventListener('change', function () {
-        var fileName = this.files[0].name;
-        document.getElementById('fileName').textContent = fileName;
-    });
-
-    document.getElementById('companionForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        var formData = new FormData(this);
-        fetch('/api/companions/create', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data) {
-                    alert('Companion created successfully!');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
 </script>
 </body>
 </html>
