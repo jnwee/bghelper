@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Class {
   @Id
   private String id;
-  private HashMap<String, Integer> kitLevels;
+  private HashMap<String, Integer> kitLevels = new HashMap<>();
   private Kit mainKit;
   private boolean isFighter;
   private boolean isThief;
