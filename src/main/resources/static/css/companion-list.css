@@ -16,3 +16,22 @@ img {
     align-items: center;
     margin: 10px;
 }
+
+.home-button {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
+    background-color: #832e03;
+    color: #1e242f;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    display: inline-block;
+    align-content: center;
+}
+
+.home-button:hover {
+    background-color: #104900;
+}

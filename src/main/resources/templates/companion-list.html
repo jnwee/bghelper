@@ -9,6 +9,7 @@
 <body>
 <h1>Companions</h1>
 <div id="companionsList"></div>
+<a href="/" class="home-button">Home</a>
 <script>
     fetch('/api/companions')
         .then(response => response.json())
@@ -37,6 +38,5 @@
         window.location.href = `/companions/${companionId}`;
     }
 </script>
-<a href="/">Home</a>
 </body>
 </html>
