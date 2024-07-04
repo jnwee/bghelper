@@ -146,4 +146,8 @@ public class Companion {
   public void setSod(boolean sod) {
     this.sod = sod;
   }
+
+  public String getId() {
+    return id;
+  }
 }
