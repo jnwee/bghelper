@@ -51,6 +51,8 @@ public class KitController {
                                     Boolean isFighter,
                                     @RequestParam(value = "isMage", defaultValue = "false")
                                     Boolean isMage,
+                                    @RequestParam(value = "isCleric", defaultValue = "false")
+                                    Boolean isCleric,
                                     @RequestParam(value = "isThief", defaultValue = "false")
                                     Boolean isThief) {
     Kit kit = new Kit();
@@ -61,6 +63,9 @@ public class KitController {
     }
     if (isMage) {
       kitTypes.add(KitType.MAGE);
+    }
+    if (isCleric) {
+      kitTypes.add(KitType.CLERIC);
     }
     if (isThief) {
       kitTypes.add(KitType.THIEF);
