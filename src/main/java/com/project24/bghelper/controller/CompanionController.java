@@ -154,9 +154,6 @@ public class CompanionController {
     HashMap<Kit, Integer> kitLevels = new HashMap<>();
     charClass.setMultiClass(false);
     charClass.setDualClass(false);
-    if (kit1lvl != 0 || kit2lvl != 0 || kit3lvl != 0) {
-      charClass.setDualClass(true);
-    }
     if (kit3 != null) {
       kitLevels.put(kit3, kit3lvl);
       charClass.setMainKit(kit3);
@@ -171,6 +168,9 @@ public class CompanionController {
     }
     if (kitLevels.keySet().size() != 1) {
       charClass.setMultiClass(true);
+    }
+    if (kit1lvl != 0 || kit2lvl != 0 || kit3lvl != 0) {
+      charClass.setDualClass(true);
     }
     charClass.setKitLevels(kitLevels);
     Class savedCharClass = classService.addClass(charClass);

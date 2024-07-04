@@ -102,10 +102,10 @@ public class Class {
     }
     StringBuilder str = new StringBuilder();
     if (isDualClass) {
-      str.append("main-kit: ").append(mainKit.toString());
+      str.append(mainKit.toString());
       for (String kit : kitLevels.keySet()) {
         if (kit != null && !kit.equals(mainKit.getId())) {
-          str.append(" - ").append(kitNames.get(kit)).append(" lvl: ").append(kitLevels.get(kit));
+          str.append("\n\n and \n\n").append(kitNames.get(kit)).append(" - ").append(kitLevels.get(kit));
         }
       }
     }
