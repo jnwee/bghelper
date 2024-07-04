@@ -8,12 +8,17 @@
 </head>
 <body>
 <div class="hBox">
-    <div id="companion">
+    <div id="companion" class="vBox">
         <h1 id="companionName">Empty</h1>
         <img id="companionPortrait" alt="portrait">
         <button onclick="deleteCompanion()" style="margin-top: 50px">Delete</button>
     </div>
-    <div id="companionInfo">
+    <div class="vBox" id="companionClass">
+        <div class="hBox">
+            <label id="class">Class</label>
+        </div>
+    </div>
+    <div id="companionInfo" class="vBox">
         <div class="hBox">
             <label style="font-weight: bold">Strength: </label>
             <p id="str" style="font-weight: bold">str</p>
@@ -82,6 +87,18 @@
                 document.getElementById('int').innerText = companion.intelligence;
                 document.getElementById('wis').innerText = companion.wisdom;
                 document.getElementById('cha').innerText = companion.charisma;
+
+                fetch(`/api/companions/class/${companion.charClassId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error fetching class data');
+                        }
+                        return response.text(); // Assuming the endpoint returns plain text
+                    })
+                    .then(charClassString => {
+                        document.getElementById('class').innerText = charClassString;
+                    })
+                    .catch(error => console.error('Error:', error));
             })
             .catch(error => console.error('Error fetching companion data:', error));
     });

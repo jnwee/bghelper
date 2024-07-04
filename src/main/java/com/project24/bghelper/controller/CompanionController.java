@@ -135,6 +135,18 @@ public class CompanionController {
     return ResponseEntity.noContent().build();
   }
 
+  @GetMapping("/class/{id}")
+  public ResponseEntity<String> getClassById(@PathVariable String id) {
+    Class charClass;
+    if (classService.getClassById(id).isPresent()) {
+      charClass = classService.getClassById(id).get();
+    } else {
+      throw new IllegalArgumentException("No Class with this ID");
+    }
+    return Optional.of(charClass.toString()).map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+  }
+
   private String createClass(Kit kit1, Integer kit1lvl, Kit kit2, Integer kit2lvl, Kit kit3,
                              Integer kit3lvl) {
     Class charClass = new Class();

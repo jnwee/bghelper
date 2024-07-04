@@ -115,6 +115,7 @@ public class Class {
           str.append(kitNames.get(kit)).append(" / ");
         }
       }
+      str.delete(str.length() - 2, str.length());
     }
     return str.toString();
   }
