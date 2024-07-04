@@ -7,9 +7,62 @@
     <link rel="stylesheet" th:href="@{/css/companion.css}">
 </head>
 <body>
-<h1 id="companionName">Empty</h1>
+<div class="hBox">
+    <div id="companion">
+        <h1 id="companionName">Empty</h1>
+        <img id="companionPortrait" alt="portrait">
+        <button onclick="deleteCompanion()" style="margin-top: 50px">Delete</button>
+    </div>
+    <div id="companionInfo">
+        <div class="hBox">
+            <label style="font-weight: bold">Strength: </label>
+            <p id="str" style="font-weight: bold">str</p>
+        </div>
+        <div class="hBox">
+            <label style="font-weight: bold">Dexterity: </label>
+            <p id="dex" style="font-weight: bold">dex</p>
+        </div>
+        <div class="hBox">
+            <label style="font-weight: bold">Constitution: </label>
+            <p id="con" style="font-weight: bold">con</p>
+        </div>
+        <div class="hBox">
+            <label style="font-weight: bold">Intelligence: </label>
+            <p id="int" style="font-weight: bold">int</p>
+        </div>
+        <div class="hBox">
+            <label style="font-weight: bold">Wisdom: </label>
+            <p id="wis" style="font-weight: bold">wis</p>
+        </div>
+        <div class="hBox">
+            <label style="font-weight: bold">Charisma: </label>
+            <p id="cha" style="font-weight: bold">cha</p>
+        </div>
+    </div>
+</div>
 </body>
 <script>
+
+    function deleteCompanion() {
+        const companionId = window.location.pathname.split('/').pop();
+
+        fetch(`/api/companions/${companionId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text(); // Instead of response.json()
+            })
+            .then(() => {
+                window.location.href = '/companions';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const companionId = window.location.pathname.split('/').pop();
 
@@ -22,6 +75,13 @@
             })
             .then(companion => {
                 document.getElementById('companionName').innerText = companion.name;
+                document.getElementById('companionPortrait').src = `/api/companions/portrait/${companion.portraitId}`;
+                document.getElementById('str').innerText = companion.strength;
+                document.getElementById('dex').innerText = companion.dexterity;
+                document.getElementById('con').innerText = companion.constitution;
+                document.getElementById('int').innerText = companion.intelligence;
+                document.getElementById('wis').innerText = companion.wisdom;
+                document.getElementById('cha').innerText = companion.charisma;
             })
             .catch(error => console.error('Error fetching companion data:', error));
     });
