@@ -45,7 +45,7 @@
                 return response.text(); // Instead of response.json()
             })
             .then(() => {
-                //window.location.href = '/';
+                location.reload();
             })
             .catch(error => {
                 console.error('Error:', error);
