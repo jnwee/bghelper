@@ -14,6 +14,7 @@ public class Class {
   private boolean isFighter;
   private boolean isThief;
   private boolean isMage;
+  private boolean isCleric;
   private boolean isMultiClass;
   private boolean isDualClass;
 
@@ -31,6 +32,7 @@ public class Class {
     }
     isFighter = false;
     isMage = false;
+    isCleric = false;
     isThief = false;
 
     for (Kit kit : kitLevels.keySet()) {
@@ -40,6 +42,9 @@ public class Class {
       }
       if (kits.contains(KitType.MAGE)) {
         isMage = true;
+      }
+      if (kits.contains(KitType.CLERIC)) {
+        isCleric = true;
       }
       if (kits.contains(KitType.THIEF)) {
         isThief = true;
@@ -81,6 +86,10 @@ public class Class {
 
   public boolean isMage() {
     return isMage;
+  }
+
+  public boolean isCleric() {
+    return isCleric;
   }
 
   public boolean isThief() {
