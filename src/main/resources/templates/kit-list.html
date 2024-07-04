@@ -24,7 +24,8 @@
 
                 const button = document.createElement('button');
                 button.innerText = "delete";
-                button.onclick = deleteKit(kit.id);
+                button.style.marginLeft = "50px";
+                button.onclick = function() { deleteKit(kit.id); };
                 container.appendChild(button);
 
                 list.appendChild(container);
