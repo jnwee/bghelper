@@ -31,6 +31,11 @@ public class WebController {
     return "createCompanion";
   }
 
+  @GetMapping("/kits")
+  public String viewKits() {
+    return "kit-list";
+  }
+
   @GetMapping("/kits/new")
   public String newKit() {
     return "createKit";

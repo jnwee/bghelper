@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kits</title>
+    <link rel="stylesheet" th:href="@{/css/kit-list.css}">
+</head>
+<body>
+<h1>Kits</h1>
+<div id="kitList"></div>
+<a href="/" class="home-button" style="margin-left: 10px">Home</a>
+<script>
+    fetch('/api/kits')
+        .then(response => response.json())
+        .then(kits => {
+            const list = document.getElementById('kitList');
+            kits.forEach(kit => {
+                const container = document.createElement('div');
+
+                const label = document.createElement('label');
+                label.innerText = `${kit.name}`;
+                container.appendChild(label);
+
+                const button = document.createElement('button');
+                button.innerText = "delete";
+                button.onclick = deleteKit(kit.id);
+                container.appendChild(button);
+
+                list.appendChild(container);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    function deleteKit(kitId) {
+        fetch(`/api/kits/${kitId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text(); // Instead of response.json()
+            })
+            .then(() => {
+                //window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>
