@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Companions List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companions</title>
+    <link rel="stylesheet" th:href="@{/css/companion-list.css}">
 </head>
 <body>
 <h1>Companions</h1>
-<ul id="companionsList"></ul>
+<div id="companionsList"></div>
 <script>
     fetch('/api/companions')
         .then(response => response.json())
         .then(companions => {
             const list = document.getElementById('companionsList');
             companions.forEach(companion => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${companion.name}`;
+                const container = document.createElement('div');
                 const img = document.createElement('img');
                 img.src = `/api/companions/portrait/${companion.portraitId}`;
                 img.alt = "portrait";
-                listItem.appendChild(img);
-                list.appendChild(listItem);
+                container.appendChild(img);
+
+                const label = document.createElement('label');
+                label.innerText = `${companion.name}`;
+                container.appendChild(label);
+
+                list.appendChild(container);
             });
         })
         .catch(error => {
