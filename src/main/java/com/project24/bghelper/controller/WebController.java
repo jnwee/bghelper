@@ -4,6 +4,7 @@ import com.project24.bghelper.service.CompanionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class WebController {
@@ -33,5 +34,10 @@ public class WebController {
   @GetMapping("/kits/new")
   public String newKit() {
     return "createKit";
+  }
+
+  @GetMapping("companions/{id}")
+  public String viewCompanion(@PathVariable String id) {
+    return "companion";
   }
 }

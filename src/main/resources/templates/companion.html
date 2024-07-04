@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companion</title>
+    <link rel="stylesheet" th:href="@{/css/companion.css}">
+</head>
+<body>
+<h1 id="companionName">Empty</h1>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const companionId = window.location.pathname.split('/').pop();
+
+        fetch(`/api/companions/${companionId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(companion => {
+                document.getElementById('companionName').innerText = companion.name;
+            })
+            .catch(error => console.error('Error fetching companion data:', error));
+    });
+</script>
