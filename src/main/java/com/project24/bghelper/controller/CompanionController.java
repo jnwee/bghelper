@@ -89,7 +89,6 @@ public class CompanionController {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
     logger.info("alignment - {}", alignment);
-    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kitId1, kitId2, kitId3);
     Optional<Kit> optionalKit1 = kitService.getKitById(kitId1);
     Kit kit1;
     kit1 = optionalKit1.orElse(null);
