@@ -10,6 +10,7 @@ public class Companion {
   private String name;
   private String portraitId;
   private Alignment alignment;
+  private Race race;
   private String charClass;
   private Integer strength;
   private Integer dexterity;
@@ -120,6 +121,14 @@ public class Companion {
 
   public void setAlignment(Alignment alignment) {
     this.alignment = alignment;
+  }
+
+  public Race getRace() {
+    return race;
+  }
+
+  public void setRace(Race race) {
+    this.race = race;
   }
 
   public String getCharClass() {
