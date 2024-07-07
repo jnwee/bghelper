@@ -44,13 +44,13 @@
     });
 
     document.getElementById('portrait').addEventListener('change', function () {
-        var fileName = this.files[0].name;
+        let fileName = this.files[0].name;
         document.getElementById('fileName').textContent = fileName;
     });
 
     document.getElementById('companionForm').addEventListener('submit', function (event) {
         event.preventDefault();
-        var formData = new FormData(this);
+        let formData = new FormData(this);
         formData.append('alignment', document.getElementById("alignmentDropdown").value);
         formData.append('str', document.getElementById('str').value);
         formData.append('dex', document.getElementById('dex').value);
