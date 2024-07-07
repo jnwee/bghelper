@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Companion</title>
     <link rel="stylesheet" th:href="@{/css/companion.css}">
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
 </head>
 <body>
 <div class="hBox">
@@ -87,18 +88,8 @@
                 document.getElementById('int').innerText = companion.intelligence;
                 document.getElementById('wis').innerText = companion.wisdom;
                 document.getElementById('cha').innerText = companion.charisma;
-
-                fetch(`/api/companions/class/${companion.charClassId}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error fetching class data');
-                        }
-                        return response.text(); // Assuming the endpoint returns plain text
-                    })
-                    .then(charClassString => {
-                        document.getElementById('class').innerText = charClassString;
-                    })
-                    .catch(error => console.error('Error:', error));
+                document.getElementById('class').innerText = companion.charClass;
+                document.getElementById()
             })
             .catch(error => console.error('Error fetching companion data:', error));
     });
