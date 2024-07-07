@@ -58,22 +58,6 @@
         formData.append('int', document.getElementById('int').value);
         formData.append('wis', document.getElementById('wis').value);
         formData.append('cha', document.getElementById('cha').value);
-        if (!document.getElementById('dualClass').checked && !document.getElementById('multiClass').checked) {
-            formData.append('kit1', document.getElementById('dropdown0').value);
-        }
-        if (document.getElementById('multiClass').checked) {
-            formData.append('kit1', document.getElementById('dropdown0').value);
-            formData.append('kit2', document.getElementById('dropdown1').value);
-            formData.append('kit3', document.getElementById('dropdown2').value);
-        }
-        if (document.getElementById('dualClass').checked) {
-            formData.append('kit1', document.getElementById('dropdown0').value);
-            formData.append('kit1lvl', document.getElementById('lvlInput0').value);
-            formData.append('kit2', document.getElementById('dropdown1').value);
-            formData.append('kit2lvl', document.getElementById('lvlInput1').value);
-            formData.append('kit3', document.getElementById('dropdown2').value);
-            formData.append('kit3lvl', document.getElementById('lvlInput2').value);
-        }
         formData.append('bg1', document.getElementById('bg1Check').checked);
         formData.append('sod', document.getElementById('sodCheck').checked);
         formData.append('bg2', document.getElementById('bg2Check').checked);
@@ -93,21 +77,8 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.getElementById('dualClass').checked = false;
-        document.getElementById('multiClass').checked = false;
-        updateDropdowns();
+    document.addEventListener('DOMContentLoaded', () => {
         updateAlignmentDropDown();
-    });
-
-    document.getElementById('dualClass').addEventListener('change', function () {
-        document.getElementById('multiClass').checked = false;
-        updateDropdowns();
-    });
-
-    document.getElementById('multiClass').addEventListener('change', function () {
-        document.getElementById('dualClass').checked = false;
-        updateDropdowns();
     });
 
     function updateAlignmentDropDown() {

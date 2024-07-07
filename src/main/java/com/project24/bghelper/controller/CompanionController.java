@@ -2,6 +2,7 @@ package com.project24.bghelper.controller;
 
 import com.project24.bghelper.model.Alignment;
 import com.project24.bghelper.model.Companion;
+import com.project24.bghelper.model.Race;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
 import java.io.IOException;
@@ -50,6 +51,8 @@ public class CompanionController {
   public ResponseEntity<Companion> addCompanion(@RequestParam("name") String name,
                                                 @RequestParam("portrait") MultipartFile image,
                                                 @RequestParam("alignment") Alignment alignment,
+                                                @RequestParam("race") Race race,
+                                                @RequestParam("charClass") String charClass,
                                                 @RequestParam("str") Integer str,
                                                 @RequestParam("dex") Integer dex,
                                                 @RequestParam("con") Integer con,
@@ -61,7 +64,22 @@ public class CompanionController {
                                                 @RequestParam(value = "sod", defaultValue = "false")
                                                 Boolean sod,
                                                 @RequestParam(value = "bg2", defaultValue = "false")
-                                                Boolean bg2)
+                                                Boolean bg2,
+                                                @RequestParam(value = "isFighter", defaultValue = "false")
+                                                Boolean isFighter,
+                                                @RequestParam(value = "isThief", defaultValue = "false")
+                                                Boolean isThief,
+                                                @RequestParam(value = "isFullMage", defaultValue = "false")
+                                                Boolean isFullMage,
+                                                @RequestParam(value = "isHalfMage", defaultValue = "false")
+                                                Boolean isHalfMage,
+                                                @RequestParam(value = "isDruid", defaultValue = "false")
+                                                Boolean isDruid,
+                                                @RequestParam(value = "isFullCleric", defaultValue = "false")
+                                                Boolean isFullCleric,
+                                                @RequestParam(value = "isHalfCleric", defaultValue = "false")
+                                                Boolean isHalfCleric
+                                                )
       throws IOException {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
@@ -69,6 +87,8 @@ public class CompanionController {
     companion.setName(name);
     companion.setPortraitId(portraitId);
     companion.setAlignment(alignment);
+    companion.setRace(race);
+    companion.setCharClass(charClass);
     companion.setStrength(str);
     companion.setDexterity(dex);
     companion.setConstitution(con);
@@ -78,6 +98,13 @@ public class CompanionController {
     companion.setBg1(bg1);
     companion.setSod(sod);
     companion.setBg2(bg2);
+    companion.setFighter(isFighter);
+    companion.setThief(isThief);
+    companion.setFullMage(isFullMage);
+    companion.setHalfMage(isHalfMage);
+    companion.setDruid(isDruid);
+    companion.setFullCleric(isFullCleric);
+    companion.setHalfCleric(isHalfCleric);
     Companion savedCompanion = companionService.addCompanion(companion);
     logger.info("Character {} created", savedCompanion.getName());
     return ResponseEntity.status(201).body(savedCompanion);
