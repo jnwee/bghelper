@@ -1,7 +1,14 @@
-/* Basic styles */
+root {
+    --prime-color: #832e03;
+    --affirm-color: #104900;
+    --background-color: #000000;
+    --node-background-color: #1e242f;
+    --cancel-color: #750000;
+}
+
 body {
     font-family: "Droid Sans", monospace;
-    background-color: #000000;
+    background-color: var(--background-color);
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,9 +17,9 @@ body {
 }
 
 header {
-    background-color: #000000;
+    background-color: var(--background-color);
     font-weight: bold;
-    color: #832e03;
+    color: var(--prime-color);
     padding: 20px;
     text-align: center;
 }
@@ -25,60 +32,19 @@ main {
     padding: 20px;
 }
 
-/* Grid container */
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0; /* This value controls the spacing between the grid items */
-    background-color: #2a2a2a;
-    padding: 15px;
-    border-radius: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 1000px; /* Fixed width */
-    height: 750px; /* Fixed height */
-    overflow: auto; /* Adds scrollbars if content overflows */
-}
-
-/* Form group */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.stats-row {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 15px;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.checkboxes-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-/* Label styles */
 label {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 15px;
-    color: #832e03;
+    color: var(--prime-color);
 }
 
-/* Input styles */
 input[type="text"],
 input[type="file"] {
     padding: 10px;
     border-width: 0;
-    color: #832e03;
-    background-color: #1e242f;
+    color: var(--prime-color);
+    background-color: var(--node-background-color);
     border-radius: 4px;
     font-size: 16px;
     margin-bottom: 15px;
@@ -88,8 +54,8 @@ input[type="number"],
 input[type="checkbox"] {
     width: 60px;
     margin-bottom: 15px;
-    background-color: #1e242f;
-    color: #832e03;
+    background-color: var(--node-background-color);
+    color: var(--prime-color);
     outline: none;
     border-width: 0;
 }
@@ -103,22 +69,16 @@ input[type="checkbox"]:focus {
 
 select {
     align-items: center;
-    width: 200px; /* Set a fixed width */
+    width: 200px;
     margin-bottom: 15px;
-    background-color: #1e242f;
-    color: #832e03;
+    background-color: var(--node-background-color);
+    color: var(--prime-color);
     border-width: 0;
 }
 
-.checkbox-group {
-    display: flex;
-    align-items: center;
-}
-
-/* Button styles */
 button[type="submit"] {
-    background-color: #832e03;
-    color: #1e242f;
+    background-color: var(--prime-color);
+    color: var(--node-background-color);
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -127,12 +87,12 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #104900;
+    background-color: var(--affirm-color);
 }
 
 .home-button {
-    background-color: #832e03;
-    color: #1e242f;
+    background-color: var(--prime-color);
+    color: var(--node-background-color);
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 4px;
@@ -143,5 +103,5 @@ button[type="submit"]:hover {
 }
 
 .home-button:hover {
-    background-color: #104900;
+    background-color: var(--affirm-color);
 }

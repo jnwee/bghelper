@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Companion</title>
     <link rel="stylesheet" th:href="@{/css/createCompanion.css}">
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
 </head>
 <body>
 <header>
@@ -14,10 +15,6 @@
     <div class="grid-container">
         <form id="companionForm" action="/api/companions/create" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
                 <label>Portrait:</label>
                 <div class="file-input-container">
                     <input type="file" id="portrait" name="portrait" style="display: none;">
@@ -25,70 +22,17 @@
                     <span id="fileName"></span>
                 </div>
             </div>
-            <div class="form-group">
+            <div>
                 <label>Alignment:</label>
                 <div id="alignmentDropdownContainer"></div>
             </div>
-            <div id="statsRow1" class="stats-row">
-                <div class="stat-item">
-                    <label>STR:</label>
-                    <input type="number" id="str" name="strength">
-                </div>
-                <div class="stat-item">
-                    <label>DEX:</label>
-                    <input type="number" id="dex" name="dexterity">
-                </div>
-                <div class="stat-item">
-                    <label>CON:</label>
-                    <input type="number" id="con" name="constitution">
-                </div>
-            </div>
-            <div id="statsRow2" class="stats-row">
-                <div class="stat-item">
-                    <label>INT:</label>
-                    <input type="number" id="int" name="intelligence">
-                </div>
-                <div class="stat-item">
-                    <label>WIS:</label>
-                    <input type="number" id="wis" name="wisdom">
-                </div>
-                <div class="stat-item">
-                    <label>CHA:</label>
-                    <input type="number" id="cha" name="charisma">
-                </div>
-            </div>
-            <div class="checkboxes-container">
-                <div class="form-group checkbox-group">
-                    <label>Dual-Class:</label>
-                    <input type="checkbox" id="dualClass" name="dualClass">
-                </div>
-                <div class="form-group checkbox-group">
-                    <label>Multi-Class:</label>
-                    <input type="checkbox" id="multiClass" name="multiClass">
-                </div>
-            </div>
-            <div id="dropdownContainer"></div>
-            <div class="checkboxes-container">
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="bg1Check" name="bg1Checkbox">
-                    <label for="bg1Check">BG1</label>
-                </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="sodCheck" name="sodCheckbox">
-                    <label for="sodCheck">SoD</label>
-                </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="bg2Check" name="bg2Checkbox">
-                    <label for="bg2Check">BG2</label>
-                </div>
-            </div>
-            <div class="form-group">
+            <div>
                 <button type="submit">Add Companion</button>
             </div>
-            <div class="form-group">
+            <div>
                 <label>Main Class for Dual Class is first one not "None" from the left</label>
             </div>
-            <div class="form-group">
+            <div>
                 <a href="/" class="home-button">Home</a>
             </div>
         </form>
@@ -184,58 +128,6 @@
             })
             .catch(error => console.error('Error:', error));
         dropdownContainer.appendChild(alignmentDropdown);
-    }
-
-    function updateDropdowns() {
-        var dropdownContainer = document.getElementById("dropdownContainer");
-        dropdownContainer.innerHTML = '';
-        if (document.getElementById('dualClass').checked) {
-            for (var i = 0; i < 3; i++) {
-                var dropdownDiv = document.createElement('div');
-                var dropdown = document.createElement('select');
-                dropdown.id = 'dropdown' + i;
-                dropdownDiv.appendChild(dropdown);
-                dropdownContainer.appendChild(dropdown);
-                var input = document.createElement('input');
-                input.type = 'number';
-                input.id = 'lvlInput' + i;
-                dropdownContainer.appendChild(input);
-            }
-        } else if (document.getElementById('multiClass').checked) {
-            for (var i = 0; i < 3; i++) {
-                var dropdown = document.createElement('select');
-                dropdown.id = 'dropdown' + i;
-                dropdownContainer.appendChild(dropdown);
-            }
-        } else if (!document.getElementById('dualClass').checked && !document.getElementById('multiClass').checked) {
-            var dropdown = document.createElement('select');
-            dropdown.id = 'dropdown0';
-            dropdown.style.width = '300px';
-            dropdownContainer.appendChild(dropdown);
-        }
-        updateDropdownOptions();
-    }
-
-    function updateDropdownOptions() {
-        fetch('/api/kits')
-            .then(response => response.json())
-            .then(data => {
-                var dropdowns = document.getElementById('dropdownContainer').getElementsByTagName('select');
-                for (var dropdown of dropdowns) {
-                    dropdown.innerHTML = '';
-                    for (var kit of data) {
-                        var option = document.createElement('option');
-                        option.value = kit.id;
-                        option.textContent = kit.name;
-                        dropdown.appendChild(option);
-                    }
-                    var option = document.createElement('option');
-                    option.value = null;
-                    option.textContent = "None";
-                    dropdown.appendChild(option);
-                    dropdown.item(option);
-                }
-            });
     }
 </script>
 </body>

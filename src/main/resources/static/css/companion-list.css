@@ -1,13 +1,13 @@
 body {
-    background-color: black;
-    color: #832e03;
+    background-color: var(--background-color);
+    color: var(--prime-color);
 }
 
 img {
     width: 210px;
     height: 330px;
     padding: 5px;
-    background-color: #1e242f;
+    background-color: var(--node-background-color);
 }
 
 #companionsList div {
@@ -20,8 +20,8 @@ img {
 .home-button {
     font-family: "Droid Sans", monospace;
     font-weight: bold;
-    background-color: #832e03;
-    color: #1e242f;
+    background-color: var(--prime-color);
+    color: var(--node-background-color);
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 4px;
@@ -33,5 +33,5 @@ img {
 }
 
 .home-button:hover {
-    background-color: #104900;
+    background-color: var(--affirm-color);
 }
