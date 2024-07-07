@@ -1,20 +1,26 @@
 package com.project24.bghelper.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+public enum Race {
+  HUMAN,
+  HALF_ELF,
+  ELF,
+  GNOME,
+  HALFLING,
+  DWARF,
+  HALF_ORC;
 
-@Document(collection = "races")
-public class Race {
-
-  @Id
-  private String id;
-  private String name;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  @Override
+  public String toString() {
+    String str = "";
+    switch (this) {
+      case HUMAN -> str = "Human";
+      case HALF_ELF -> str = "Half-Elf";
+      case ELF -> str = "Elf";
+      case GNOME -> str = "Gnome";
+      case HALFLING -> str = "Halfling";
+      case DWARF -> str = "Dwarf";
+      case HALF_ORC -> str = "Half-Orc";
+    }
+    return str;
   }
 }
