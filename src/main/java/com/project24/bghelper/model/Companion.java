@@ -10,7 +10,7 @@ public class Companion {
   private String name;
   private String portraitId;
   private Alignment alignment;
-  private String charClassId;
+  private String charClass;
   private Integer strength;
   private Integer dexterity;
   private Integer constitution;
@@ -20,6 +20,13 @@ public class Companion {
   private boolean bg1;
   private boolean bg2;
   private boolean sod;
+  private boolean isFighter;
+  private boolean isThief;
+  private boolean isFullMage;
+  private boolean isHalfMage;
+  private boolean isDruid;
+  private boolean isFullCleric;
+  private boolean isHalfCleric;
 
   /* TODO
   private List<String> spritePictureIds;
@@ -115,12 +122,12 @@ public class Companion {
     this.alignment = alignment;
   }
 
-  public String getCharClassId() {
-    return charClassId;
+  public String getCharClass() {
+    return charClass;
   }
 
-  public void setCharClassId(String charClassId) {
-    this.charClassId = charClassId;
+  public void setCharClass(String charClass) {
+    this.charClass = charClass;
   }
 
   public boolean isBg1() {
@@ -147,7 +154,67 @@ public class Companion {
     this.sod = sod;
   }
 
+  public boolean isFighter() {
+    return isFighter;
+  }
+
+  public void setFighter(boolean fighter) {
+    isFighter = fighter;
+  }
+
+  public boolean isThief() {
+    return isThief;
+  }
+
+  public void setThief(boolean thief) {
+    isThief = thief;
+  }
+
+  public boolean isFullMage() {
+    return isFullMage;
+  }
+
+  public void setFullMage(boolean fullMage) {
+    isFullMage = fullMage;
+  }
+
+  public boolean isHalfMage() {
+    return isHalfMage;
+  }
+
+  public void setHalfMage(boolean halfMage) {
+    isHalfMage = halfMage;
+  }
+
+  public boolean isFullCleric() {
+    return isFullCleric;
+  }
+
+  public void setFullCleric(boolean fullCleric) {
+    isFullCleric = fullCleric;
+  }
+
+  public boolean isDruid() {
+    return isDruid;
+  }
+
+  public void setDruid(boolean druid) {
+    isDruid = druid;
+  }
+
+  public boolean isHalfCleric() {
+    return isHalfCleric;
+  }
+
+  public void setHalfCleric(boolean halfCleric) {
+    isHalfCleric = halfCleric;
+  }
+
   public String getId() {
     return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 }
