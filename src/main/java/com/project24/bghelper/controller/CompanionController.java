@@ -1,17 +1,11 @@
 package com.project24.bghelper.controller;
 
 import com.project24.bghelper.model.Alignment;
-import com.project24.bghelper.model.Class;
 import com.project24.bghelper.model.Companion;
-import com.project24.bghelper.model.Kit;
-import com.project24.bghelper.service.ClassService;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
-import com.project24.bghelper.service.KitService;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +28,11 @@ public class CompanionController {
 
   CompanionService companionService;
   FileService fileService;
-  ClassService classService;
-  KitService kitService;
 
   @Autowired
-  public CompanionController(CompanionService companionService, FileService fileService,
-                             ClassService classService, KitService kitService) {
+  public CompanionController(CompanionService companionService, FileService fileService) {
     this.companionService = companionService;
     this.fileService = fileService;
-    this.classService = classService;
-    this.kitService = kitService;
   }
 
   @GetMapping("")
@@ -67,18 +56,6 @@ public class CompanionController {
                                                 @RequestParam("int") Integer inT,
                                                 @RequestParam("wis") Integer wis,
                                                 @RequestParam("cha") Integer cha,
-                                                @RequestParam(value = "kit1", defaultValue = "null")
-                                                String kitId1,
-                                                @RequestParam(value = "kit1lvl", defaultValue = "0")
-                                                Integer kit1lvl,
-                                                @RequestParam(value = "kit2", defaultValue = "null")
-                                                String kitId2,
-                                                @RequestParam(value = "kit2lvl", defaultValue = "0")
-                                                Integer kit2lvl,
-                                                @RequestParam(value = "kit3", defaultValue = "null")
-                                                String kitId3,
-                                                @RequestParam(value = "kit3lvl", defaultValue = "0")
-                                                Integer kit3lvl,
                                                 @RequestParam(value = "bg1", defaultValue = "false")
                                                 Boolean bg1,
                                                 @RequestParam(value = "sod", defaultValue = "false")
@@ -89,15 +66,6 @@ public class CompanionController {
     String portraitId = fileService.saveFile(image);
     Companion companion = new Companion();
     logger.info("alignment - {}", alignment);
-    Optional<Kit> optionalKit1 = kitService.getKitById(kitId1);
-    Kit kit1;
-    kit1 = optionalKit1.orElse(null);
-    Optional<Kit> optionalKit2 = kitService.getKitById(kitId2);
-    Kit kit2;
-    kit2 = optionalKit2.orElse(null);
-    Optional<Kit> optionalKit3 = kitService.getKitById(kitId3);
-    Kit kit3;
-    kit3 = optionalKit3.orElse(null);
     companion.setName(name);
     companion.setPortraitId(portraitId);
     companion.setAlignment(alignment);
@@ -107,7 +75,6 @@ public class CompanionController {
     companion.setIntelligence(inT);
     companion.setWisdom(wis);
     companion.setCharisma(cha);
-    companion.setCharClassId(createClass(kit1, kit1lvl, kit2, kit2lvl, kit3, kit3lvl));
     companion.setBg1(bg1);
     companion.setSod(sod);
     companion.setBg2(bg2);
@@ -133,48 +100,5 @@ public class CompanionController {
   public ResponseEntity<Void> deleteCompanion(@PathVariable String id) {
     companionService.deleteCompanion(id);
     return ResponseEntity.noContent().build();
-  }
-
-  @GetMapping("/class/{id}")
-  public ResponseEntity<String> getClassById(@PathVariable String id) {
-    Class charClass;
-    if (classService.getClassById(id).isPresent()) {
-      charClass = classService.getClassById(id).get();
-    } else {
-      throw new IllegalArgumentException("No Class with this ID");
-    }
-    return Optional.of(charClass.toString()).map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
-  }
-
-  private String createClass(Kit kit1, Integer kit1lvl, Kit kit2, Integer kit2lvl, Kit kit3,
-                             Integer kit3lvl) {
-    Class charClass = new Class();
-    logger.info("Kit 1 {}, Kit 2 {} , Kit 3 {}", kit1, kit2, kit3);
-    HashMap<Kit, Integer> kitLevels = new HashMap<>();
-    charClass.setMultiClass(false);
-    charClass.setDualClass(false);
-    if (kit3 != null) {
-      kitLevels.put(kit3, kit3lvl);
-      charClass.setMainKit(kit3);
-    }
-    if (kit2 != null) {
-      kitLevels.put(kit2, kit2lvl);
-      charClass.setMainKit(kit2);
-    }
-    if (kit1 != null) {
-      kitLevels.put(kit1, kit1lvl);
-      charClass.setMainKit(kit1);
-    }
-    if (kitLevels.keySet().size() != 1) {
-      charClass.setMultiClass(true);
-    }
-    if (kit1lvl != 0 || kit2lvl != 0 || kit3lvl != 0) {
-      charClass.setDualClass(true);
-    }
-    charClass.setKitLevels(kitLevels);
-    Class savedCharClass = classService.addClass(charClass);
-    logger.info("Character class set to {}", savedCharClass.toString());
-    return savedCharClass.getId();
   }
 }
