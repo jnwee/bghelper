@@ -73,7 +73,54 @@
                         <label style="margin-right: 10px">Cha:</label>
                         <input type="number" id="charisma" th:field="*{charisma}">
                     </div>
-
+                    <div class="hBox" style="margin-top: 30px">
+                        <label>
+                            <input type="checkbox" name="isFighter" value="true">
+                            Fighter
+                        </label>
+                        <label>
+                            <input type="checkbox" name="isThief" value="true">
+                            Thief
+                        </label>
+                    </div>
+                    <div class="hBox">
+                        <fieldset>
+                            <legend>Mage Type</legend>
+                            <label>
+                                <input type="radio" name="mageType" value="none" checked>
+                                None
+                            </label>
+                            <label>
+                                <input type="radio" name="mageType" value="fullMage">
+                                Full Mage
+                            </label>
+                            <label>
+                                <input type="radio" name="mageType" value="halfMage">
+                                Half Mage
+                            </label>
+                        </fieldset>
+                    </div>
+                    <div class="hBox" style="margin-top: 35px">
+                        <fieldset>
+                            <legend>Cleric/Druid Type</legend>
+                            <label>
+                                <input type="radio" name="clericDruidType" value="none" checked>
+                                None
+                            </label>
+                            <label>
+                                <input type="radio" name="clericDruidType" value="druid">
+                                Druid
+                            </label>
+                            <label>
+                                <input type="radio" name="clericDruidType" value="fullCleric">
+                                Full Cleric
+                            </label>
+                            <label>
+                                <input type="radio" name="clericDruidType" value="halfCleric">
+                                Half Cleric
+                            </label>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
             <div>
