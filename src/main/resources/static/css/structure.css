@@ -16,19 +16,19 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 25px;
+    gap: 5px;
 }
 
 .hBox {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-right: 50px;
-    margin-left: 200px;
     gap: 5px;
 }
 
 .affirm-button {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
     background-color: var(--prime-color);
     color: var(--node-background-color);
     text-decoration: none;

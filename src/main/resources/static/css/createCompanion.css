@@ -33,6 +33,8 @@ label {
 
 input[type="text"],
 input[type="file"] {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
     padding: 10px;
     border-width: 0;
     color: var(--prime-color);
@@ -60,10 +62,14 @@ input[type="checkbox"]:focus {
 }
 
 select {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
     align-items: center;
     width: 200px;
+    height: 40px;
     margin-bottom: 15px;
     background-color: var(--node-background-color);
     color: var(--prime-color);
     border-width: 0;
+    border-radius: 8px;
 }

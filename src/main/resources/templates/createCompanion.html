@@ -12,28 +12,79 @@
     <h1>Add a New Companion Here</h1>
 </header>
 <main>
-    <div class="grid-container">
-        <form id="companionForm" action="/api/companions/create" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label>Portrait:</label>
-                <div class="file-input-container">
-                    <input type="file" id="portrait" name="portrait" style="display: none;">
-                    <button class="affirm-button" type="button" id="browseButton" style="border-width: 0">Browse</button>
-                    <span id="fileName"></span>
+    <form th:action="@{/api/companions/create}" th:object="${companion}" method="post" enctype="multipart/form-data">
+        <div class="vBox">
+            <div class="hBox">
+                <div class="vBox" style="margin-right: 100px">
+                    <div class="hBox">
+                        <label style="margin-bottom: 15px">Name:</label>
+                        <input type="text" id="name" th:field="*{name}">
+                    </div>
+                    <div class="hBox">
+                        <div class="vBox">
+                            <label style="margin-bottom: 15px">Race:</label>
+                            <select id="race" th:field="*{race}">
+                                <option th:each="race : ${races}" th:value="${race}" th:text="${race.toString()}">Race
+                                </option>
+                            </select>
+                        </div>
+                        <div class="vBox">
+                            <label style="margin-bottom: 15px">Alignment:</label>
+                            <select id="alignment" th:field="*{alignment}">
+                                <option th:each="alignment : ${alignments}" th:value="${alignment}"
+                                        th:text="${alignment.toString()}">Alignment
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="vBox">
+                        <label style="margin-bottom: 15px">Portrait:</label>
+                        <div class="hBox">
+                            <div class="file-input-container">
+                                <input type="file" id="portrait" name="portrait" style="display: none;">
+                                <button class="affirm-button" type="button" id="browseButton"
+                                        style="border-width: 0; margin-bottom: 15px">Browse
+                                </button>
+                                <label id="fileName"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hBox">
+                        <div class="vBox">
+                            <label style="margin-bottom: 15px">Class:</label>
+                            <input type="text" id="charClass" th:field="*{charClass}">
+                        </div>
+                    </div>
+                </div>
+                <div class="vBox">
+                    <div class="hBox">
+                        <label style="margin-right: 10px">Str:</label>
+                        <input type="number" id="strength" th:field="*{strength}">
+                        <label style="margin-right: 10px">Dex:</label>
+                        <input type="number" id="dexterity" th:field="*{dexterity}">
+                        <label style="margin-right: 10px">Con:</label>
+                        <input type="number" id="constitution" th:field="*{constitution}">
+                    </div>
+                    <div class="hBox">
+                        <label style="margin-right: 10px">Int:</label>
+                        <input type="number" id="intelligence" th:field="*{intelligence}">
+                        <label style="margin-right: 10px">Wis:</label>
+                        <input type="number" id="wisdom" th:field="*{wisdom}">
+                        <label style="margin-right: 10px">Cha:</label>
+                        <input type="number" id="charisma" th:field="*{charisma}">
+                    </div>
                 </div>
             </div>
             <div>
-                <label>Alignment:</label>
-                <div id="alignmentDropdownContainer"></div>
-            </div>
-            <div>
-                <button class="affirm-button" type="submit" style="border-width: 0">Add Companion</button>
+                <button class="affirm-button" type="submit"
+                        style="border-width: 0; margin-top: 50px; margin-bottom: 25px">Add Companion
+                </button>
             </div>
             <div>
                 <a href="/" class="affirm-button">Home</a>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </main>
 <script>
     document.getElementById('browseButton').addEventListener('click', function () {
@@ -44,59 +95,6 @@
         let fileName = this.files[0].name;
         document.getElementById('fileName').textContent = fileName;
     });
-
-    document.getElementById('companionForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        let formData = new FormData(this);
-        formData.append('alignment', document.getElementById("alignmentDropdown").value);
-        formData.append('str', document.getElementById('str').value);
-        formData.append('dex', document.getElementById('dex').value);
-        formData.append('con', document.getElementById('con').value);
-        formData.append('int', document.getElementById('int').value);
-        formData.append('wis', document.getElementById('wis').value);
-        formData.append('cha', document.getElementById('cha').value);
-        formData.append('bg1', document.getElementById('bg1Check').checked);
-        formData.append('sod', document.getElementById('sodCheck').checked);
-        formData.append('bg2', document.getElementById('bg2Check').checked);
-        fetch('/api/companions/create', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data) {
-                    alert('Companion created successfully!');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        updateAlignmentDropDown();
-    });
-
-    function updateAlignmentDropDown() {
-        var dropdownContainer = document.getElementById('alignmentDropdownContainer');
-        dropdownContainer.innerHTML = '';
-        var alignmentDropdown = document.createElement('select');
-        alignmentDropdown.id = 'alignmentDropdown';
-
-        fetch('/api/alignments')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(alignment => {
-                    var option = document.createElement('option');
-                    option.value = alignment;
-                    option.textContent = alignment.replace(/_/g, ' ');
-                    alignmentDropdown.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-        dropdownContainer.appendChild(alignmentDropdown);
-    }
 </script>
 </body>
 </html>
