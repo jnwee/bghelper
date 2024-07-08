@@ -1,6 +1,8 @@
 package com.project24.bghelper.controller;
 
+import com.project24.bghelper.model.Alignment;
 import com.project24.bghelper.model.Companion;
+import com.project24.bghelper.model.Race;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
 import java.io.IOException;
@@ -49,6 +51,8 @@ public class CompanionController {
   @PostMapping("/create")
   public ResponseEntity<Companion> addCompanion(@ModelAttribute Companion companion,
                                                 @RequestParam("portrait") MultipartFile portrait,
+                                                @RequestParam("race") Race race,
+                                                @RequestParam("alignment") Alignment alignment,
                                                 @RequestParam(defaultValue = "false")
                                                 boolean fighter,
                                                 @RequestParam(defaultValue = "false") boolean thief,
@@ -58,6 +62,9 @@ public class CompanionController {
                                                 @RequestParam(defaultValue = "false") boolean sod,
                                                 @RequestParam(defaultValue = "false") boolean bg2)
       throws IOException {
+    companion.setRace(race);
+    companion.setAlignment(alignment);
+
     companion.setFighter(fighter);
     companion.setThief(thief);
 

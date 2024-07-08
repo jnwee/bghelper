@@ -23,16 +23,16 @@
                     <div class="hBox">
                         <div class="vBox">
                             <label style="margin-bottom: 15px">Race:</label>
-                            <select id="race" th:field="*{race}">
+                            <select id="race">
                                 <option th:each="race : ${races}" th:value="${race}" th:text="${race.toString()}">Race
                                 </option>
                             </select>
                         </div>
                         <div class="vBox">
                             <label style="margin-bottom: 15px">Alignment:</label>
-                            <select id="alignment" th:field="*{alignment}">
+                            <select id="alignment">
                                 <option th:each="alignment : ${alignments}" th:value="${alignment}"
-                                        th:text="${alignment.toString()}">Alignment
+                                        th:text="${alignment}">Alignment
                                 </option>
                             </select>
                         </div>
@@ -122,8 +122,30 @@
                         </fieldset>
                     </div>
                 </div>
+                <div class="vBox" style="margin-left: 100px; width: 400px">
+                    <h2>Explanation</h2>
+                    <p>Class is basically only the name
+                        of the class,
+                        so enter whatever you want
+                    <p>Important for rolling parties
+                        are the checkboxes,
+                        Full Mage for example just means,
+                        if the Character is able
+                        to fulfill the role of the
+                        main caster for the group
+                        so someone like Edwin for example,
+                        while Jan or Aerie
+                        are more like half mages.
+                    </p>
+                    <p>Though it is up to you to determine
+                        who you consider a Full Mage since
+                        it depends on difficulty, if for example
+                        Aerie can work as the only caster
+                        for a party
+                    </p>
+                </div>
             </div>
-            <div class="hBox">
+            <div class="hBox" style="margin-top: 35px">
                 <label>
                     <input type="checkbox" name="bg1" value="true">
                     BG1
@@ -138,7 +160,7 @@
                 </label>
             </div>
             <div>
-                <button class="affirm-button" type="submit"
+                <button class="affirm-button" type="submit" id="addCompanionButton"
                         style="border-width: 0; margin-top: 50px; margin-bottom: 25px">Add Companion
                 </button>
             </div>

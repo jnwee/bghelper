@@ -1,6 +1,7 @@
 body {
     font-family: "Droid Sans", monospace;
     background-color: var(--background-color);
+    color: var(--prime-color);
     margin: 0;
     padding: 0;
     display: flex;
