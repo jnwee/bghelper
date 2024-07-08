@@ -114,6 +114,7 @@ public class CompanionController {
 
     Companion savedCompanion = companionService.addCompanion(companion);
     logger.info("Character {} created", savedCompanion.getName());
+    companionService.sync();
     return ResponseEntity.status(201).body(savedCompanion);
   }
 
@@ -133,6 +134,7 @@ public class CompanionController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteCompanion(@PathVariable String id) {
     companionService.deleteCompanion(id);
+    companionService.sync();
     return ResponseEntity.noContent().build();
   }
 }
