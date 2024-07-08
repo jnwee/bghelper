@@ -46,12 +46,15 @@ input[type="file"] {
 
 input[type="number"],
 input[type="checkbox"] {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
     width: 60px;
     margin-bottom: 15px;
     background-color: var(--node-background-color);
     color: var(--prime-color);
     outline: none;
     border-width: 0;
+    border-radius: 4px;
 }
 
 input[type="text"]:focus,
@@ -72,4 +75,14 @@ select {
     color: var(--prime-color);
     border-width: 0;
     border-radius: 8px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
 }

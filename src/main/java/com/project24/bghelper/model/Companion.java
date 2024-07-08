@@ -29,7 +29,7 @@ public class Companion {
   private boolean isFullCleric;
   private boolean isHalfCleric;
 
-  /* TODO
+  /* TODO maybe
   private List<String> spritePictureIds;
    */
 
