@@ -1,3 +1,11 @@
+:root {
+    --prime-color: #832e03;
+    --affirm-color: #104900;
+    --background-color: #000000;
+    --node-background-color: #1e242f;
+    --cancel-color: #750000;
+}
+
 .vBox {
     display: flex;
     flex-direction: column;

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Companions</title>
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
     <link rel="stylesheet" th:href="@{/css/companion-list.css}">
 </head>
 <body>
 <h1>Companions</h1>
-<h1>Companion List</h1>
 <div id="companionsList">
     <div th:each="companion : ${companions}">
         <div>
