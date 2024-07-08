@@ -33,6 +33,7 @@ body {
     color: var(--node-background-color);
     text-decoration: none;
     padding: 10px 20px;
+    border-width: 0;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
@@ -42,4 +43,23 @@ body {
 
 .affirm-button:hover {
     background-color: var(--affirm-color);
+}
+
+.cancel-button {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
+    background-color: var(--prime-color);
+    color: var(--node-background-color);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-width: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    align-content: center;
+}
+
+.cancel-button:hover {
+    background-color: var(--cancel-color);
 }

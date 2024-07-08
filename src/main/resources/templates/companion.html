@@ -4,46 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Companion</title>
-    <link rel="stylesheet" th:href="@{/css/companion.css}">
     <link rel="stylesheet" th:href="@{/css/structure.css}">
+    <link rel="stylesheet" th:href="@{/css/companion.css}">
 </head>
 <body>
-<div class="hBox">
-    <div id="companion" class="vBox">
-        <h1 id="companionName">Empty</h1>
-        <img id="companionPortrait" alt="portrait">
-        <button onclick="deleteCompanion()" style="margin-top: 50px">Delete</button>
-    </div>
-    <div class="vBox" id="companionClass">
-        <div class="hBox">
-            <p id="class">Class</p>
+<div class="vBox">
+    <div class="hBox">
+        <div id="companionForm" class="vBox">
+            <h1 id="companionName" th:text="${companion.name}"></h1>
+            <img id="companionPortrait" alt="portrait" th:src="|/api/companions/portrait/${companion.portraitId}|">
+        </div>
+        <div class="vBox" style="margin-left: 100px">
+            <p th:text="${companion.alignment}" }></p>
+            <p th:text="${companion.race}"></p>
+            <p th:text="${companion.charClass}"></p>
+        </div>
+        <div id="companionInfo" class="vBox" style="margin-left: 100px">
+            <div class="hBox">
+                <label>Strength: </label>
+                <p th:text="${companion.strength}"></p>
+            </div>
+            <div class="hBox">
+                <label>Dexterity: </label>
+                <p th:text="${companion.dexterity}"></p>
+            </div>
+            <div class="hBox">
+                <label>Constitution: </label>
+                <p th:text="${companion.constitution}"></p>
+            </div>
+            <div class="hBox">
+                <label>Intelligence: </label>
+                <p th:text="${companion.intelligence}"></p>
+            </div>
+            <div class="hBox">
+                <label>Wisdom: </label>
+                <p th:text="${companion.wisdom}"></p>
+            </div>
+            <div class="hBox">
+                <label>Charisma: </label>
+                <p th:text="${companion.charisma}"></p>
+            </div>
         </div>
     </div>
-    <div id="companionInfo" class="vBox">
-        <div class="hBox">
-            <label style="font-weight: bold">Strength: </label>
-            <p id="str" style="font-weight: bold">str</p>
-        </div>
-        <div class="hBox">
-            <label style="font-weight: bold">Dexterity: </label>
-            <p id="dex" style="font-weight: bold">dex</p>
-        </div>
-        <div class="hBox">
-            <label style="font-weight: bold">Constitution: </label>
-            <p id="con" style="font-weight: bold">con</p>
-        </div>
-        <div class="hBox">
-            <label style="font-weight: bold">Intelligence: </label>
-            <p id="int" style="font-weight: bold">int</p>
-        </div>
-        <div class="hBox">
-            <label style="font-weight: bold">Wisdom: </label>
-            <p id="wis" style="font-weight: bold">wis</p>
-        </div>
-        <div class="hBox">
-            <label style="font-weight: bold">Charisma: </label>
-            <p id="cha" style="font-weight: bold">cha</p>
-        </div>
+    <div class="hBox">
+        <a href="/companions" class="affirm-button" style="margin-top: 50px">Back</a>
+        <button onclick="deleteCompanion()" class="cancel-button" style="margin-top: 50px">Delete</button>
     </div>
 </div>
 </body>
@@ -68,29 +73,4 @@
                 console.error('Error:', error);
             });
     }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const companionId = window.location.pathname.split('/').pop();
-
-        fetch(`/api/companions/${companionId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(companion => {
-                document.getElementById('companionName').innerText = companion.name;
-                document.getElementById('companionPortrait').src = `/api/companions/portrait/${companion.portraitId}`;
-                document.getElementById('str').innerText = companion.strength;
-                document.getElementById('dex').innerText = companion.dexterity;
-                document.getElementById('con').innerText = companion.constitution;
-                document.getElementById('int').innerText = companion.intelligence;
-                document.getElementById('wis').innerText = companion.wisdom;
-                document.getElementById('cha').innerText = companion.charisma;
-                document.getElementById('class').innerText = companion.charClass;
-                document.getElementById()
-            })
-            .catch(error => console.error('Error fetching companion data:', error));
-    });
 </script>
