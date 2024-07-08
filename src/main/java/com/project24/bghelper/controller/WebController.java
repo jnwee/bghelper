@@ -26,7 +26,8 @@ public class WebController {
 
   @GetMapping("/companions")
   public String viewCompanions(Model model) {
-    model.addAttribute("companions", companionService.getAllCompanions());
+    model.addAttribute("companionsBg1", companionService.getCompanionsBg1());
+    model.addAttribute("companionsBg2", companionService.getCompanionsBg2());
     return "companion-list";
   }
 

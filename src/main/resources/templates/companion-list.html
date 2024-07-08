@@ -8,17 +8,30 @@
     <link rel="stylesheet" th:href="@{/css/companion-list.css}">
 </head>
 <body>
-<h1>Companions</h1>
-<div id="companionsList">
-    <div th:each="companion : ${companions}">
-        <div>
+<div class="hBox">
+    <a href="/" class="affirm-button" style="margin: 15px;">Back</a>
+    <h1 style="color: #104900">Here are all your Companions :)</h1>
+</div>
+<h2>Companions for Baldur's Gate 1</h2>
+<div class="companionsList">
+    <div th:each="companion : ${companionsBg1}">
+        <div class="vBox">
             <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
                  th:alt="companion.name" th:data-id="${companion.id}" onclick="goToCompanion(this)"/>
             <label th:text="${companion.name}" style="margin-top: 15px"></label>
         </div>
     </div>
 </div>
-<a href="/" class="affirm-button" style="margin-left: 10px; margin-top: 25px">Home</a>
+<h2>Companions for Baldur's Gate 2</h2>
+<div class="companionsList">
+    <div th:each="companion : ${companionsBg2}">
+        <div class="vBox">
+            <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
+                 th:alt="companion.name" th:data-id="${companion.id}" onclick="goToCompanion(this)"/>
+            <label th:text="${companion.name}" style="margin-top: 15px"></label>
+        </div>
+    </div>
+</div>
 <script>
     function goToCompanion(element) {
         const companionId = element.getAttribute('data-id');
