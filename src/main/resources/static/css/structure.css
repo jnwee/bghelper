@@ -6,6 +6,11 @@
     --cancel-color: #750000;
 }
 
+body {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
+}
+
 .vBox {
     display: flex;
     flex-direction: column;
@@ -21,4 +26,20 @@
     margin-right: 50px;
     margin-left: 200px;
     gap: 5px;
+}
+
+.affirm-button {
+    background-color: var(--prime-color);
+    color: var(--node-background-color);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    align-content: center;
+}
+
+.affirm-button:hover {
+    background-color: var(--affirm-color);
 }

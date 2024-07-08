@@ -14,11 +14,11 @@
         <div>
             <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
                  th:alt="companion.name" th:data-id="${companion.id}" onclick="goToCompanion(this)"/>
-            <label th:text="${companion.name}"></label>
+            <label th:text="${companion.name}" style="margin-top: 15px"></label>
         </div>
     </div>
 </div>
-<a href="/" class="home-button" style="margin-left: 10px">Home</a>
+<a href="/" class="affirm-button" style="margin-left: 10px; margin-top: 25px">Home</a>
 <script>
     function goToCompanion(element) {
         const companionId = element.getAttribute('data-id');
