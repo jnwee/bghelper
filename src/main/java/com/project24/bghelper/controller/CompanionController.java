@@ -1,8 +1,6 @@
 package com.project24.bghelper.controller;
 
-import com.project24.bghelper.model.Alignment;
 import com.project24.bghelper.model.Companion;
-import com.project24.bghelper.model.Race;
 import com.project24.bghelper.service.CompanionService;
 import com.project24.bghelper.service.FileService;
 import java.io.IOException;
@@ -50,8 +48,30 @@ public class CompanionController {
 
   @PostMapping("/create")
   public ResponseEntity<Companion> addCompanion(@ModelAttribute Companion companion,
-                                                @RequestParam("portrait") MultipartFile portrait)
+                                                @RequestParam("portrait") MultipartFile portrait,
+                                                @RequestParam(defaultValue = "false")
+                                                boolean fighter,
+                                                @RequestParam(defaultValue = "false") boolean thief,
+                                                @RequestParam String mageType,
+                                                @RequestParam String clericDruidType,
+                                                @RequestParam(defaultValue = "false") boolean bg1,
+                                                @RequestParam(defaultValue = "false") boolean sod,
+                                                @RequestParam(defaultValue = "false") boolean bg2)
       throws IOException {
+    companion.setFighter(fighter);
+    companion.setThief(thief);
+
+    companion.setFullMage("fullMage".equals(mageType));
+    companion.setHalfMage("halfMage".equals(mageType));
+
+    companion.setDruid("druid".equals(clericDruidType));
+    companion.setFullCleric("fullCleric".equals(clericDruidType));
+    companion.setHalfCleric("halfCleric".equals(clericDruidType));
+
+    companion.setBg1(bg1);
+    companion.setSod(sod);
+    companion.setBg2(bg2);
+
     String portraitId = fileService.saveFile(portrait);
     companion.setPortraitId(portraitId);
     Companion savedCompanion = companionService.addCompanion(companion);
