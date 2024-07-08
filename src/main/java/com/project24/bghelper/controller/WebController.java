@@ -21,7 +21,8 @@ public class WebController {
   }
 
   @GetMapping("/companions")
-  public String viewCompanions() {
+  public String viewCompanions(Model model) {
+    model.addAttribute("companions", companionService.getAllCompanions());
     return "companion-list";
   }
 
@@ -30,18 +31,11 @@ public class WebController {
     return "createCompanion";
   }
 
-  @GetMapping("/kits")
-  public String viewKits() {
-    return "kit-list";
-  }
-
-  @GetMapping("/kits/new")
-  public String newKit() {
-    return "createKit";
-  }
-
   @GetMapping("companions/{id}")
-  public String viewCompanion(@PathVariable String id) {
+  public String viewCompanion(Model model, @PathVariable String id) {
+    if (companionService.getCompanionById(id).isPresent()) {
+      model.addAttribute("companion", companionService.getCompanionById(id).get());
+    }
     return "companion";
   }
 }

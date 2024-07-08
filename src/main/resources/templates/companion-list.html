@@ -8,33 +8,20 @@
 </head>
 <body>
 <h1>Companions</h1>
-<div id="companionsList"></div>
+<h1>Companion List</h1>
+<div id="companionsList">
+    <div th:each="companion : ${companions}">
+        <div>
+            <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
+                 th:alt="companion.name" th:data-id="${companion.id}" onclick="goToCompanion(this)"/>
+            <label th:text="${companion.name}"></label>
+        </div>
+    </div>
+</div>
 <a href="/" class="home-button" style="margin-left: 10px">Home</a>
 <script>
-    fetch('/api/companions')
-        .then(response => response.json())
-        .then(companions => {
-            const list = document.getElementById('companionsList');
-            companions.forEach(companion => {
-                const container = document.createElement('div');
-                const img = document.createElement('img');
-                img.src = `/api/companions/portrait/${companion.portraitId}`;
-                img.alt = "portrait";
-                img.onclick = () => goToCompanion(companion.id);
-                container.appendChild(img);
-
-                const label = document.createElement('label');
-                label.innerText = `${companion.name}`;
-                container.appendChild(label);
-
-                list.appendChild(container);
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    function goToCompanion(companionId) {
+    function goToCompanion(element) {
+        const companionId = element.getAttribute('data-id');
         window.location.href = `/companions/${companionId}`;
     }
 </script>
