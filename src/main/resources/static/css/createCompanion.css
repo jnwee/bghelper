@@ -67,33 +67,3 @@ select {
     color: var(--prime-color);
     border-width: 0;
 }
-
-button[type="submit"] {
-    background-color: var(--prime-color);
-    color: var(--node-background-color);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button[type="submit"]:hover {
-    background-color: var(--affirm-color);
-}
-
-.home-button {
-    background-color: var(--prime-color);
-    color: var(--node-background-color);
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    display: inline-block;
-}
-
-.home-button:hover {
-    background-color: var(--affirm-color);
-}

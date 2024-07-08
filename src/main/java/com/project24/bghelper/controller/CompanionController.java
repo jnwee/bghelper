@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,63 +49,11 @@ public class CompanionController {
   }
 
   @PostMapping("/create")
-  public ResponseEntity<Companion> addCompanion(@RequestParam("name") String name,
-                                                @RequestParam("portrait") MultipartFile image,
-                                                @RequestParam("alignment") Alignment alignment,
-                                                @RequestParam("race") Race race,
-                                                @RequestParam("charClass") String charClass,
-                                                @RequestParam("str") Integer str,
-                                                @RequestParam("dex") Integer dex,
-                                                @RequestParam("con") Integer con,
-                                                @RequestParam("int") Integer inT,
-                                                @RequestParam("wis") Integer wis,
-                                                @RequestParam("cha") Integer cha,
-                                                @RequestParam(value = "bg1", defaultValue = "false")
-                                                Boolean bg1,
-                                                @RequestParam(value = "sod", defaultValue = "false")
-                                                Boolean sod,
-                                                @RequestParam(value = "bg2", defaultValue = "false")
-                                                Boolean bg2,
-                                                @RequestParam(value = "isFighter", defaultValue = "false")
-                                                Boolean isFighter,
-                                                @RequestParam(value = "isThief", defaultValue = "false")
-                                                Boolean isThief,
-                                                @RequestParam(value = "isFullMage", defaultValue = "false")
-                                                Boolean isFullMage,
-                                                @RequestParam(value = "isHalfMage", defaultValue = "false")
-                                                Boolean isHalfMage,
-                                                @RequestParam(value = "isDruid", defaultValue = "false")
-                                                Boolean isDruid,
-                                                @RequestParam(value = "isFullCleric", defaultValue = "false")
-                                                Boolean isFullCleric,
-                                                @RequestParam(value = "isHalfCleric", defaultValue = "false")
-                                                Boolean isHalfCleric
-                                                )
+  public ResponseEntity<Companion> addCompanion(@ModelAttribute Companion companion,
+                                                @RequestParam("portrait") MultipartFile portrait)
       throws IOException {
-    String portraitId = fileService.saveFile(image);
-    Companion companion = new Companion();
-    logger.info("alignment - {}", alignment);
-    companion.setName(name);
+    String portraitId = fileService.saveFile(portrait);
     companion.setPortraitId(portraitId);
-    companion.setAlignment(alignment);
-    companion.setRace(race);
-    companion.setCharClass(charClass);
-    companion.setStrength(str);
-    companion.setDexterity(dex);
-    companion.setConstitution(con);
-    companion.setIntelligence(inT);
-    companion.setWisdom(wis);
-    companion.setCharisma(cha);
-    companion.setBg1(bg1);
-    companion.setSod(sod);
-    companion.setBg2(bg2);
-    companion.setFighter(isFighter);
-    companion.setThief(isThief);
-    companion.setFullMage(isFullMage);
-    companion.setHalfMage(isHalfMage);
-    companion.setDruid(isDruid);
-    companion.setFullCleric(isFullCleric);
-    companion.setHalfCleric(isHalfCleric);
     Companion savedCompanion = companionService.addCompanion(companion);
     logger.info("Character {} created", savedCompanion.getName());
     return ResponseEntity.status(201).body(savedCompanion);

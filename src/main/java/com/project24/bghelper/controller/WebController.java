@@ -1,6 +1,10 @@
 package com.project24.bghelper.controller;
 
+import com.project24.bghelper.model.Alignment;
+import com.project24.bghelper.model.Companion;
+import com.project24.bghelper.model.Race;
 import com.project24.bghelper.service.CompanionService;
+import java.util.Arrays;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +31,10 @@ public class WebController {
   }
 
   @GetMapping("/companions/new")
-  public String newCompanion() {
+  public String newCompanion(Model model) {
+    model.addAttribute("companion", new Companion());
+    model.addAttribute("alignments", Arrays.stream(Alignment.values()).toList());
+    model.addAttribute("races", Arrays.stream(Race.values()).toList());
     return "createCompanion";
   }
 
