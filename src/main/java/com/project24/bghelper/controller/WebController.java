@@ -32,7 +32,6 @@ public class WebController {
 
   @GetMapping("/companions/new")
   public String newCompanion(Model model) {
-    model.addAttribute("companion", new Companion());
     model.addAttribute("alignments", Arrays.stream(Alignment.values()).toList());
     model.addAttribute("races", Arrays.stream(Race.values()).toList());
     return "createCompanion";

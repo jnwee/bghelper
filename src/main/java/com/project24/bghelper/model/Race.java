@@ -1,5 +1,7 @@
 package com.project24.bghelper.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum Race {
   HUMAN,
   HALF_ELF,
@@ -22,5 +24,10 @@ public enum Race {
       case HALF_ORC -> str = "Half-Orc";
     }
     return str;
+  }
+
+  @JsonCreator
+  public static Race fromString(String key) {
+    return key == null ? null : Race.valueOf(key.toUpperCase().replace("-", "_"));
   }
 }

@@ -49,21 +49,54 @@ public class CompanionController {
   }
 
   @PostMapping("/create")
-  public ResponseEntity<Companion> addCompanion(@ModelAttribute Companion companion,
+  public ResponseEntity<Companion> addCompanion(@RequestParam("name") String name,
                                                 @RequestParam("portrait") MultipartFile portrait,
-                                                @RequestParam("race") Race race,
-                                                @RequestParam("alignment") Alignment alignment,
-                                                @RequestParam(defaultValue = "false")
-                                                boolean fighter,
-                                                @RequestParam(defaultValue = "false") boolean thief,
+                                                @RequestParam("race") String race,
+                                                @RequestParam("alignment") String alignment,
+                                                @RequestParam("charClass") String charClass,
+                                                @RequestParam("strength") Integer strength,
+                                                @RequestParam("dexterity") Integer dexterity,
+                                                @RequestParam("constitution") Integer constitution,
+                                                @RequestParam("intelligence") Integer intelligence,
+                                                @RequestParam("wisdom") Integer wisdom,
+                                                @RequestParam("charisma") Integer charisma,
+                                                @RequestParam(value = "fighter", defaultValue = "false")
+                                                Boolean fighter,
+                                                @RequestParam(value = "thief", defaultValue = "false")
+                                                Boolean thief,
                                                 @RequestParam String mageType,
                                                 @RequestParam String clericDruidType,
-                                                @RequestParam(defaultValue = "false") boolean bg1,
-                                                @RequestParam(defaultValue = "false") boolean sod,
-                                                @RequestParam(defaultValue = "false") boolean bg2)
+                                                @RequestParam(value = "bg1", defaultValue = "false")
+                                                Boolean bg1,
+                                                @RequestParam(value = "sod", defaultValue = "false")
+                                                Boolean sod,
+                                                @RequestParam(value = "bg2", defaultValue = "false")
+                                                Boolean bg2)
       throws IOException {
-    companion.setRace(race);
-    companion.setAlignment(alignment);
+    logger.info("Race - {}, Alignment - {}", race, alignment);
+    Companion companion = new Companion();
+
+    companion.setFighter(false);
+    companion.setThief(false);
+    companion.setFullMage(false);
+    companion.setHalfMage(false);
+    companion.setDruid(false);
+    companion.setFullCleric(false);
+    companion.setHalfCleric(false);
+
+    companion.setName(name);
+    companion.setRace(Race.fromString(race));
+    companion.setAlignment(Alignment.fromString(alignment));
+    String portraitId = fileService.saveFile(portrait);
+    companion.setPortraitId(portraitId);
+    companion.setCharClass(charClass);
+
+    companion.setStrength(strength);
+    companion.setDexterity(dexterity);
+    companion.setConstitution(constitution);
+    companion.setIntelligence(intelligence);
+    companion.setWisdom(wisdom);
+    companion.setCharisma(charisma);
 
     companion.setFighter(fighter);
     companion.setThief(thief);
@@ -79,8 +112,6 @@ public class CompanionController {
     companion.setSod(sod);
     companion.setBg2(bg2);
 
-    String portraitId = fileService.saveFile(portrait);
-    companion.setPortraitId(portraitId);
     Companion savedCompanion = companionService.addCompanion(companion);
     logger.info("Character {} created", savedCompanion.getName());
     return ResponseEntity.status(201).body(savedCompanion);

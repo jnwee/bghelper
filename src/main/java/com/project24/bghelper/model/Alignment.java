@@ -1,5 +1,7 @@
 package com.project24.bghelper.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum Alignment {
   LAWFUL_GOOD,
   NEUTRAL_GOOD,
@@ -24,8 +26,12 @@ public enum Alignment {
       case LAWFUL_EVIL -> str = "Lawful Evil";
       case NEUTRAL_EVIL -> str = "Neutral Evil";
       case CHAOTIC_EVIL -> str = "Chaotic Evil";
-      default -> str = "unknown";
     }
     return str;
+  }
+
+  @JsonCreator
+  public static Alignment fromString(String key) {
+    return key == null ? null : Alignment.valueOf(key.toUpperCase().replace(" ", "_"));
   }
 }
