@@ -13,8 +13,12 @@ img {
 }
 
 .companionsList {
-    display: inline-flex;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-start;
+    max-width: 2000px;
     margin: 10px;
+    gap: 15px;
 }

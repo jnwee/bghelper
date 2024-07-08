@@ -15,20 +15,20 @@
 <h2>Companions for Baldur's Gate 1</h2>
 <div class="companionsList">
     <div th:each="companion : ${companionsBg1}">
-        <div class="vBox">
+        <div class="vBox" style="margin-left: 25px">
             <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
                  th:alt="companion.name" th:data-id="${companion.id}" onclick="goToCompanion(this)"/>
-            <label th:text="${companion.name}" style="margin-top: 15px"></label>
+            <label th:text="${companion.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
         </div>
     </div>
 </div>
 <h2>Companions for Baldur's Gate 2</h2>
 <div class="companionsList">
     <div th:each="companion : ${companionsBg2}">
-        <div class="vBox">
+        <div class="vBox" style="margin-left: 25px">
             <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
                  th:alt="companion.name" th:data-id="${companion.id}" onclick="goToCompanion(this)"/>
-            <label th:text="${companion.name}" style="margin-top: 15px"></label>
+            <label th:text="${companion.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
         </div>
     </div>
 </div>
