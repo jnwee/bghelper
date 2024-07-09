@@ -23,6 +23,12 @@ public class Party {
     this.party.add(companionId);
   }
 
+  public void deleteCompanion(String companionId) {
+    if (party.contains(companionId)) {
+      party.remove(companionId);
+    }
+  }
+
   public boolean isBg2() {
     return bg2;
   }
