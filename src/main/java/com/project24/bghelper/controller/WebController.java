@@ -17,8 +17,9 @@ public class WebController {
   private CompanionService companionService;
   private CharacterService characterService;
 
-  public WebController(CompanionService companionService) {
+  public WebController(CompanionService companionService, CharacterService characterService) {
     this.companionService = companionService;
+    this.characterService = characterService;
   }
 
   @GetMapping("/")
@@ -50,7 +51,7 @@ public class WebController {
 
   @GetMapping("/characters")
   public String viewCharacters(Model model) {
-    model.addAttribute("aliveCharacters", characterService.getAliveCharacters());
+    model.addAttribute("aliveCharacters", characterService.getAliveCharacters().reversed());
     model.addAttribute("deadCharacters", characterService.getDeadCharacters());
     return "character-list";
   }
