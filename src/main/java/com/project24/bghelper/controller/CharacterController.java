@@ -181,4 +181,28 @@ public class CharacterController {
     }
     return ResponseEntity.status(500).body(null);
   }
+
+  @PutMapping("/{id}/addToBg1")
+  public ResponseEntity<Void> addCompanionToPartyBg1(@PathVariable String id,
+                                                     @RequestParam("companionId") String companionId,
+                                                     @RequestParam("index") String index) {
+    if (characterService.getCharacterById(id).isPresent()) {
+      Character character = characterService.getCharacterById(id).get();
+      partyService.addCompanion(character, companionId, Integer.parseInt(index), false);
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.status(500).body(null);
+  }
+
+  @PutMapping("/{id}/addToBg2")
+  public ResponseEntity<Void> addCompanionToPartyBg2(@PathVariable String id,
+                                                     @RequestParam("companionId") String companionId,
+                                                     @RequestParam("index") String index) {
+    if (characterService.getCharacterById(id).isPresent()) {
+      Character character = characterService.getCharacterById(id).get();
+      partyService.addCompanion(character, companionId, Integer.parseInt(index), true);
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.status(500).body(null);
+  }
 }

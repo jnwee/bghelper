@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companions</title>
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
+    <link rel="stylesheet" th:href="@{/css/companion-list.css}">
+</head>
+<body>
+<div class="hBox">
+    <a href="/" class="affirm-button" style="margin: 15px;">Back</a>
+    <h1 style="color: #104900">Here are all your Companions :)</h1>
+</div>
+<h1>Baldurs Gate 1</h1>
+<h2>Good</h2>
+<div class="companionsList" id="characterIdElement" th:data-id="${character.id}">
+    <div th:each="companion : ${goodCompanions}">
+        <div class="vBox" style="margin-left: 25px">
+            <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
+                 th:alt="companion.name" th:data-id="${companion.id}" onclick="selectCompanion(this)"/>
+            <label th:text="${companion.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
+        </div>
+    </div>
+</div>
+<h2>Neutral</h2>
+<div class="companionsList" id="listNumberElement" th:data-id="${index}">
+    <div th:each="companion : ${neutralCompanions}">
+        <div class="vBox" style="margin-left: 25px">
+            <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
+                 th:alt="companion.name" th:data-id="${companion.id}" onclick="selectCompanion(this)"/>
+            <label th:text="${companion.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
+        </div>
+    </div>
+</div>
+<h2>Evil</h2>
+<div class="companionsList">
+    <div th:each="companion : ${evilCompanions}">
+        <div class="vBox" style="margin-left: 25px">
+            <img th:src="@{/api/companions/portrait/{portraitId}(portraitId=${companion.portraitId})}"
+                 th:alt="companion.name" th:data-id="${companion.id}" onclick="selectCompanion(this)"/>
+            <label th:text="${companion.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
+        </div>
+    </div>
+</div>
+<script>
+    function selectCompanion(element) {
+        const companionId = element.getAttribute('data-id');
+        const characterId = document.getElementById("characterIdElement").getAttribute('data-id');
+        const index = document.getElementById("listNumberElement").getAttribute('data-id');
+
+        const url = `/api/characters/${characterId}/addToBg1`;
+        const formData = new FormData();
+        formData.append("companionId", companionId);
+        formData.append("index", index);
+
+        fetch(url, {
+            method: 'PUT',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/characters/${characterId}`;
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>

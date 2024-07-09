@@ -29,6 +29,21 @@ public class PartyService {
     return partyRepository.findById(id);
   }
 
+  // TODO no check if companion is already in Party for now
+  public void addCompanion(Character character, String companionId, Integer index, boolean bg2) {
+    if (!bg2) {
+      Party bg1Party = partyRepository.findById(character.getPartyBg1()).get();
+      Companion companion = companionService.getCompanionById(companionId).get();
+      bg1Party.getParty().set(index, companion);
+      partyRepository.save(bg1Party);
+    } else if (bg2) {
+      Party bg2Party = partyRepository.findById(character.getPartyBg2()).get();
+      Companion companion = companionService.getCompanionById(companionId).get();
+      bg2Party.getParty().set(index, companion);
+      partyRepository.save(bg2Party);
+    }
+  }
+
   // TODO A LOT TO OPTIMIZE HERE :/
   public void fillPartyBalanced(Character character, boolean bg2, boolean good, boolean neutral,
                                 boolean evil) {

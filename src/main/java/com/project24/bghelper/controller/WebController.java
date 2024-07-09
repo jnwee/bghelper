@@ -2,7 +2,6 @@ package com.project24.bghelper.controller;
 
 import com.project24.bghelper.model.Alignment;
 import com.project24.bghelper.model.Character;
-import com.project24.bghelper.model.Companion;
 import com.project24.bghelper.model.Race;
 import com.project24.bghelper.service.CharacterService;
 import com.project24.bghelper.service.CompanionService;
@@ -79,5 +78,37 @@ public class WebController {
           partyService.getPartyById(character.getPartyBg2()).get().getParty());
     }
     return "character";
+  }
+
+  @GetMapping("/characters/{id}/bg1/{index}")
+  public String addCompanionToCharacterBg1(Model model, @PathVariable String id,
+                                           @PathVariable String index) {
+    Character character = null;
+    if (characterService.getCharacterById(id).isPresent()) {
+      character = characterService.getCharacterById(id).get();
+      model.addAttribute("character", character);
+    }
+    model.addAttribute(index);
+    model.addAttribute("goodCompanions", companionService.getGoodCompanionsBg1());
+    model.addAttribute("neutralCompanions", companionService.getNeutralCompanionsBg1());
+    model.addAttribute("evilCompanions", companionService.getEvilCompanionsBg1());
+
+    return "selectCompanionBg1";
+  }
+
+  @GetMapping("/characters/{id}/bg2/{index}")
+  public String addCompanionToCharacterBg2(Model model, @PathVariable String id,
+                                        @PathVariable String index) {
+    Character character = null;
+    if (characterService.getCharacterById(id).isPresent()) {
+      character = characterService.getCharacterById(id).get();
+      model.addAttribute("character", character);
+    }
+    model.addAttribute(index);
+    model.addAttribute("goodCompanions", companionService.getGoodCompanionsBg2());
+    model.addAttribute("neutralCompanions", companionService.getNeutralCompanionsBg2());
+    model.addAttribute("evilCompanions", companionService.getEvilCompanionsBg2());
+
+    return "selectCompanionBg2";
   }
 }
