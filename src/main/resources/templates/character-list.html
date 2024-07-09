@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companions</title>
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
+    <link rel="stylesheet" th:href="@{/css/companion-list.css}">
+</head>
+<body>
+<div class="hBox">
+    <a href="/" class="affirm-button" style="margin: 15px;">Back</a>
+    <h1 style="color: #104900">Here are all your Characters :)</h1>
+</div>
+<h2>Character that are still going strong :)</h2>
+<div class="companionsList">
+    <div th:each="character : ${aliveCharacters}">
+        <div class="vBox" style="margin-left: 25px">
+            <img th:src="@{/api/characters/portrait/{portraitId}(portraitId=${character.portraitId})}"
+                 th:alt="character.name" th:data-id="${character.id}" onclick="goToCharacter(this)"/>
+            <label th:text="${character.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
+        </div>
+    </div>
+</div>
+<h2>Characters that died :/</h2>
+<div class="companionsList">
+    <div th:each="character : ${deadCharacters}">
+        <div class="vBox" style="margin-left: 25px">
+            <img th:src="@{/api/charcters/portrait/{portraitId}(portraitId=${character.portraitId})}"
+                 th:alt="character.name" th:data-id="${character.id}" onclick="goToCharacter(this)"/>
+            <label th:text="${character.name}" style="margin-top: 15px; margin-bottom: 15px"></label>
+        </div>
+    </div>
+</div>
+<script>
+    function goToCharacter(element) {
+        const companionId = element.getAttribute('data-id');
+        window.location.href = `/characters/${companionId}`;
+    }
+</script>
+</body>
+</html>
