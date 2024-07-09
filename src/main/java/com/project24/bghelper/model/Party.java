@@ -20,6 +20,9 @@ public class Party {
     if (party.size() >= 5) {
       throw new IllegalStateException("Party is full, this should never occur");
     }
+    if (party.contains(companionId)) {
+      throw new IllegalArgumentException("Companion is already in party");
+    }
     this.party.add(companionId);
   }
 
