@@ -91,4 +91,5 @@ input[type="number"] {
 fieldset {
     color: var(--prime-color);
     border-color: var(--prime-color);
+    width: 500px;
 }

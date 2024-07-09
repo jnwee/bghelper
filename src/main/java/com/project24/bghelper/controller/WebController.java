@@ -3,6 +3,7 @@ package com.project24.bghelper.controller;
 import com.project24.bghelper.model.Alignment;
 import com.project24.bghelper.model.Companion;
 import com.project24.bghelper.model.Race;
+import com.project24.bghelper.service.CharacterService;
 import com.project24.bghelper.service.CompanionService;
 import java.util.Arrays;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class WebController {
 
   private CompanionService companionService;
+  private CharacterService characterService;
 
   public WebController(CompanionService companionService) {
     this.companionService = companionService;
@@ -44,5 +46,19 @@ public class WebController {
       model.addAttribute("companion", companionService.getCompanionById(id).get());
     }
     return "companion";
+  }
+
+  @GetMapping("/characters")
+  public String viewCharacters(Model model) {
+    model.addAttribute("aliveCharacters", characterService.getAliveCharacters());
+    model.addAttribute("deadCharacters", characterService.getDeadCharacters());
+    return "character-list";
+  }
+
+  @GetMapping("/characters/new")
+  public String newCharacter(Model model) {
+    model.addAttribute("alignments", Arrays.stream(Alignment.values()).toList());
+    model.addAttribute("races", Arrays.stream(Race.values()).toList());
+    return "createCharacter";
   }
 }

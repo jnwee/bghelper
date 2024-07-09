@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Companion</title>
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
+    <link rel="stylesheet" th:href="@{/css/createCompanion.css}">
+</head>
+<body>
+<header>
+    <h1>Add a New Character Here</h1>
+</header>
+<main>
+    <form id="companionForm" method="post" enctype="multipart/form-data">
+        <div class="vBox">
+            <div class="hBox">
+                <div class="vBox" style="margin-right: 100px">
+                    <div class="hBox">
+                        <label style="margin-bottom: 15px">Name:</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                    <div class="hBox">
+                        <div class="vBox">
+                            <label style="margin-bottom: 15px">Race:</label>
+                            <select id="race" name="race">
+                                <option th:each="race : ${races}" th:value="${race}" th:text="${race.toString()}">Race</option>
+                            </select>
+                        </div>
+                        <div class="vBox">
+                            <label style="margin-bottom: 15px">Alignment:</label>
+                            <select id="alignment" name="alignment">
+                                <option th:each="alignment : ${alignments}" th:value="${alignment}" th:text="${alignment.toString()}">Alignment</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="vBox">
+                        <label style="margin-bottom: 15px">Portrait:</label>
+                        <div class="hBox">
+                            <div class="file-input-container">
+                                <input type="file" id="portrait" name="portrait" style="display: none;">
+                                <button class="affirm-button" type="button" id="browseButton"
+                                        style="border-width: 0; margin-bottom: 15px">Browse
+                                </button>
+                                <label id="fileName"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hBox">
+                        <div class="vBox">
+                            <label style="margin-bottom: 15px">Class:</label>
+                            <input type="text" id="charClass" name="charClass">
+                        </div>
+                    </div>
+                </div>
+                <div class="vBox">
+                    <div class="hBox">
+                        <label style="margin-right: 10px">Str:</label>
+                        <input type="number" id="strength" name="strength">
+                        <label style="margin-right: 10px">Dex:</label>
+                        <input type="number" id="dexterity" name="dexterity">
+                        <label style="margin-right: 10px">Con:</label>
+                        <input type="number" id="constitution" name="constitution">
+                    </div>
+                    <div class="hBox">
+                        <label style="margin-right: 10px">Int:</label>
+                        <input type="number" id="intelligence" name="intelligence">
+                        <label style="margin-right: 10px">Wis:</label>
+                        <input type="number" id="wisdom" name="wisdom">
+                        <label style="margin-right: 10px">Cha:</label>
+                        <input type="number" id="charisma" name="charisma">
+                    </div>
+                    <div class="hBox" style="margin-top: 30px">
+                        <label>
+                            <input type="checkbox" id="fighter" name="fighter">
+                            Fighter
+                        </label>
+                        <label>
+                            <input type="checkbox" id="thief" name="thief">
+                            Thief
+                        </label>
+                    </div>
+                    <div class="hBox">
+                        <fieldset>
+                            <legend>Mage Type</legend>
+                            <label>
+                                <input type="radio" id="noneMage" name="mageType" value="none" checked>
+                                None
+                            </label>
+                            <label>
+                                <input type="radio" id="fullMage" name="mageType" value="fullMage">
+                                Full Mage
+                            </label>
+                            <label>
+                                <input type="radio" id="halfMage" name="mageType" value="halfMage">
+                                Half Mage
+                            </label>
+                        </fieldset>
+                    </div>
+                    <div class="hBox" style="margin-top: 35px">
+                        <fieldset id="clericDruidTypes">
+                            <legend>Cleric/Druid Type</legend>
+                            <label>
+                                <input type="radio" id="noneClericDruid" name="clericDruidType" value="none" checked>
+                                None
+                            </label>
+                            <label>
+                                <input type="radio" id="druid" name="clericDruidType" value="druid">
+                                Druid
+                            </label>
+                            <label>
+                                <input type="radio" id="fullCleric" name="clericDruidType" value="fullCleric">
+                                Full Cleric
+                            </label>
+                            <label>
+                                <input type="radio" id="halfCleric" name="clericDruidType" value="halfCleric">
+                                Half Cleric
+                            </label>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="vBox" style="margin-left: 100px; width: 400px">
+                    <h2>Explanation</h2>
+                    <p>Class is basically only the name of the class, so enter whatever you want.</p>
+                    <p>Important for rolling parties are the checkboxes. Full Mage, for example, just means if the Character is able to fulfill the role of the main caster for the group, so someone like Edwin, while Jan or Aerie are more like half mages.</p>
+                    <p>Though it is up to you to determine who you consider a Full Mage since it depends on difficulty, if, for example, Aerie can work as the only caster for a party.</p>
+                </div>
+            </div>
+            <div>
+                <button class="affirm-button" type="submit" id="addCompanionButton"
+                        style="border-width: 0; margin-top: 50px; margin-bottom: 25px">Add Companion
+                </button>
+            </div>
+            <div>
+                <a href="/" class="affirm-button">Home</a>
+            </div>
+        </div>
+    </form>
+</main>
+<script>
+    document.getElementById("addCompanionButton").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        var form = document.getElementById("companionForm");
+        var formData = new FormData(form);
+
+        var portraitFile = document.getElementById("portrait").files[0];
+        if (portraitFile) {
+            formData.append("portrait", portraitFile);
+        }
+
+        fetch("/api/characters/create", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Success:", data);
+                window.location.href = "/characters";
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    });
+</script>
+<script>
+    document.getElementById('browseButton').addEventListener('click', function () {
+        document.getElementById('portrait').click();
+    });
+
+    document.getElementById('portrait').addEventListener('change', function () {
+        let fileName = this.files[0].name;
+        document.getElementById('fileName').textContent = fileName;
+    });
+
+
+</script>
+</body>
+</html>
