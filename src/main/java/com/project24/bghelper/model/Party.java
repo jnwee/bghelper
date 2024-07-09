@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Party {
   @Id
   private String id;
-  private List<Companion> party;
+  private List<Companion> party = new ArrayList<>();
   private boolean bg2;
 
   public List<Companion> getParty() {

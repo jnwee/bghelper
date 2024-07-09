@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character</title>
+    <link rel="stylesheet" th:href="@{/css/structure.css}">
+    <link rel="stylesheet" th:href="@{/css/character.css}">
+</head>
+<body>
+<main>
+    <div class="vBox">
+        <div class="hBox" style="margin-top: 50px">
+            <div class="vBox" style="width: 350px">
+                <img alt="portrait" th:src="|/api/characters/portrait/${character.portraitId}|"
+                     style="width: 315px; height: 495px">
+                <label style="margin-top: 15px" th:text="${character.name}"></label>
+                <label style="margin-top: 15px" th:text="${character.alignment}"></label>
+                <label style="margin-top: 15px" th:text="${character.race}"></label>
+                <label style="margin-top: 15px" th:text="${character.charClass}"></label>
+            </div>
+            <div class="vBox" style="width: 250px">
+                <label>Stats:</label>
+                <div class="hBox">
+                    <label style="margin-top: 15px">STR:</label>
+                    <label style="margin-top: 15px" th:text="${character.strength}"></label>
+                </div>
+                <div class="hBox">
+                    <label style="margin-top: 15px">DEX:</label>
+                    <label style="margin-top: 15px" th:text="${character.dexterity}"></label>
+                </div>
+                <div class="hBox">
+                    <label style="margin-top: 15px">CON:</label>
+                    <label style="margin-top: 15px" th:text="${character.constitution}"></label>
+                </div>
+                <div class="hBox">
+                    <label style="margin-top: 15px">INT:</label>
+                    <label style="margin-top: 15px" th:text="${character.intelligence}"></label>
+                </div>
+                <div class="hBox">
+                    <label style="margin-top: 15px">WIS:</label>
+                    <label style="margin-top: 15px" th:text="${character.wisdom}"></label>
+                </div>
+                <div class="hBox">
+                    <label style="margin-top: 15px">CHA:</label>
+                    <label style="margin-top: 15px" th:text="${character.charisma}"></label>
+                </div>
+                <div class="hBox">
+                    <label style="margin-top: 15px">All:</label>
+                    <label style="margin-top: 15px" th:text="${character.statSum}"></label>
+                </div>
+            </div>
+            <div class="vBox"
+                 style="width: 1200px; height: 750px; background-color: var(--node-background-color); border-radius: 8px">
+                <h2>Companions for BG1</h2>
+                <div class="hBox" style="gap: 15px">
+                    <a th:href="@{/characters/{id}/bg1/0(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg1)}" th:alt="${partyBg1.get(0).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg1.get(0).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg1/1(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg1)}" th:alt="${partyBg1.get(1).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg1.get(1).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg1/2(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg1)}" th:alt="${partyBg1.get(2).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg1.get(2).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg1/3(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg1)}" th:alt="${partyBg1.get(3).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg1.get(3).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg1/4(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg1)}" th:alt="${partyBg1.get(4).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg1.get(4).getPortraitId()}|">
+                        </div>
+                    </a>
+                </div>
+                <h2>Companions for BG2</h2>
+                <div class="hBox" style="gap: 15px">
+                    <a th:href="@{/characters/{id}/bg2/0(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(0).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg2.get(0).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg2/1(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(1).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg2.get(1).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg2/2(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(2).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg2.get(2).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg2/3(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(3).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg2.get(3).getPortraitId()}|">
+                        </div>
+                    </a>
+                    <a th:href="@{/characters/{id}/bg2/4(id=${character.id})}">
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(4).getName()}"
+                                 th:src="|/api/companions/portrait/${partyBg2.get(4).getPortraitId()}|">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
