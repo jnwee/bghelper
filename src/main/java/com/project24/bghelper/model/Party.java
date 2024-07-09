@@ -9,27 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Party {
   @Id
   private String id;
-  private List<String> party = new ArrayList<>();
+  private List<Companion> party = new ArrayList<>();
   private boolean bg2;
 
-  public List<String> getParty() {
+  public List<Companion> getParty() {
     return party;
   }
 
-  public void addCompanion(String companionId) throws IllegalStateException {
-    if (party.size() >= 5) {
-      throw new IllegalStateException("Party is full, this should never occur");
-    }
-    if (party.contains(companionId)) {
-      throw new IllegalArgumentException("Companion is already in party");
-    }
-    this.party.add(companionId);
-  }
-
-  public void deleteCompanion(String companionId) {
-    if (party.contains(companionId)) {
-      party.remove(companionId);
-    }
+  public void setParty(List<Companion> party) {
+    this.party = party;
   }
 
   public boolean isBg2() {
