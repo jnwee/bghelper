@@ -132,13 +132,13 @@ public class PartyService {
         if (!fighter) {
           companion = getRandomFighter(suitedCompanions);
         }
-        if (cleric < 1 || cleric < 2 && druid == true) {
-          companion = getRandomCleric(suitedCompanions);
-        }
         if (!thief) {
           companion = getRandomThief(suitedCompanions);
         }
-        while (mage < 2) {
+        if (cleric < 1 || cleric < 2 && druid) {
+          companion = getRandomCleric(suitedCompanions);
+        }
+        if (mage < 2) {
           companion = getRandomMage(suitedCompanions);
         }
       }
@@ -182,13 +182,13 @@ public class PartyService {
         if (!fighter) {
           companion = getRandomFighter(suitedCompanions);
         }
-        if (cleric < 1 || cleric < 2 && druid == true) {
-          companion = getRandomCleric(suitedCompanions);
-        }
         if (!thief) {
           companion = getRandomThief(suitedCompanions);
         }
-        while (mage < 2) {
+        if (cleric < 2 || cleric < 3 && druid) {
+          companion = getRandomCleric(suitedCompanions);
+        }
+        if (mage < 3) {
           companion = getRandomMage(suitedCompanions);
         }
       }
