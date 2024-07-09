@@ -159,18 +159,18 @@ public class CharacterController {
       Character character = characterService.getCharacterById(id).get();
       partyService.fillPartyBalanced(character, false, good, neutral, evil);
       logger.info("BG1 Party of Character {} filled", character.getName());
-      return ResponseEntity.noContent().build();
+      return ResponseEntity.status(200).body(null);
     }
     return ResponseEntity.status(500).body(null);
   }
 
   @PutMapping("/{id}/fillPartyBg2")
   public ResponseEntity<Void> fillPartyBg2(@PathVariable String id,
-                                           @RequestParam(value = "good", defaultValue = "false")
+                                           @RequestParam(value = "good", defaultValue = "true")
                                            Boolean good,
-                                           @RequestParam(value = "neutral", defaultValue = "false")
+                                           @RequestParam(value = "neutral", defaultValue = "true")
                                            Boolean neutral,
-                                           @RequestParam(value = "evil", defaultValue = "false")
+                                           @RequestParam(value = "evil", defaultValue = "true")
                                            Boolean evil) {
     if (characterService.getCharacterById(id).isPresent()) {
       logger.info("PUT REQUEST RECEIVED for BG2 with good = {}, neutral = {} and evil = {}", good, neutral, evil);

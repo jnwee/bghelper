@@ -90,9 +90,16 @@
                         </div>
                     </a>
                     <div class="vBox"
-                         style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
-                        <button class="affirm-button" id="goodPartyButton" th:data-id="${character.id}">Good Party</button>
+                         style="width: 105px; height: 165px; border-radius: 8px">
+                        <button class="affirm-button" id="goodPartyButton" th:data-id="${character.id}">Good
+                        </button>
+                        <button class="affirm-button" id="idcButton" th:data-id="${character.id}">Anyone
+                        </button>
+                        <button class="affirm-button" id="evilPartyButton" th:data-id="${character.id}">Evil
+                        </button>
                     </div>
+                </div>
+                <div class="vBox">
                     <h2>Companions for BG2</h2>
                     <div class="hBox" style="gap: 15px">
                         <a th:href="@{/characters/{id}/bg2/0(id=${character.id})}">
@@ -130,6 +137,15 @@
                                      th:src="|/api/companions/portrait/${partyBg2.get(4).getPortraitId()}|">
                             </div>
                         </a>
+                        <div class="vBox"
+                             style="width: 105px; height: 165px; border-radius: 8px">
+                            <button class="affirm-button" id="goodPartyButton2" th:data-id="${character.id}">Good
+                            </button>
+                            <button class="affirm-button" id="idcButton2" th:data-id="${character.id}">Anyone
+                            </button>
+                            <button class="affirm-button" id="evilPartyButton2" th:data-id="${character.id}">Evil
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,28 +153,154 @@
     </div>
 </main>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const button = document.getElementById('goodPartyButton');
-        button.addEventListener('click', function() {
-            const characterId = button.getAttribute('data-id');
+    document.addEventListener('DOMContentLoaded', function () {
+        const goodButton = document.getElementById('goodPartyButton');
+        goodButton.addEventListener('click', function () {
+            const characterId = goodButton.getAttribute('data-id');
             const url = `/api/characters/${characterId}/fillPartyBg1`;
-            const data = {
-                good: true,
-                neutral: true,
-                evil: false
-            };
+            const formData = new FormData();
+            formData.append("good", "true");
+            formData.append("neutral", "true");
+            formData.append("evil", "false");
 
             fetch(url, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
+                body: formData
             })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+                    window.location.reload();
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+        const evilButton = document.getElementById('evilPartyButton');
+        evilButton.addEventListener('click', function () {
+            const characterId = evilButton.getAttribute('data-id');
+            const url = `/api/characters/${characterId}/fillPartyBg1`;
+            const formData = new FormData();
+            formData.append("good", "false");
+            formData.append("neutral", "true");
+            formData.append("evil", "true");
+
+            fetch(url, {
+                method: 'PUT',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.reload();
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+        const idcButton = document.getElementById('idcButton');
+        idcButton.addEventListener('click', function () {
+            const characterId = idcButton.getAttribute('data-id');
+            const url = `/api/characters/${characterId}/fillPartyBg1`;
+            const formData = new FormData();
+
+            fetch(url, {
+                method: 'PUT',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.reload();
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+        const goodButton2 = document.getElementById('goodPartyButton2');
+        goodButton2.addEventListener('click', function () {
+            const characterId = goodButton2.getAttribute('data-id');
+            const url = `/api/characters/${characterId}/fillPartyBg2`;
+            const formData = new FormData();
+            formData.append("good", "true");
+            formData.append("neutral", "true");
+            formData.append("evil", "false");
+
+            fetch(url, {
+                method: 'PUT',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.reload();
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+        const evilButton2 = document.getElementById('evilPartyButton2');
+        evilButton2.addEventListener('click', function () {
+            const characterId = evilButton2.getAttribute('data-id');
+            const url = `/api/characters/${characterId}/fillPartyBg2`;
+            const formData = new FormData();
+            formData.append("good", "false");
+            formData.append("neutral", "true");
+            formData.append("evil", "true");
+
+            fetch(url, {
+                method: 'PUT',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.reload();
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+        const idcButton2 = document.getElementById('idcButton2');
+        idcButton2.addEventListener('click', function () {
+            const characterId = idcButton2.getAttribute('data-id');
+            const url = `/api/characters/${characterId}/fillPartyBg2`;
+            const formData = new FormData();
+
+            fetch(url, {
+                method: 'PUT',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.reload();
                     return response.json();
                 })
                 .then(data => {
