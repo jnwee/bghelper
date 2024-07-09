@@ -56,6 +56,7 @@ public class PartyService {
         suitedCompanions.addAll(companionService.getEvilCompanionsBg2());
       }
     }
+    logger.info("suited companions list created - size = {}", suitedCompanions.size());
     //---------------------------------------------------------------------
 
     boolean thief = false;
@@ -95,6 +96,9 @@ public class PartyService {
     List<Companion> party = new ArrayList<>();
     if (!bg2) {
       Companion companion = null;
+      for (Companion companion1 : suitedCompanions) {
+        logger.info(companion1.getName());
+      }
       while (size < 6) {
         if (companion != null) {
           if (companion.isFighter()) {
@@ -121,28 +125,34 @@ public class PartyService {
           }
           size++;
           suitedCompanions.remove(companion);
+          logger.info("Suited Companions left - Size = {}, Companion {} removed", suitedCompanions.size(), companion.getName());
           logger.info(
               "Character {} added to calculation, composition is now - fighter = {}, thief = {}, mages = {}, clerics = {}, druid = {}, size = {}",
               companion.getName(), fighter, thief, mage, cleric, druid, size);
           party.add(companion);
         }
 
-        companion = getRandomCompanion(suitedCompanions);
+        companion = getRandomCompanion(new ArrayList<>(suitedCompanions));
 
         if (!fighter) {
-          companion = getRandomFighter(suitedCompanions);
+          companion = getRandomFighter(new ArrayList<>(suitedCompanions));
         }
         if (!thief) {
-          companion = getRandomThief(suitedCompanions);
+          companion = getRandomThief(new ArrayList<>(suitedCompanions));
         }
         if (cleric < 1 || cleric < 2 && druid) {
-          companion = getRandomCleric(suitedCompanions);
+          companion = getRandomCleric(new ArrayList<>(suitedCompanions));
         }
         if (mage < 2) {
-          companion = getRandomMage(suitedCompanions);
+          companion = getRandomMage(new ArrayList<>(suitedCompanions));
         }
       }
-      partyRepository.findById(character.getPartyBg1()).get().setParty(party);
+      Party bg1Party = partyRepository.findById(character.getPartyBg1()).get();
+      bg1Party.setParty(party);
+      partyRepository.save(bg1Party);
+      logger.info("BG1 Party of Character {} set to {} - {} - {} - {} - {}", character.getName(),
+          party.get(0).getName(), party.get(1).getName(), party.get(2).getName(),
+          party.get(3).getName(), party.get(4).getName());
     } else if (bg2) {
       Companion companion = null;
       while (size < 6) {
@@ -171,28 +181,34 @@ public class PartyService {
           }
           size++;
           suitedCompanions.remove(companion);
+          logger.info("BG2 Suited Companions left - Size = {}", suitedCompanions.size());
           logger.info(
               "Character {} added to calculation, composition is now - fighter = {}, thief = {}, mages = {}, clerics = {}, druid = {}, size = {}",
               companion.getName(), fighter, thief, mage, cleric, druid, size);
           party.add(companion);
         }
 
-        companion = getRandomCompanion(suitedCompanions);
+        companion = getRandomCompanion(new ArrayList<>(suitedCompanions));
 
         if (!fighter) {
-          companion = getRandomFighter(suitedCompanions);
+          companion = getRandomFighter(new ArrayList<>(suitedCompanions));
         }
         if (!thief) {
-          companion = getRandomThief(suitedCompanions);
+          companion = getRandomThief(new ArrayList<>(suitedCompanions));
         }
         if (cleric < 2 || cleric < 3 && druid) {
-          companion = getRandomCleric(suitedCompanions);
+          companion = getRandomCleric(new ArrayList<>(suitedCompanions));
         }
         if (mage < 3) {
-          companion = getRandomMage(suitedCompanions);
+          companion = getRandomMage(new ArrayList<>(suitedCompanions));
         }
       }
-      partyRepository.findById(character.getPartyBg2()).get().setParty(party);
+      Party bg2Party = partyRepository.findById(character.getPartyBg2()).get();
+      bg2Party.setParty(party);
+      partyRepository.save(bg2Party);
+      logger.info("BG2 Party of Character {} set to {} - {} - {} - {} - {}", character.getName(),
+          party.get(0).getName(), party.get(1).getName(), party.get(2).getName(),
+          party.get(3).getName(), party.get(4).getName());
     }
   }
 
@@ -204,7 +220,10 @@ public class PartyService {
    */
   private Companion getRandomMage(List<Companion> suitedCompanions) {
     Random random = new Random();
-    Companion companion = suitedCompanions.get(random.nextInt(suitedCompanions.size()));
+    if (suitedCompanions.size() <= 1) {
+      return suitedCompanions.getFirst();
+    }
+    Companion companion = suitedCompanions.get(random.nextInt(0, suitedCompanions.size()));
     if (!companion.isHalfMage() || !companion.isFullMage()) {
       suitedCompanions.remove(companion);
       getRandomMage(suitedCompanions);
@@ -214,7 +233,10 @@ public class PartyService {
 
   private Companion getRandomThief(List<Companion> suitedCompanions) {
     Random random = new Random();
-    Companion companion = suitedCompanions.get(random.nextInt(suitedCompanions.size()));
+    if (suitedCompanions.size() <= 1) {
+      return suitedCompanions.getFirst();
+    }
+    Companion companion = suitedCompanions.get(random.nextInt(0, suitedCompanions.size()));
     if (!companion.isThief()) {
       suitedCompanions.remove(companion);
       getRandomThief(suitedCompanions);
@@ -224,7 +246,10 @@ public class PartyService {
 
   private Companion getRandomCleric(List<Companion> suitedCompanions) {
     Random random = new Random();
-    Companion companion = suitedCompanions.get(random.nextInt(suitedCompanions.size()));
+    if (suitedCompanions.size() <= 1) {
+      return suitedCompanions.getFirst();
+    }
+    Companion companion = suitedCompanions.get(random.nextInt(0, suitedCompanions.size()));
     if (!companion.isFullCleric() || !companion.isHalfCleric()) {
       suitedCompanions.remove(companion);
       getRandomThief(suitedCompanions);
@@ -234,7 +259,10 @@ public class PartyService {
 
   private Companion getRandomFighter(List<Companion> suitedCompanions) {
     Random random = new Random();
-    Companion companion = suitedCompanions.get(random.nextInt(suitedCompanions.size()));
+    if (suitedCompanions.size() <= 1) {
+      return suitedCompanions.getFirst();
+    }
+    Companion companion = suitedCompanions.get(random.nextInt(0, suitedCompanions.size()));
     if (!companion.isFighter()) {
       suitedCompanions.remove(companion);
       getRandomFighter(suitedCompanions);
@@ -244,7 +272,7 @@ public class PartyService {
 
   private Companion getRandomCompanion(List<Companion> suitedCompanions) {
     Random random = new Random();
-    Companion companion = suitedCompanions.get(random.nextInt(suitedCompanions.size()));
+    Companion companion = suitedCompanions.get(random.nextInt(0, suitedCompanions.size()));
     return companion;
   }
 

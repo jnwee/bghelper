@@ -68,7 +68,7 @@ public class CompanionService {
   }
 
   public List<Companion> getEvilCompanionsBg1() {
-    return neutralCompanionsBg1;
+    return evilCompanionsBg1;
   }
 
   public List<Companion> getEvilCompanionsBg2() {

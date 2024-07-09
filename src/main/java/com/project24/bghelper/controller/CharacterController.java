@@ -2,6 +2,7 @@ package com.project24.bghelper.controller;
 
 import com.project24.bghelper.model.Alignment;
 import com.project24.bghelper.model.Character;
+import com.project24.bghelper.model.Party;
 import com.project24.bghelper.model.Race;
 import com.project24.bghelper.service.CharacterService;
 import com.project24.bghelper.service.FileService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -131,5 +133,52 @@ public class CharacterController {
   public ResponseEntity<Void> deleteCompanion(@PathVariable String id) {
     characterService.deleteCharacter(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/{id}/partyBg1")
+  public ResponseEntity<Party> getPartyBg1(@PathVariable String id) {
+    String partyBg1Id = "";
+    if (characterService.getCharacterById(id).isPresent()) {
+      partyBg1Id = characterService.getCharacterById(id).get().getPartyBg1();
+    }
+
+    return partyService.getPartyById(partyBg1Id).map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+  }
+
+  @PutMapping("/{id}/fillPartyBg1")
+  public ResponseEntity<Void> fillPartyBg1(@PathVariable String id,
+                                           @RequestParam(value = "good", defaultValue = "true")
+                                           Boolean good,
+                                           @RequestParam(value = "neutral", defaultValue = "true")
+                                           Boolean neutral,
+                                           @RequestParam(value = "evil", defaultValue = "true")
+                                           Boolean evil) {
+    if (characterService.getCharacterById(id).isPresent()) {
+      logger.info("PUT REQUEST RECEIVED for BG1 with good = {}, neutral = {} and evil = {}", good, neutral, evil);
+      Character character = characterService.getCharacterById(id).get();
+      partyService.fillPartyBalanced(character, false, good, neutral, evil);
+      logger.info("BG1 Party of Character {} filled", character.getName());
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.status(500).body(null);
+  }
+
+  @PutMapping("/{id}/fillPartyBg2")
+  public ResponseEntity<Void> fillPartyBg2(@PathVariable String id,
+                                           @RequestParam(value = "good", defaultValue = "false")
+                                           Boolean good,
+                                           @RequestParam(value = "neutral", defaultValue = "false")
+                                           Boolean neutral,
+                                           @RequestParam(value = "evil", defaultValue = "false")
+                                           Boolean evil) {
+    if (characterService.getCharacterById(id).isPresent()) {
+      logger.info("PUT REQUEST RECEIVED for BG2 with good = {}, neutral = {} and evil = {}", good, neutral, evil);
+      Character character = characterService.getCharacterById(id).get();
+      partyService.fillPartyBalanced(character, true, good, neutral, evil);
+      logger.info("BG2 Party of Character {} filled", character.getName());
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.status(500).body(null);
   }
 }

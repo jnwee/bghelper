@@ -89,48 +89,86 @@
                                  th:src="|/api/companions/portrait/${partyBg1.get(4).getPortraitId()}|">
                         </div>
                     </a>
-                </div>
-                <h2>Companions for BG2</h2>
-                <div class="hBox" style="gap: 15px">
-                    <a th:href="@{/characters/{id}/bg2/0(id=${character.id})}">
-                        <div class="vBox"
-                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
-                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(0).getName()}"
-                                 th:src="|/api/companions/portrait/${partyBg2.get(0).getPortraitId()}|">
-                        </div>
-                    </a>
-                    <a th:href="@{/characters/{id}/bg2/1(id=${character.id})}">
-                        <div class="vBox"
-                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
-                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(1).getName()}"
-                                 th:src="|/api/companions/portrait/${partyBg2.get(1).getPortraitId()}|">
-                        </div>
-                    </a>
-                    <a th:href="@{/characters/{id}/bg2/2(id=${character.id})}">
-                        <div class="vBox"
-                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
-                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(2).getName()}"
-                                 th:src="|/api/companions/portrait/${partyBg2.get(2).getPortraitId()}|">
-                        </div>
-                    </a>
-                    <a th:href="@{/characters/{id}/bg2/3(id=${character.id})}">
-                        <div class="vBox"
-                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
-                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(3).getName()}"
-                                 th:src="|/api/companions/portrait/${partyBg2.get(3).getPortraitId()}|">
-                        </div>
-                    </a>
-                    <a th:href="@{/characters/{id}/bg2/4(id=${character.id})}">
-                        <div class="vBox"
-                             style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
-                            <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(4).getName()}"
-                                 th:src="|/api/companions/portrait/${partyBg2.get(4).getPortraitId()}|">
-                        </div>
-                    </a>
+                    <div class="vBox"
+                         style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                        <button class="affirm-button" id="goodPartyButton" th:data-id="${character.id}">Good Party</button>
+                    </div>
+                    <h2>Companions for BG2</h2>
+                    <div class="hBox" style="gap: 15px">
+                        <a th:href="@{/characters/{id}/bg2/0(id=${character.id})}">
+                            <div class="vBox"
+                                 style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                                <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(0).getName()}"
+                                     th:src="|/api/companions/portrait/${partyBg2.get(0).getPortraitId()}|">
+                            </div>
+                        </a>
+                        <a th:href="@{/characters/{id}/bg2/1(id=${character.id})}">
+                            <div class="vBox"
+                                 style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                                <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(1).getName()}"
+                                     th:src="|/api/companions/portrait/${partyBg2.get(1).getPortraitId()}|">
+                            </div>
+                        </a>
+                        <a th:href="@{/characters/{id}/bg2/2(id=${character.id})}">
+                            <div class="vBox"
+                                 style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                                <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(2).getName()}"
+                                     th:src="|/api/companions/portrait/${partyBg2.get(2).getPortraitId()}|">
+                            </div>
+                        </a>
+                        <a th:href="@{/characters/{id}/bg2/3(id=${character.id})}">
+                            <div class="vBox"
+                                 style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                                <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(3).getName()}"
+                                     th:src="|/api/companions/portrait/${partyBg2.get(3).getPortraitId()}|">
+                            </div>
+                        </a>
+                        <a th:href="@{/characters/{id}/bg2/4(id=${character.id})}">
+                            <div class="vBox"
+                                 style="width: 105px; height: 165px; background-color: var(--background-color); border-radius: 8px">
+                                <img th:if="${not #lists.isEmpty(partyBg2)}" th:alt="${partyBg2.get(4).getName()}"
+                                     th:src="|/api/companions/portrait/${partyBg2.get(4).getPortraitId()}|">
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const button = document.getElementById('goodPartyButton');
+        button.addEventListener('click', function() {
+            const characterId = button.getAttribute('data-id');
+            const url = `/api/characters/${characterId}/fillPartyBg1`;
+            const data = {
+                good: true,
+                neutral: true,
+                evil: false
+            };
+
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
 </body>
 </html>
