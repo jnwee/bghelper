@@ -37,12 +37,15 @@ public class CharacterService {
   }
 
   public Character addCharacter(Character character) {
-    return characterRepository.save(character);
+    Character savedCharacter = characterRepository.save(character);
+    sync();
+    return savedCharacter;
   }
 
   public void deleteCharacter(String id) {
     characterRepository.deleteById(id);
     logger.info("Deleted Character with ID - {}", id);
+    sync();
   }
 
   public List<Character> getAliveCharacters() {
