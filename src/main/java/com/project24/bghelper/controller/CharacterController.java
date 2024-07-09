@@ -130,7 +130,13 @@ public class CharacterController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteCompanion(@PathVariable String id) {
+  public ResponseEntity<Void> deleteCharacter(@PathVariable String id) {
+
+    Character character = characterService.getCharacterById(id).get();
+    partyService.deleteParty(character.getPartyBg1());
+    partyService.deleteParty(character.getPartyBg2());
+    character = null;
+
     characterService.deleteCharacter(id);
     return ResponseEntity.noContent().build();
   }

@@ -18,6 +18,7 @@
                 <label style="margin-top: 15px" th:text="${character.alignment}"></label>
                 <label style="margin-top: 15px" th:text="${character.race}"></label>
                 <label style="margin-top: 15px" th:text="${character.charClass}"></label>
+                <button class="cancel-button" id="deleteButton" onclick="deleteCharacter()" th:data-id="${character.id}">Delete!!!</button>
             </div>
             <div class="vBox" style="width: 250px">
                 <label>Stats:</label>
@@ -311,6 +312,26 @@
                 });
         });
     });
+
+    function deleteCharacter() {
+        const characterId = document.getElementById('deleteButton').getAttribute('data-id')
+
+        fetch(`/api/characters/${characterId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(() => {
+                window.location.href = '/characters';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 </body>
 </html>
