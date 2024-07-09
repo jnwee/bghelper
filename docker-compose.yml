@@ -1,24 +1,30 @@
 version: '3.8'
+
 services:
   mongo:
     image: mongo:latest
     container_name: mongo
     ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
+      - "27018:27017"
+    networks:
+      - springboot-mongo-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
 
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  spring-boot-app:
+    image: spring-boot-app
+    build: .
     container_name: spring-boot-app
     ports:
       - "8080:8080"
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/yourdatabase
+    networks:
+      - springboot-mongo-network
     depends_on:
       - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:example@mongo:27017/yourdatabase?authSource=admin
 
-volumes:
-  mongo-data:
+networks:
+  springboot-mongo-network:
+    driver: bridge
