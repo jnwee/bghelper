@@ -1,0 +1,14 @@
+body {
+    font-family: "Droid Sans", monospace;
+    font-weight: bold;
+    background-color: var(--background-color);
+    color: var(--prime-color);
+}
+
+img {
+    width: 420px;
+    height: 660px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: var(--node-background-color);
+}
