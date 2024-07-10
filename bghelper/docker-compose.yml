@@ -1,6 +1,8 @@
 services:
   mongo:
-    image: mongo:latest
+    build:
+      context: ./mongo
+      dockerfile: DockerfileMongo
     container_name: mongo
     ports:
       - "27017:27017"
@@ -16,7 +18,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: DockerfileGradle
     container_name: bghelper
     ports:
       - "8080:8080"

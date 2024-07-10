@@ -1,0 +1,4 @@
+FROM mongo:7.0.12-jammy
+COPY dump /dump
+#COPY docker-entrypoint.sh /docker-entrypoint.sh
+#ENTRYPOINT ["/bin/bash", "/docker-entrypoint.sh"]
