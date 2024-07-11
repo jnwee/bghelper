@@ -10,3 +10,5 @@ else
 fi
 
 docker compose up
+
+xdg-open "localhost:8080"
