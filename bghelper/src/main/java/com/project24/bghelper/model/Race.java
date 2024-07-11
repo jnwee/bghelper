@@ -3,26 +3,22 @@ package com.project24.bghelper.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum Race {
-  HUMAN,
-  HALF_ELF,
-  ELF,
-  GNOME,
-  HALFLING,
-  DWARF,
-  HALF_ORC;
+  HUMAN("Human"),
+  HALF_ELF("Half-Elf"),
+  ELF("Elf"),
+  GNOME("Gnome"),
+  HALFLING("Halfling"),
+  DWARF("Dwarf"),
+  HALF_ORC("Half-Orc");
+
+  private final String str;
+
+  Race(String str) {
+    this.str = str;
+  }
 
   @Override
   public String toString() {
-    String str = "";
-    switch (this) {
-      case HUMAN -> str = "Human";
-      case HALF_ELF -> str = "Half-Elf";
-      case ELF -> str = "Elf";
-      case GNOME -> str = "Gnome";
-      case HALFLING -> str = "Halfling";
-      case DWARF -> str = "Dwarf";
-      case HALF_ORC -> str = "Half-Orc";
-    }
     return str;
   }
 
