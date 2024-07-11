@@ -141,26 +141,33 @@
     document.getElementById("addCompanionButton").addEventListener("click", function(event) {
         event.preventDefault();
 
-        var form = document.getElementById("companionForm");
-        var formData = new FormData(form);
+        const form = document.getElementById("companionForm");
 
-        var portraitFile = document.getElementById("portrait").files[0];
-        if (portraitFile) {
-            formData.append("portrait", portraitFile);
+        if (form.checkValidity()) {
+
+            const formData = new FormData(form);
+            const portraitFile = document.getElementById("portrait").files[0];
+
+            if (portraitFile) {
+                formData.append("portrait", portraitFile);
+            }
+
+            fetch("/api/characters/create", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Success:", data);
+                    window.location.href = "/characters";
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        } else {
+            form.reportValidity();
         }
 
-        fetch("/api/characters/create", {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Success:", data);
-                window.location.href = "/characters";
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
     });
 </script>
 <script>

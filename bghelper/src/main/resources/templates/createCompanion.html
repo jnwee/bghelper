@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Add New Companion</title>
     <link rel="stylesheet" th:href="@{/css/structure.css}">
     <link rel="stylesheet" th:href="@{/css/createCompanion.css}">
@@ -12,25 +12,28 @@
     <h1>Add a New Companion Here</h1>
 </header>
 <main>
-    <form id="companionForm" method="post" enctype="multipart/form-data">
+    <form enctype="multipart/form-data" id="companionForm" method="post">
         <div class="vBox">
             <div class="hBox">
                 <div class="vBox" style="margin-right: 100px">
                     <div class="hBox">
-                        <label style="margin-bottom: 15px" for="name">Name:</label>
-                        <input type="text" id="name" name="name">
+                        <label for="name" style="margin-bottom: 15px">Name:</label>
+                        <input id="name" name="name" type="text">
                     </div>
                     <div class="hBox">
                         <div class="vBox">
-                            <label style="margin-bottom: 15px" for="race">Race:</label>
+                            <label for="race" style="margin-bottom: 15px">Race:</label>
                             <select id="race" name="race">
-                                <option th:each="race : ${races}" th:value="${race}" th:text="${race.toString()}">Race</option>
+                                <option th:each="race : ${races}" th:text="${race.toString()}" th:value="${race}">Race
+                                </option>
                             </select>
                         </div>
                         <div class="vBox">
-                            <label style="margin-bottom: 15px" for="alignment">Alignment:</label>
+                            <label for="alignment" style="margin-bottom: 15px">Alignment:</label>
                             <select id="alignment" name="alignment">
-                                <option th:each="alignment : ${alignments}" th:value="${alignment}" th:text="${alignment.toString()}">Alignment</option>
+                                <option th:each="alignment : ${alignments}" th:text="${alignment.toString()}"
+                                        th:value="${alignment}">Alignment
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -38,9 +41,9 @@
                         <label style="margin-bottom: 15px">Portrait:</label>
                         <div class="hBox">
                             <div class="file-input-container">
-                                <input type="file" id="portrait" name="portrait" style="display: none;">
-                                <button class="affirm-button" type="button" id="browseButton"
-                                        style="border-width: 0; margin-bottom: 15px">Browse
+                                <input id="portrait" name="portrait" style="display: none;" type="file">
+                                <button class="affirm-button" id="browseButton" style="border-width: 0; margin-bottom: 15px"
+                                        type="button">Browse
                                 </button>
                                 <label id="fileName"></label>
                             </div>
@@ -48,35 +51,35 @@
                     </div>
                     <div class="hBox">
                         <div class="vBox">
-                            <label style="margin-bottom: 15px" for="charClass">Class:</label>
-                            <input type="text" id="charClass" name="charClass">
+                            <label for="charClass" style="margin-bottom: 15px">Class:</label>
+                            <input id="charClass" name="charClass" type="text">
                         </div>
                     </div>
                 </div>
                 <div class="vBox">
                     <div class="hBox">
-                        <label style="margin-right: 10px" for="strength">Str:</label>
-                        <input type="number" min="1" max="25" required id="strength" name="strength">
-                        <label style="margin-right: 10px" for="dexterity">Dex:</label>
-                        <input type="number" min="1" max="25" required id="dexterity" name="dexterity">
-                        <label style="margin-right: 10px" for="constitution">Con:</label>
-                        <input type="number" min="1" max="25" required id="constitution" name="constitution">
+                        <label for="strength" style="margin-right: 10px">Str:</label>
+                        <input id="strength" max="25" min="1" name="strength" required type="number">
+                        <label for="dexterity" style="margin-right: 10px">Dex:</label>
+                        <input id="dexterity" max="25" min="1" name="dexterity" required type="number">
+                        <label for="constitution" style="margin-right: 10px">Con:</label>
+                        <input id="constitution" max="25" min="1" name="constitution" required type="number">
                     </div>
                     <div class="hBox">
-                        <label style="margin-right: 10px" for="intelligence">Int:</label>
-                        <input type="number" min="1" max="25" required id="intelligence" name="intelligence">
-                        <label style="margin-right: 10px" for="wisdom">Wis:</label>
-                        <input type="number" min="1" max="25" required id="wisdom" name="wisdom">
-                        <label style="margin-right: 10px" for="charisma">Cha:</label>
-                        <input type="number" min="1" max="25" required id="charisma" name="charisma">
+                        <label for="intelligence" style="margin-right: 10px">Int:</label>
+                        <input id="intelligence" max="25" min="1" name="intelligence" required type="number">
+                        <label for="wisdom" style="margin-right: 10px">Wis:</label>
+                        <input id="wisdom" max="25" min="1" name="wisdom" required type="number">
+                        <label for="charisma" style="margin-right: 10px">Cha:</label>
+                        <input id="charisma" max="25" min="1" name="charisma" required type="number">
                     </div>
                     <div class="hBox" style="margin-top: 30px">
                         <label>
-                            <input type="checkbox" id="fighter" name="fighter">
+                            <input id="fighter" name="fighter" type="checkbox">
                             Fighter
                         </label>
                         <label>
-                            <input type="checkbox" id="thief" name="thief">
+                            <input id="thief" name="thief" type="checkbox">
                             Thief
                         </label>
                     </div>
@@ -84,15 +87,15 @@
                         <fieldset>
                             <legend>Mage Type</legend>
                             <label>
-                                <input type="radio" id="noneMage" name="mageType" value="none" checked>
+                                <input checked id="noneMage" name="mageType" type="radio" value="none">
                                 None
                             </label>
                             <label>
-                                <input type="radio" id="fullMage" name="mageType" value="fullMage">
+                                <input id="fullMage" name="mageType" type="radio" value="fullMage">
                                 Full Mage
                             </label>
                             <label>
-                                <input type="radio" id="halfMage" name="mageType" value="halfMage">
+                                <input id="halfMage" name="mageType" type="radio" value="halfMage">
                                 Half Mage
                             </label>
                         </fieldset>
@@ -101,19 +104,19 @@
                         <fieldset id="clericDruidTypes">
                             <legend>Cleric/Druid Type</legend>
                             <label>
-                                <input type="radio" id="noneClericDruid" name="clericDruidType" value="none" checked>
+                                <input checked id="noneClericDruid" name="clericDruidType" type="radio" value="none">
                                 None
                             </label>
                             <label>
-                                <input type="radio" id="druid" name="clericDruidType" value="druid">
+                                <input id="druid" name="clericDruidType" type="radio" value="druid">
                                 Druid
                             </label>
                             <label>
-                                <input type="radio" id="fullCleric" name="clericDruidType" value="fullCleric">
+                                <input id="fullCleric" name="clericDruidType" type="radio" value="fullCleric">
                                 Full Cleric
                             </label>
                             <label>
-                                <input type="radio" id="halfCleric" name="clericDruidType" value="halfCleric">
+                                <input id="halfCleric" name="clericDruidType" type="radio" value="halfCleric">
                                 Half Cleric
                             </label>
                         </fieldset>
@@ -122,59 +125,69 @@
                 <div class="vBox" style="margin-left: 100px; width: 400px">
                     <h2>Explanation</h2>
                     <p>Class is basically only the name of the class, so enter whatever you want.</p>
-                    <p>Important for rolling parties are the checkboxes. Full Mage, for example, just means if the Character is able to fulfill the role of the main caster for the group, so someone like Edwin, while Jan or Aerie are more like half mages.</p>
-                    <p>Though it is up to you to determine who you consider a Full Mage since it depends on difficulty, if, for example, Aerie can work as the only caster for a party.</p>
+                    <p>Important for rolling parties are the checkboxes. Full Mage, for example, just means if the
+                        Character is able to fulfill the role of the main caster for the group, so someone like Edwin,
+                        while Jan or Aerie are more like half mages.</p>
+                    <p>Though it is up to you to determine who you consider a Full Mage since it depends on difficulty,
+                        if, for example, Aerie can work as the only caster for a party.</p>
                 </div>
             </div>
             <div class="hBox" style="margin-top: 35px">
                 <label>
-                    <input type="checkbox" id="bg1" name="bg1">
+                    <input id="bg1" name="bg1" type="checkbox">
                     BG1
                 </label>
                 <label>
-                    <input type="checkbox" id="sod" name="sod">
+                    <input id="sod" name="sod" type="checkbox">
                     SoD
                 </label>
                 <label>
-                    <input type="checkbox" id="bg2" name="bg2">
+                    <input id="bg2" name="bg2" type="checkbox">
                     BG2
                 </label>
             </div>
             <div>
-                <button class="affirm-button" type="submit" id="addCompanionButton"
-                        style="border-width: 0; margin-top: 50px; margin-bottom: 25px">Add Companion
+                <button class="affirm-button" id="addCompanionButton" style="border-width: 0; margin-top: 50px; margin-bottom: 25px"
+                        type="submit">Add Companion
                 </button>
             </div>
             <div>
-                <a href="/" class="affirm-button">Home</a>
+                <a class="affirm-button" href="/">Home</a>
             </div>
         </div>
     </form>
 </main>
 <script>
-    document.getElementById("addCompanionButton").addEventListener("click", function(event) {
+    document.getElementById("addCompanionButton").addEventListener("click", function (event) {
         event.preventDefault();
 
-        var form = document.getElementById("companionForm");
-        var formData = new FormData(form);
+        const form = document.getElementById("companionForm");
 
-        var portraitFile = document.getElementById("portrait").files[0];
-        if (portraitFile) {
-            formData.append("portrait", portraitFile);
+        if (form.checkValidity()) {
+
+            const formData = new FormData(form);
+            const portraitFile = document.getElementById("portrait").files[0];
+
+            if (portraitFile) {
+                formData.append("portrait", portraitFile);
+            }
+
+            fetch("/api/companions/create", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Success:", data);
+                    window.location.href = "/companions";
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        } else {
+            form.reportValidity();
         }
 
-        fetch("/api/companions/create", {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Success:", data);
-                window.location.href = "/companions";
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
     });
 </script>
 <script>
