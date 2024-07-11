@@ -1,5 +1,6 @@
 package com.project24.bghelper.model;
 
+import com.project24.bghelper.exception.IllegalAbilityScoreException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -55,7 +56,7 @@ public class Companion {
 
   public void setStrength(Integer strength) {
     if (strength > 25 || strength < 1) {
-      throw new IllegalArgumentException("strength stat not valid");
+      throw new IllegalAbilityScoreException(strength + " strength");
     }
     this.strength = strength;
   }
@@ -66,7 +67,7 @@ public class Companion {
 
   public void setDexterity(Integer dexterity) {
     if (dexterity > 25 || dexterity < 1) {
-      throw new IllegalArgumentException("dexterity stat not valid");
+      throw new IllegalAbilityScoreException(dexterity + " dexterity");
     }
     this.dexterity = dexterity;
   }
@@ -77,7 +78,7 @@ public class Companion {
 
   public void setConstitution(Integer constitution) {
     if (constitution > 25 || constitution < 1) {
-      throw new IllegalArgumentException("constitution stat not valid");
+      throw new IllegalAbilityScoreException(constitution + " constitution");
     }
     this.constitution = constitution;
   }
@@ -88,7 +89,7 @@ public class Companion {
 
   public void setIntelligence(Integer intelligence) {
     if (intelligence > 25 || intelligence < 1) {
-      throw new IllegalArgumentException("intelligence stat not valid");
+      throw new IllegalAbilityScoreException(intelligence + " intelligence");
     }
     this.intelligence = intelligence;
   }
@@ -99,7 +100,7 @@ public class Companion {
 
   public void setWisdom(Integer wisdom) {
     if (wisdom > 25 || wisdom < 1) {
-      throw new IllegalArgumentException("wisdom stat not valid");
+      throw new IllegalAbilityScoreException(wisdom + " wisdom");
     }
     this.wisdom = wisdom;
   }
@@ -110,7 +111,7 @@ public class Companion {
 
   public void setCharisma(Integer charisma) {
     if (charisma > 25 || charisma < 1) {
-      throw new IllegalArgumentException("charisma stat not valid");
+      throw new IllegalAbilityScoreException(charisma + " charisma");
     }
     this.charisma = charisma;
   }
