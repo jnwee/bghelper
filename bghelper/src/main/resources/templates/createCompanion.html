@@ -17,18 +17,18 @@
             <div class="hBox">
                 <div class="vBox" style="margin-right: 100px">
                     <div class="hBox">
-                        <label style="margin-bottom: 15px">Name:</label>
+                        <label style="margin-bottom: 15px" for="name">Name:</label>
                         <input type="text" id="name" name="name">
                     </div>
                     <div class="hBox">
                         <div class="vBox">
-                            <label style="margin-bottom: 15px">Race:</label>
+                            <label style="margin-bottom: 15px" for="race">Race:</label>
                             <select id="race" name="race">
                                 <option th:each="race : ${races}" th:value="${race}" th:text="${race.toString()}">Race</option>
                             </select>
                         </div>
                         <div class="vBox">
-                            <label style="margin-bottom: 15px">Alignment:</label>
+                            <label style="margin-bottom: 15px" for="alignment">Alignment:</label>
                             <select id="alignment" name="alignment">
                                 <option th:each="alignment : ${alignments}" th:value="${alignment}" th:text="${alignment.toString()}">Alignment</option>
                             </select>
@@ -48,27 +48,27 @@
                     </div>
                     <div class="hBox">
                         <div class="vBox">
-                            <label style="margin-bottom: 15px">Class:</label>
+                            <label style="margin-bottom: 15px" for="charClass">Class:</label>
                             <input type="text" id="charClass" name="charClass">
                         </div>
                     </div>
                 </div>
                 <div class="vBox">
                     <div class="hBox">
-                        <label style="margin-right: 10px">Str:</label>
-                        <input type="number" id="strength" name="strength">
-                        <label style="margin-right: 10px">Dex:</label>
-                        <input type="number" id="dexterity" name="dexterity">
-                        <label style="margin-right: 10px">Con:</label>
-                        <input type="number" id="constitution" name="constitution">
+                        <label style="margin-right: 10px" for="strength">Str:</label>
+                        <input type="number" min="1" max="25" required id="strength" name="strength">
+                        <label style="margin-right: 10px" for="dexterity">Dex:</label>
+                        <input type="number" min="1" max="25" required id="dexterity" name="dexterity">
+                        <label style="margin-right: 10px" for="constitution">Con:</label>
+                        <input type="number" min="1" max="25" required id="constitution" name="constitution">
                     </div>
                     <div class="hBox">
-                        <label style="margin-right: 10px">Int:</label>
-                        <input type="number" id="intelligence" name="intelligence">
-                        <label style="margin-right: 10px">Wis:</label>
-                        <input type="number" id="wisdom" name="wisdom">
-                        <label style="margin-right: 10px">Cha:</label>
-                        <input type="number" id="charisma" name="charisma">
+                        <label style="margin-right: 10px" for="intelligence">Int:</label>
+                        <input type="number" min="1" max="25" required id="intelligence" name="intelligence">
+                        <label style="margin-right: 10px" for="wisdom">Wis:</label>
+                        <input type="number" min="1" max="25" required id="wisdom" name="wisdom">
+                        <label style="margin-right: 10px" for="charisma">Cha:</label>
+                        <input type="number" min="1" max="25" required id="charisma" name="charisma">
                     </div>
                     <div class="hBox" style="margin-top: 30px">
                         <label>
