@@ -5,8 +5,6 @@ services:
     restart: unless-stopped
     environment:
       MONGO_INITDB_DATABASE: bghelperdb
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: secret_password
     ports:
       - "27017:27017"
     volumes:
@@ -14,34 +12,36 @@ services:
     networks:
       - app-network
 
-  backend:
+  spring-backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: spring_backend
+    container_name: spring-backend
     restart: unless-stopped
     ports:
       - "8089:8089"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://root:secret_password@mongodb:27017/bghelperdb
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/bghelperdb
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - mongodb
     networks:
       - app-network
 
-  frontend:
+  next-frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: next_frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8089/api
+    container_name: next-frontend
     restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8089
+      NEXT_PUBLIC_API_URL: http://localhost:8089/api
     depends_on:
-      - backend
+      - spring-backend
     networks:
       - app-network
 
