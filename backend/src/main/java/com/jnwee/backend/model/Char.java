@@ -1,5 +1,6 @@
 package com.jnwee.backend.model;
 
+import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +14,9 @@ public class Char {
     private boolean dead;
     private String imageUrl;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime diedAt;
+
     /**
     Char is a Player Character
     @param name Name of the character, can't be empty
@@ -24,7 +28,10 @@ public class Char {
         }
         this.name = name;
         this.dead = dead;
-        this.toString();
+        this.createdAt = LocalDateTime.now();
+        if (dead) {
+            this.diedAt = LocalDateTime.now();
+        }
     }
 
     public String getId() {
@@ -56,6 +63,14 @@ public class Char {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getDiedAt() {
+        return diedAt;
     }
 
     @Override
