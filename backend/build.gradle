@@ -32,6 +32,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Testing with JUnit 5
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Mockito for mocking
+    testImplementation 'org.mockito:mockito-core'
 }
 
 tasks.named('test') {
