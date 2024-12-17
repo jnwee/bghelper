@@ -7,7 +7,9 @@ export default function Home() {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/characters`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/characters/sorted?sortBy=createdAt&direction=desc`,
+    )
       .then((res) => res.json())
       .then((data) => setCharacters(data))
       .catch((err) => console.error("Error fetching characters:", err));
