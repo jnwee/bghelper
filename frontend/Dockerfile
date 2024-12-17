@@ -1,30 +1,15 @@
-# Stage 1: Build the application
-FROM node:lts AS builder
+# Base image for development
+FROM node:18
 
+# Set working directory
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm ci
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
 
-COPY . .
-
-ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-
-RUN npm run build
-
-# Stage 2: Serve the application
-FROM node:lts
-
-WORKDIR /app
-
-COPY package.json package-lock.json ./
-RUN npm ci --only=production
-
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-
+# Expose port 3000 for Next.js
 EXPOSE 3000
 
-CMD ["npm", "start"]
+# Start the Next.js dev server
+CMD ["npm", "run", "dev"]

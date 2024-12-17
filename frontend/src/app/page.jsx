@@ -36,7 +36,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="text-end mb-4">
+      <div>
         <a href="/characters/create" className="btn btn-success">
           Create New Character
         </a>
