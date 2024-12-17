@@ -3,8 +3,11 @@ package com.jnwee.backend.controller;
 import com.jnwee.backend.model.Char;
 import com.jnwee.backend.service.CharacterService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -39,5 +42,22 @@ public class CharacterController {
     public ResponseEntity<Void> deleteCharacter(@PathVariable String id) {
         characterService.deleteCharacter(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/upload")
+    public Char uploadImage(
+        @PathVariable String id,
+        @RequestParam("image") MultipartFile imageFile
+    ) {
+        try {
+            String imageUrl = characterService.storeImage(id, imageFile);
+            return characterService.updateCharacterImage(id, imageUrl);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Error uploading image",
+                e
+            );
+        }
     }
 }

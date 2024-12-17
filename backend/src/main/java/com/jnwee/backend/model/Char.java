@@ -11,6 +11,7 @@ public class Char {
 
     private String name;
     private boolean dead;
+    private String imageUrl;
 
     /**
     Char is a Player Character
@@ -47,6 +48,14 @@ public class Char {
 
     public void setDead(boolean dead) {
         this.dead = dead;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
