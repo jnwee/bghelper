@@ -5,7 +5,9 @@
     --secondary-color: #6c757d;
     --background-color: #f8f9fa; /* Light gray */
     --default-bg-color: #f5b8b8; /* Backup background color */
+    --second-bg-color: #300505;
     --text-color: #470000;
+    --side-bar-width: 15%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,7 +69,36 @@ a {
 }
 
 .bg-fallback {
-    background-color: var(--background-color);
+    background-color: var(--default-bg-color);
+}
+
+/* Layout Container */
+.layout-container {
+    min-height: 100vh; /* Full page height */
+}
+
+/* Side Bars */
+.side-bar {
+    width: var(--side-bar-width); /* Set width for the bars */
+    background-color: var(--second-bg-color); /* Dark gray */
+}
+
+.left-bar {
+    border-right: 2px solid var(--second-bg-color); /* Add a subtle border */
+}
+
+.right-bar {
+    border-left: 2px solid var(--second-bg-color);
+}
+
+/* Main Content Area */
+.main-content {
+    background-color: var(
+        --default-bg-color,
+        #f8f9fa
+    ); /* Fallback background */
+    padding: 2rem;
+    overflow-y: auto;
 }
 
 /* Custom Link Button */

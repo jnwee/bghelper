@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "@/components/CharacterCard";
 
 export default function Home() {
   const [characters, setCharacters] = useState([]);
@@ -16,25 +16,29 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4 text-center">Character Roster</h1>
+    <main className="bg-home d-flex justify-content-center algin-items-center">
+      <div className="container mt-5">
+        <h1 className="mb-4 text-center">Character Roster</h1>
 
-      {/* Display characters */}
-      <div className="row">
-        {characters.length > 0 ? (
-          characters.map((char) => (
-            <div className="col-md-4" key={char.id}>
-              <CharacterCard
-                name={char.name}
-                dead={char.dead}
-                imageUrl={char.imageUrl}
-              />
-            </div>
-          ))
-        ) : (
-          <p className="text-center">No characters found. Add some, Captain!</p>
-        )}
+        {/* Display characters */}
+        <div className="row">
+          {characters.length > 0 ? (
+            characters.map((char) => (
+              <div className="col-md-4" key={char.id}>
+                <CharacterCard
+                  name={char.name}
+                  dead={char.dead}
+                  imageUrl={char.imageUrl}
+                />
+              </div>
+            ))
+          ) : (
+            <p className="text-center">
+              No characters found. Add some, Captain!
+            </p>
+          )}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

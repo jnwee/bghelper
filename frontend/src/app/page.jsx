@@ -7,11 +7,6 @@ import LinkButton from "@/components/LinkButton";
 export default function Home() {
   const router = useRouter();
 
-  const handleNavigate = () => {
-    alert("Ye clicked me, Captain! Navigating to the About page...");
-    router.push("/about");
-  };
-
   return (
     <main className="bg-home d-flex justify-content-center algin-items-center">
       <div className="container text-center mt-5">
