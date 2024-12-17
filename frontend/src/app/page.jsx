@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import LinkButton from "@/components/LinkButton";
 
 export default function Home() {
   const router = useRouter();
@@ -12,35 +13,25 @@ export default function Home() {
   };
 
   return (
-    <div className="container text-center mt-5">
-      <h1 className="display-4">Welcome Aboard, Matey!</h1>
-      <p className="lead mb-4">
-        This be the mighty homepage of our Next.js vessel, styled with
-        Bootstrap.
-      </p>
+    <main className="bg-home d-flex justify-content-center algin-items-center">
+      <div className="container text-center mt-5">
+        <h1 className="display-4">YOUR BALDUR'S GATE COMPANION</h1>
+        <p className="lead mb-4">Don't expect too much of this application</p>
 
-      {/* Bootstrap Buttons */}
-      <div className="mb-3">
-        <Link href="/about">
-          <button className="btn btn-primary mx-2">Go to About Page</button>
-        </Link>
-        <button onClick={handleNavigate} className="btn btn-warning mx-2">
-          Click to Navigate
-        </button>
-      </div>
+        <div className="mb-3">
+          <LinkButton
+            href="/characters"
+            iconClass="bi-arrow-right" /* Bootstrap Icons class */
+            label="View Characters"
+          />
 
-      {/* Bootstrap Links */}
-      <div>
-        <Link href="/characters" className="btn btn-success">
-          View Characters
-        </Link>
+          <LinkButton
+            href="/add"
+            iconClass="bi-plus-circle" /* Another icon */
+            label="Add Character"
+          />
+        </div>
       </div>
-
-      <div>
-        <a href="/characters/create" className="btn btn-success">
-          Create New Character
-        </a>
-      </div>
-    </div>
+    </main>
   );
 }
