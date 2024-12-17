@@ -3,6 +3,7 @@ package com.jnwee.backend.controller;
 import com.jnwee.backend.model.Char;
 import com.jnwee.backend.service.CharacterService;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,17 @@ public class CharacterController {
     @GetMapping
     public List<Char> getAllCharacters() {
         return characterService.getAllCharacters();
+    }
+
+    @GetMapping("/sorted")
+    public List<Char> getCharactersSorted(
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "desc") String direction
+    ) {
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("asc")
+            ? Sort.Direction.ASC
+            : Sort.Direction.DESC;
+        return characterService.getAllCharactersSorted(sortBy, sortDirection);
     }
 
     @PostMapping

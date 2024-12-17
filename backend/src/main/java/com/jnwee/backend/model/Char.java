@@ -69,8 +69,16 @@ public class Char {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public LocalDateTime getDiedAt() {
         return diedAt;
+    }
+
+    public void setDiedAt(LocalDateTime diedAt) {
+        this.diedAt = diedAt;
     }
 
     @Override

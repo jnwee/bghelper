@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -74,5 +75,22 @@ public class CharacterControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name").value("Will Turner"))
             .andExpect(jsonPath("$.dead").value(false));
+    }
+
+    @Test
+    public void testGetCharactersSortedByCreatedAt() throws Exception {
+        Char char1 = new Char("Blackbeard", true);
+        Char char2 = new Char("Jack Sparrow", false);
+        char2.setCreatedAt(char1.getCreatedAt().minusDays(1));
+
+        when(
+            service.getAllCharactersSorted("createdAt", Sort.Direction.DESC)
+        ).thenReturn(Arrays.asList(char1, char2));
+
+        mockMvc
+            .perform(get("/api/characters/sorted"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].name").value("Blackbeard"))
+            .andExpect(jsonPath("$[1].name").value("Jack Sparrow"));
     }
 }
