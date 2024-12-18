@@ -83,9 +83,9 @@ public class CharacterControllerTest {
         Char char2 = new Char("Jack Sparrow", false);
         char2.setCreatedAt(char1.getCreatedAt().minusDays(1));
 
-        when(
-            service.getAllCharactersSorted("createdAt", Sort.Direction.DESC)
-        ).thenReturn(Arrays.asList(char1, char2));
+        when(service.getAllCharacters()).thenReturn(
+            Arrays.asList(char1, char2)
+        );
 
         mockMvc
             .perform(get("/api/characters/sorted"))

@@ -13,6 +13,10 @@ class CharacterService {
     return this.request(endpoint, "POST", data);
   }
 
+  async patch(endpoint, data) {
+    return this.request(endpoint, "PUT", data);
+  }
+
   async put(endpoint, data) {
     return this.request(endpoint, "PUT", data);
   }
@@ -50,13 +54,6 @@ class CharacterService {
     return this.get("characters");
   }
 
-  /* direction asc or desc and sortBy with a field in the character collection (that can be sorted by) */
-  async getSortedCharacters(sortBy, direction) {
-    return this.get(
-      "characters/sorted?sortBy=" + sortBy + "&direction=" + direction,
-    );
-  }
-
   async getLightweightCharacters() {
     return this.get("characters/lightweight");
   }
@@ -70,19 +67,7 @@ class CharacterService {
   }
 
   async letCharacterDie(id) {
-    const response = await fetch(`${BASE_URL}/characters/${id}/die`, {
-      method: "PATCH",
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to mark character as dead: ${response.statusText}`,
-      );
-    }
-  }
-
-  async deleteAllCharacters() {
-    return this.delete("characters/deleteAll");
+    return this.post("characters/" + id + "/die");
   }
 }
 

@@ -25,17 +25,6 @@ public class CharacterController {
         return characterService.getAllCharacters();
     }
 
-    @GetMapping("/sorted")
-    public List<Char> getCharactersSorted(
-        @RequestParam(defaultValue = "createdAt") String sortBy,
-        @RequestParam(defaultValue = "desc") String direction
-    ) {
-        Sort.Direction sortDirection = direction.equalsIgnoreCase("asc")
-            ? Sort.Direction.ASC
-            : Sort.Direction.DESC;
-        return characterService.getAllCharactersSorted(sortBy, sortDirection);
-    }
-
     @GetMapping("/lightweight")
     public List<Char> getLightweightCharacters() {
         return characterService.getAllCharactersLightweight();

@@ -26,15 +26,13 @@ public class CharacterService {
         this.characterRepository = characterRepository;
     }
 
-    public List<Char> getAllCharactersSorted(
-        String sortBy,
-        Sort.Direction direction
-    ) {
-        return characterRepository.findAll(Sort.by(direction, sortBy));
-    }
-
+    /**
+     * Returns all Characters from newest to oldest
+     */
     public List<Char> getAllCharacters() {
-        return characterRepository.findAll();
+        return characterRepository.findAll(
+            Sort.by(Direction.DESC, "createdAt")
+        );
     }
 
     public List<Char> getAllCharactersLightweight() {
