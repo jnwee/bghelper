@@ -1,8 +1,3 @@
-:root {
-    --button-hover: #dd91aa;
-    --text-hover: #fce0de;
-}
-
 /* Custom Link Button */
 .link-button {
     display: inline-flex;

@@ -1,6 +1,7 @@
 :root {
     --background: #09000f;
     --text-color: #ffb3cc;
+    --button-hover: #dd91aa;
 }
 
 body {

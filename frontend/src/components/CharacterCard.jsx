@@ -1,29 +1,32 @@
 import React from "react";
+import "@/app/css/character_card.css";
 
-const CharacterCard = ({ name, dead, imageUrl }) => {
+const CharacterCard = ({ id, name, imageUrl, dead }) => {
+  const handleClick = () => {
+    window.location.assign(`/characters/${id}`);
+  };
+
   return (
-    <div className="card" style={{ width: "220px" }}>
+    <div
+      className="character-card"
+      onClick={handleClick}
+      role="button"
+      tabIndex="0"
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
+    >
+      {/* Image Section */}
       {imageUrl ? (
         <img
           src={imageUrl}
-          className="card-img-top"
           alt={name}
-          style={{ height: "250px", objectFit: "cover" }}
+          className={`character-image ${dead ? "greyed-out" : ""}`}
         />
       ) : (
-        <div
-          className="card-img-top text-white d-flex align-items-center justify-content-center"
-          style={{ height: "200px" }}
-        >
-          No Image
-        </div>
+        <div className="character-placeholder">No Image</div>
       )}
 
-      {/* Character Details */}
-      <div className="card-body">
-        <h5 className="card-title">{name}</h5>
-        <p className="card-text">Status: {dead ? "💀 Dead" : "⚔️ Alive"}</p>
-      </div>
+      {/* Character Name */}
+      <div className="character-name">{name}</div>
     </div>
   );
 };
