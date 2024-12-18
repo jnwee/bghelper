@@ -48,7 +48,7 @@ public class CharacterControllerTest {
 
         // Act & Assert
         mockMvc
-            .perform(get("/api/characters"))
+            .perform(get("/api/characters/lightweight"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].name").value("Blackbeard"))
             .andExpect(jsonPath("$[0].dead").value(true))
