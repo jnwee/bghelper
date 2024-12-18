@@ -55,6 +55,20 @@ public class CharacterController {
         return ResponseEntity.ok(character);
     }
 
+    @PatchMapping("/{id}/die")
+    public ResponseEntity<?> letCharacterDie(@PathVariable String id) {
+        try {
+            characterService.letCharacterDie(id);
+            return ResponseEntity.ok("Character has died.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                "An error occurred."
+            );
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCharacter(@PathVariable String id) {
         characterService.deleteCharacter(id);

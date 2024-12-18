@@ -51,6 +51,22 @@ public class CharacterService {
         return characterRepository.findById(id).orElse(null);
     }
 
+    public void letCharacterDie(String id) {
+        Char character = characterRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new IllegalArgumentException("Character not found")
+            );
+
+        if (character.isDead()) {
+            throw new IllegalArgumentException("Character is already dead.");
+        }
+
+        // Mark the character as dead
+        character.setDead(true);
+        characterRepository.save(character);
+    }
+
     public void deleteCharacter(String id) {
         characterRepository.deleteById(id);
     }
