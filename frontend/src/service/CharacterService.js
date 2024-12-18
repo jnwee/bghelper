@@ -69,6 +69,18 @@ class CharacterService {
     return this.post("characters", character);
   }
 
+  async letCharacterDie(id) {
+    const response = await fetch(`${BASE_URL}/characters/${id}/die`, {
+      method: "PATCH",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to mark character as dead: ${response.statusText}`,
+      );
+    }
+  }
+
   async deleteAllCharacters() {
     return this.delete("characters/deleteAll");
   }

@@ -36,6 +36,25 @@ export default function CharacterPage() {
     return <p className="text-center">Loading...</p>;
   }
 
+  const handleLetDie = async () => {
+    if (
+      confirm(
+        `Are you sure you want to mark ${character.name} as dead? This action cannot be undone.`,
+      )
+    ) {
+      try {
+        await CharacterService.letCharacterDie(character_id);
+        alert(`${character.name} has been marked as dead.`);
+        // Refresh character data
+        const updatedCharacter =
+          await CharacterService.getCharacterById(character_id);
+        setCharacter(updatedCharacter);
+      } catch (error) {
+        alert(`Failed to let character die: ${error.message}`);
+      }
+    }
+  };
+
   return (
     <div className="character-detail-container">
       {/* Header */}
@@ -55,6 +74,13 @@ export default function CharacterPage() {
             />
           ) : (
             <div className="character-placeholder">No Image</div>
+          )}
+
+          {/* Let Character Die Button */}
+          {!character.dead && (
+            <button className="btn btn-danger mt-3" onClick={handleLetDie}>
+              Let Character Die
+            </button>
           )}
         </div>
 
