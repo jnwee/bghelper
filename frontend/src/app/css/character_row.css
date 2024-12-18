@@ -41,7 +41,7 @@
 
 /* Character Row Styling */
 .character-row {
-    border: 2px solid var(--text-color);
+    /* border: 2px solid var(--text-color); /* leave border out for now -> ask peoples */
     border-radius: 10px;
     overflow: hidden;
 }
