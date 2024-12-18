@@ -58,19 +58,11 @@ class CharacterService {
   }
 
   async getLightweightCharacters() {
-    const response = await fetch(`${BASE_URL}/characters/lightweight`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch lightweight characters");
-    }
-    return response.json();
+    return this.get("characters/lightweight");
   }
 
   async getCharacterById(id) {
-    const response = await fetch(`${BASE_URL}/characters/${id}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch character with ID: ${id}`);
-    }
-    return response.json();
+    return this.get("characters/" + id);
   }
 
   async addCharacter(character) {
