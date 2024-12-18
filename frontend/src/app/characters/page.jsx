@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CharacterCard from "@/components/CharacterCard";
 import CharacterService from "@/service/CharacterService";
 import CharacterRow from "@/components/CharacterRow";
 
@@ -12,10 +11,7 @@ export default function CharactersPage() {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const data = await CharacterService.getSortedCharacters(
-          "createdAt",
-          "desc",
-        );
+        const data = await CharacterService.getLightweightCharacters();
         setCharacters(data);
       } catch (err) {
         setError(err.message);

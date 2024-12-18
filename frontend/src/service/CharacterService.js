@@ -57,6 +57,22 @@ class CharacterService {
     );
   }
 
+  async getLightweightCharacters() {
+    const response = await fetch(`${BASE_URL}/characters/lightweight`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch lightweight characters");
+    }
+    return response.json();
+  }
+
+  async getCharacterById(id) {
+    const response = await fetch(`${BASE_URL}/characters/${id}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch character with ID: ${id}`);
+    }
+    return response.json();
+  }
+
   async addCharacter(character) {
     return this.post("characters", character);
   }

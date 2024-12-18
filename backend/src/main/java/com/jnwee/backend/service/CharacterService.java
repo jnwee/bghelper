@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,12 @@ public class CharacterService {
 
     public List<Char> getAllCharacters() {
         return characterRepository.findAll();
+    }
+
+    public List<Char> getAllCharactersLightweight() {
+        return characterRepository.findAllLightweight(
+            Sort.by(Direction.DESC, "createdAt")
+        );
     }
 
     public Char createCharacter(Char character) {

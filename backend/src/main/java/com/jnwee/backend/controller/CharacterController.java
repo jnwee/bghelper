@@ -36,6 +36,11 @@ public class CharacterController {
         return characterService.getAllCharactersSorted(sortBy, sortDirection);
     }
 
+    @GetMapping("/lightweight")
+    public List<Char> getLightweightCharacters() {
+        return characterService.getAllCharactersLightweight();
+    }
+
     @PostMapping
     public Char createCharacter(@RequestBody Char character) {
         return characterService.createCharacter(character);
