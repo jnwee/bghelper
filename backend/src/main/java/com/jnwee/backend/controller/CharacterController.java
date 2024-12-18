@@ -3,7 +3,9 @@ package com.jnwee.backend.controller;
 import com.jnwee.backend.model.Char;
 import com.jnwee.backend.service.CharacterService;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,7 +52,9 @@ public class CharacterController {
     public ResponseEntity<?> letCharacterDie(@PathVariable String id) {
         try {
             characterService.letCharacterDie(id);
-            return ResponseEntity.ok("Character has died.");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Character marked as dead");
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -61,9 +65,13 @@ public class CharacterController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCharacter(@PathVariable String id) {
+    public ResponseEntity<Map<String, String>> deleteCharacter(
+        @PathVariable String id
+    ) {
         characterService.deleteCharacter(id);
-        return ResponseEntity.noContent().build();
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Character deleted successfully");
+        return ResponseEntity.ok(response);
     }
 
     /**

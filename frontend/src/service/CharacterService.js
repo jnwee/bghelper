@@ -83,6 +83,10 @@ class CharacterService {
       throw new Error(`Failed to upload image: ${response.statusText}`);
     }
   }
+
+  async deleteCharacter(id) {
+    return this.delete("characters/" + id);
+  }
 }
 
 export default new CharacterService();

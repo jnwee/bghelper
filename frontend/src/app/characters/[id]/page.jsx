@@ -14,6 +14,8 @@ export default function CharacterPage() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
 
+  const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/characters/${character_id}/image`;
+
   const router = useRouter();
 
   useEffect(() => {
@@ -56,6 +58,22 @@ export default function CharacterPage() {
     }
   };
 
+  const handleDelete = async () => {
+    if (
+      confirm(
+        `Are you sure you want to delete ${character.name}? This action cannot be undone.`,
+      )
+    ) {
+      try {
+        await CharacterService.deleteCharacter(character.id);
+
+        router.push("/characters");
+      } catch (error) {
+        alert(`Failed to delete character: ${error.message}`);
+      }
+    }
+  };
+
   return (
     <div className="character-detail-container">
       {/* Header */}
@@ -69,7 +87,7 @@ export default function CharacterPage() {
         <div className="character-column">
           {character.imageUrl ? (
             <img
-              src={character.imageUrl}
+              src={imageUrl}
               alt={character.name}
               className="character-image"
             />
@@ -91,6 +109,10 @@ export default function CharacterPage() {
               Let Character Die
             </button>
           )}
+
+          <button className="action-button mt-3" onClick={handleDelete}>
+            DELETE THIS CHARACTER
+          </button>
         </div>
       </div>
     </div>
