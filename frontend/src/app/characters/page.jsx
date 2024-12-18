@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import CharacterCard from "@/components/CharacterCard";
 import CharacterService from "@/service/CharacterService";
+import CharacterRow from "@/components/CharacterRow";
 
 export default function CharactersPage() {
   const [characters, setCharacters] = useState([]);
@@ -25,26 +26,17 @@ export default function CharactersPage() {
   }, []);
 
   return (
-    <main className="bg-home d-flex justify-content-center algin-items-center">
+    <main className="d-flex justify-content-center align-items-center">
       <div className="container mt-5">
-        <h1 className="mb-4 text-center">Characters</h1>
+        <h1 className="mb-5 text-center">Characters</h1>
 
-        {/* Display characters */}
-        <div className="row">
-          {characters.length > 0 ? (
-            characters.map((char) => (
-              <div className="col-md-4" key={char.id}>
-                <CharacterCard
-                  name={char.name}
-                  dead={char.dead}
-                  imageUrl={char.imageUrl}
-                />
-              </div>
-            ))
-          ) : (
-            <p className="text-center">Pretty empty here right now.</p>
-          )}
-        </div>
+        {error && <p className="text-danger text-center">{error}</p>}
+
+        {characters.length > 0 ? (
+          <CharacterRow characters={characters} />
+        ) : (
+          <p className="text-center">Pretty empty here right now.</p>
+        )}
       </div>
     </main>
   );
