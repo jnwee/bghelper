@@ -79,7 +79,7 @@ export default function Home() {
                                   ++#-----++#+                                     #
                                   -++- -++---
                                   ++-++#+--
-                                  -++++-
+                                  -++++-          "Man kann Nudeln machen warm, man kann Nudeln machen kalt."
 `}
         </pre>
       </div>
