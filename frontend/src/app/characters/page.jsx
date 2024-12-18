@@ -2,23 +2,32 @@
 
 import React, { useEffect, useState } from "react";
 import CharacterCard from "@/components/CharacterCard";
+import CharacterService from "@/service/CharacterService";
 
-export default function Home() {
+export default function CharactersPage() {
   const [characters, setCharacters] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/characters/sorted?sortBy=createdAt&direction=desc`,
-    )
-      .then((res) => res.json())
-      .then((data) => setCharacters(data))
-      .catch((err) => console.error("Error fetching characters:", err));
+    const fetchCharacters = async () => {
+      try {
+        const data = await CharacterService.getSortedCharacters(
+          "createdAt",
+          "desc",
+        );
+        setCharacters(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchCharacters();
   }, []);
 
   return (
     <main className="bg-home d-flex justify-content-center algin-items-center">
       <div className="container mt-5">
-        <h1 className="mb-4 text-center">Character Roster</h1>
+        <h1 className="mb-4 text-center">Characters</h1>
 
         {/* Display characters */}
         <div className="row">
@@ -33,9 +42,7 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <p className="text-center">
-              No characters found. Add some, Captain!
-            </p>
+            <p className="text-center">Pretty empty here right now.</p>
           )}
         </div>
       </div>

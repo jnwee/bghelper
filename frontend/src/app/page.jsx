@@ -1,17 +1,13 @@
-"use client"; // Enables client-side interactivity like onClick
+"use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import LinkButton from "@/components/LinkButton";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
-    <main className="bg-home d-flex justify-content-center algin-items-center">
+    <main className="d-flex justify-content-center align-items-center">
       <div className="container text-center mt-5">
-        <h1 className="display-4">YOUR BALDUR'S GATE COMPANION</h1>
-        <p className="lead mb-4">Don't expect too much of this application</p>
+        <h1 className="display-5">A BALDUR'S GATE COMPANION</h1>
+        <p className="lead mb-4">Keep track of your no-reload runs</p>
 
         <div className="mb-3">
           <LinkButton
@@ -21,11 +17,71 @@ export default function Home() {
           />
 
           <LinkButton
-            href="/add"
+            href="/characters/create"
             iconClass="bi-plus-circle" /* Another icon */
             label="Add Character"
           />
         </div>
+
+        <pre
+          style={{
+            whiteSpace: "pre",
+            fontFamily: "'Courier New', Courier, monospace",
+            textAlign: "start",
+            lineHeight: "0.9",
+            overflowY: "hidden",
+          }}
+        >
+          {`
+                                                                              +-+-+-+
+                                                                          --#+++++#-++
+                                                                        -+#+#+#+  ++#+++-
+                                                                      -#+##+--#+- +++ -++---
+                                                                      +#+----  ++-  ++#+  -+--
+                                                                      +#++++  ++--  ##+++-+++-
+                                                                      -+#+-    +++ +#+#+--++##+-
+                                                                    --+-+--    -#+-+#++---#-+-+-#
+                                                                  +++#++++    ###++-#+---##++ -+-
+                                                                --#- ---+    #-####+--+-++-#+-#-#
+                                                                --+- +---   #++--++##++--#+-- ---+
+                                                                -++-+--     #+- ---#+++--++--+---+
+                                                                #+#--        #+---##+#+----+-- +-.+
+                                                              #+#-+++       +#+++--++++-++#+  . --+
+                                                            -+#- -+++-      +#------#++-+++- --+-.+-
+                                                            --+++----       +#------+++-++++.  +..--
+                                                              -#-#+--        -# ----++-+--+-#. .-+.-++
+                                                          #+++-+--          --. --.+-------++-------+
+                                                          +--#+-++-          -----+-+##-+-++-+ ----- -+
+                                                      +++#----+++           --+- --+-- -+++-#- .-+- +++
+                                                      +++-++--+#+           ----   +-+ --++++#+----+--+
+                                                      +#+-------++           +-++ +--++- ++++-#  .--- ---
+                                                      #- +--+--++            +-+-- ----+ -+-+-#----+- -+--
+                                                    +-   --+-+-             -+++- ----+---#++#-+- +# --+-
+                                                  -+- .. -+---              -+-+  +-----+#+++ #+-++ +--++
+                                                  --.  .------              ++-+  ---+---#+-+.+++-----+-+
+                                                +---.. ----+.               +++#-------+--+++---+-+-+-+++
+                                                +---- -----                 ++-+--  --+--++++-+-+------+-
+                                                -#--- -----                  --+-.-+--+----#+-+++++.- --+
+                                                --+------+                   #+--.-+-#+--.+    -+++#+++#--
+                                            -+----+++++#-                     +#-##++-#--+    -+++-++++--
+                                            ++   -++--+-                      -###-#+-+++      +++-+ -+---
+                                              # .-++--++                       ++-+-#-+++--     -+----  ++--
+                                            ++ -------                       #++--+##++---     -++---  +---
+                                          #-----+-----                        ++++-#++-+--+-    -++-+-  -+--
+                                        +#---------                         ++-++--++-#-++-     ++--+   ---
+                                        ##--------                          ++-+-+-+-+#---      -#+##   ---
+                                        -#+  -----                            +--+-----+-+-      #+##    --
+                                      ----. +++ -+                            +--++-----+++        --    -
+                                    ++- -..------                              ++--- -+-#+         +-
+                                  -#+- --++----                                --+- -+-+
+                                  ++##--..---++                                   +-.+
+                                  #--+#+-+-+##-                                    +#
+                                  ++#-----++#+                                     #
+                                  -++- -++---
+                                  ++-++#+--
+                                  -++++-
+`}
+        </pre>
       </div>
     </main>
   );
