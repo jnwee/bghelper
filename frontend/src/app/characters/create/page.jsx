@@ -1,103 +1,117 @@
-"use client"; // Enables client-side interactivity
+"use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import CharacterService from "@/service/CharacterService";
+import "@/app/css/create_character.css";
 
-export default function CreateCharacter() {
-  const router = useRouter();
-
-  // State to hold form inputs and messages
+export default function CreateCharacterPage() {
   const [name, setName] = useState("");
-  const [dead, setDead] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [message, setMessage] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+
+      // Generate preview
+      const reader = new FileReader();
+      reader.onloadend = () => setPreviewUrl(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(""); // Clear previous messages
+    setMessage("");
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/characters`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, dead }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          "Failed to create character. Backend response: " + response.status,
-        );
+      if (!name || !imageFile) {
+        throw new Error("Name and Portrait are required!");
       }
 
-      setMessage("Character created successfully! ⚔️");
-      setName(""); // Reset the form
-      setDead(false);
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const payload = { name, dead: false, imageUrl: reader.result };
+        await CharacterService.addCharacter(payload);
 
-      // Navigate back to the characters list after a delay
-      setTimeout(() => router.push("/characters"), 2000);
+        setMessage("Character created successfully! ⚔️");
+        setName("");
+        setImageFile(null);
+        setPreviewUrl(null);
+      };
+      reader.readAsDataURL(imageFile);
     } catch (error) {
-      console.error("Error creating character:", error);
-      setMessage("Error: " + error.message);
+      console.error(error);
+      setMessage(`Error: ${error.message}`);
     }
   };
 
   return (
     <div className="container mt-5">
-      <h1 className="display-5 mb-4">Create a New Character</h1>
-
-      {/* Success/Error Message */}
+      <h1 className="mb-4 text-center">Create a New Character</h1>
       {message && (
         <div
-          className={`alert ${message.startsWith("Error") ? "alert-danger" : "alert-success"}`}
+          className={`alert ${
+            message.startsWith("Error") ? "alert-danger" : "alert-success"
+          }`}
         >
           {message}
         </div>
       )}
 
-      {/* Character Form */}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Character Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter character name"
-            required
-          />
+      {/* Two Column Layout */}
+      <div className="row g-4">
+        {/* Left Column: Preview */}
+        <div className="col-md-6 d-flex flex-column align-items-center">
+          <div className="preview-container">
+            {previewUrl ? (
+              <img src={previewUrl} alt="Preview" className="preview-image" />
+            ) : (
+              <div className="preview-placeholder">No Image</div>
+            )}
+            <div className="preview-name">{name || "Name"}</div>
+          </div>
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="dead" className="form-label">
-            Is the Character Dead?
-          </label>
-          <select
-            id="dead"
-            className="form-select"
-            value={dead}
-            onChange={(e) => setDead(e.target.value === "true")}
-          >
-            <option value="false">No (Alive ⚔️)</option>
-            <option value="true">Yes (Dead 💀)</option>
-          </select>
+        {/* Right Column: Form */}
+        <div className="col-md-6">
+          <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
+            {/* Name Input */}
+            <input
+              type="text"
+              className="custom-input"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+
+            {/* File Input */}
+            <div className="d-flex align-items-center gap-2">
+              <label htmlFor="image" className="portrait-label">
+                Portrait:
+              </label>
+              <input
+                type="file"
+                id="image"
+                className="file-input"
+                accept="image/*"
+                onChange={handleImageChange}
+                required
+              />
+              <label htmlFor="image" className="file-button">
+                <i className="bi bi-upload"></i>
+              </label>
+            </div>
+
+            {/* Create Button */}
+            <button type="submit" className="custom-button">
+              Create Character
+            </button>
+          </form>
         </div>
-
-        <button type="submit" className="btn btn-primary">
-          Create Character
-        </button>
-      </form>
-
-      {/* Navigation Button */}
-      <div className="mt-4">
-        <a href="/characters" className="btn btn-secondary">
-          Back to Characters
-        </a>
       </div>
     </div>
   );
