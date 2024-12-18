@@ -1,5 +1,7 @@
 import React from "react";
 
+import "@/app/css/buttons.css";
+
 const LinkButton = ({ href, iconClass, label }) => {
   return (
     <a href={href} className="link-button">

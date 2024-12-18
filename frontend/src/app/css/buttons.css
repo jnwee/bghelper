@@ -1,0 +1,31 @@
+:root {
+    --button-hover: #dd91aa;
+    --text-hover: #fce0de;
+}
+
+/* Custom Link Button */
+.link-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--background);
+    border: 1px solid var(--text-color);
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    margin: 5px;
+}
+
+.link-button:hover {
+    background-color: var(--button-hover);
+    color: var(--background);
+    text-decoration: none;
+    border: 1px solid var(--button-hover);
+}
+
+.link-button .icon {
+    margin-right: 0.5rem; /* Space between icon and text */
+    font-size: 1rem; /* Adjust icon size */
+}
