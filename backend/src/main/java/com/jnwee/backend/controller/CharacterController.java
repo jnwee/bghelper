@@ -3,7 +3,6 @@ package com.jnwee.backend.controller;
 import com.jnwee.backend.model.Char;
 import com.jnwee.backend.service.CharacterService;
 import java.util.List;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
