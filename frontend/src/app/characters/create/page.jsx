@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import CharacterService from "@/service/CharacterService";
-import "@/app/css/create_character.css";
+import "@/app/characters/create/create_character.css";
+import "@/app/css/buttons.css";
 
 export default function CreateCharacterPage() {
   const [name, setName] = useState("");
@@ -107,7 +108,7 @@ export default function CreateCharacterPage() {
             </div>
 
             {/* Create Button */}
-            <button type="submit" className="custom-button">
+            <button type="submit" className="action-button">
               Create Character
             </button>
           </form>

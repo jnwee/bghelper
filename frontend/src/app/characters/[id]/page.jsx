@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import "@/app/characters/[id]/character_page.css";
 import CharacterService from "@/service/CharacterService";
+import "@/app/css/buttons.css";
 
 export default function CharacterPage() {
   // Use useParams() to get dynamic route params
@@ -75,13 +76,6 @@ export default function CharacterPage() {
           ) : (
             <div className="character-placeholder">No Image</div>
           )}
-
-          {/* Let Character Die Button */}
-          {!character.dead && (
-            <button className="btn btn-danger mt-3" onClick={handleLetDie}>
-              Let Character Die
-            </button>
-          )}
         </div>
 
         {/* Column 2: Name */}
@@ -90,7 +84,14 @@ export default function CharacterPage() {
         </div>
 
         {/* Column 3: Empty */}
-        <div className="character-column"></div>
+        <div className="character-column">
+          {/* Let Character Die Button */}
+          {!character.dead && (
+            <button className="action-button mt-3" onClick={handleLetDie}>
+              Let Character Die
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
