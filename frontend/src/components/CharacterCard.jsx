@@ -1,10 +1,12 @@
 import React from "react";
 import "@/app/css/character_card.css";
 
-const CharacterCard = ({ id, name, imageUrl, dead }) => {
+const CharacterCard = ({ id, name, dead }) => {
   const handleClick = () => {
     window.location.assign(`/characters/${id}`);
   };
+
+  const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/characters/${id}/image`;
 
   return (
     <div

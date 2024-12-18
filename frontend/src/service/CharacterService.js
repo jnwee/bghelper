@@ -14,7 +14,7 @@ class CharacterService {
   }
 
   async patch(endpoint, data) {
-    return this.request(endpoint, "PUT", data);
+    return this.request(endpoint, "PATCH", data);
   }
 
   async put(endpoint, data) {
@@ -67,7 +67,21 @@ class CharacterService {
   }
 
   async letCharacterDie(id) {
-    return this.post("characters/" + id + "/die");
+    return this.patch("characters/" + id + "/die");
+  }
+
+  async uploadImage(characterId, formData) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/characters/${characterId}/upload`,
+      {
+        method: "POST",
+        body: formData, // FormData ensures multipart/form-data is used
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload image: ${response.statusText}`);
+    }
   }
 }
 

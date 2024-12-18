@@ -20,6 +20,8 @@ services:
     restart: unless-stopped
     ports:
       - "8089:8089"
+    volumes:
+      - character-images:/data/images
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/bghelperdb
       SPRING_PROFILES_ACTIVE: docker
@@ -50,6 +52,7 @@ services:
 
 volumes:
   mongo-data:
+  character-images:
 
 networks:
   app-network:

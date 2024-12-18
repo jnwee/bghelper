@@ -2,8 +2,11 @@ package com.jnwee.backend.controller;
 
 import com.jnwee.backend.model.Char;
 import com.jnwee.backend.service.CharacterService;
+import java.io.FileNotFoundException;
 import java.util.List;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,20 +66,37 @@ public class CharacterController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Endpoint to upload an image for a character
+     */
     @PostMapping("/{id}/upload")
-    public Char uploadImage(
+    public ResponseEntity<?> uploadImage(
         @PathVariable String id,
         @RequestParam("image") MultipartFile imageFile
     ) {
         try {
             String imageUrl = characterService.storeImage(id, imageFile);
-            return characterService.updateCharacterImage(id, imageUrl);
+            characterService.updateCharacterImage(id, imageUrl);
+            return ResponseEntity.ok("Image uploaded successfully!");
         } catch (Exception e) {
-            throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                "Error uploading image",
-                e
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                "Failed to upload image: " + e.getMessage()
             );
+        }
+    }
+
+    /**
+     * Endpoint to fetch an image for a character
+     */
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Resource> getImage(@PathVariable String id) {
+        try {
+            Resource image = characterService.getCharacterImage(id);
+            return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG) // Adjust as needed
+                .body(image);
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

@@ -28,21 +28,31 @@ export default function CreateCharacterPage() {
     setMessage("");
 
     try {
-      if (!name || !imageFile) {
-        throw new Error("Name and Portrait are required!");
+      if (!name) {
+        throw new Error("Name is required!");
       }
 
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const payload = { name, dead: false, imageUrl: reader.result };
-        await CharacterService.addCharacter(payload);
+      // Step 1: Create the character
+      const createdCharacter = await CharacterService.addCharacter({
+        name,
+        dead: false,
+      });
 
-        setMessage("Character created successfully! ⚔️");
-        setName("");
-        setImageFile(null);
-        setPreviewUrl(null);
-      };
-      reader.readAsDataURL(imageFile);
+      if (!createdCharacter.id) {
+        throw new Error("Character creation failed. No ID returned.");
+      }
+
+      // Step 2: Upload the image
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+        await CharacterService.uploadImage(createdCharacter.id, formData);
+      }
+
+      setMessage("Character created successfully! ⚔️");
+      setName("");
+      setImageFile(null);
+      setPreviewUrl(null);
     } catch (error) {
       console.error(error);
       setMessage(`Error: ${error.message}`);
@@ -100,7 +110,6 @@ export default function CreateCharacterPage() {
                 className="file-input"
                 accept="image/*"
                 onChange={handleImageChange}
-                required
               />
               <label htmlFor="image" className="file-button">
                 <i className="bi bi-upload"></i>

@@ -40,7 +40,6 @@ export default function CharacterRow({ characters }) {
             id={character.id}
             name={character.name}
             dead={character.dead}
-            imageUrl={character.imageUrl}
           />
         ))}
       </div>
