@@ -83,6 +83,11 @@ public class Char {
     }
 
     public void increaseProgress() {
+        if (this.status == Status.DEAD || this.status == Status.ASCENDED) {
+            throw new IllegalArgumentException(
+                "Progress is fixed since Character is " + this.status.name()
+            );
+        }
         switch (this.progress) {
             case Progress.BG1 -> this.progress = Progress.BG2;
             case Progress.BG2 -> this.progress = Progress.TOB;
