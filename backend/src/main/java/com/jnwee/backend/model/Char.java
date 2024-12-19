@@ -13,6 +13,7 @@ public class Char {
     private String name;
     private String imageUrl;
     private Status status;
+    private Progress progress;
 
     private LocalDateTime createdAt;
     private LocalDateTime diedAt;
@@ -27,6 +28,7 @@ public class Char {
         }
         this.name = name;
         status = Status.ALIVE;
+        progress = Progress.BG1;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -59,7 +61,7 @@ public class Char {
     }
 
     public void setStatus(Status status) {
-        if (status == Status.DEAD || status == Status.ASCENDED) {
+        if (this.status == Status.DEAD || status == Status.ASCENDED) {
             throw new IllegalArgumentException(
                 "Character is " + status.name() + " which is final."
             );
@@ -70,7 +72,7 @@ public class Char {
     public void setDiedAt(LocalDateTime time) {
         if (diedAt != null) {
             throw new IllegalArgumentException(
-                "dietAt is already set and can't be set anew"
+                "dietAt is already set on Character and can't be set anew"
             );
         }
         this.diedAt = time;
@@ -78,6 +80,18 @@ public class Char {
 
     public LocalDateTime getDiedAt() {
         return this.diedAt;
+    }
+
+    public void increaseProgress() {
+        switch (this.progress) {
+            case Progress.BG1 -> this.progress = Progress.BG2;
+            case Progress.BG2 -> this.progress = Progress.TOB;
+            case Progress.TOB -> this.setStatus(Status.ASCENDED);
+        }
+    }
+
+    public Progress getProgress() {
+        return this.progress;
     }
 
     @Override
