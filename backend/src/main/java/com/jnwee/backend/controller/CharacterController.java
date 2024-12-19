@@ -1,6 +1,7 @@
 package com.jnwee.backend.controller;
 
 import com.jnwee.backend.model.Char;
+import com.jnwee.backend.model.Status;
 import com.jnwee.backend.service.CharacterService;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -31,6 +32,14 @@ public class CharacterController {
     @GetMapping("/lightweight")
     public List<Char> getLightweightCharacters() {
         return characterService.getAllCharactersLightweight();
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Char>> getCharsByStatus(
+        @RequestParam Status status
+    ) {
+        List<Char> filteredChars = characterService.getCharsByStatus(status);
+        return ResponseEntity.ok(filteredChars);
     }
 
     @PostMapping

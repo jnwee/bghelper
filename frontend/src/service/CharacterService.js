@@ -58,6 +58,13 @@ class CharacterService {
     return this.get("characters/lightweight");
   }
 
+  async getCharactersByStatus(status) {
+    if (!status) {
+      status = "ALIVE";
+    }
+    return this.get("characters/filter?status=" + status);
+  }
+
   async getCharacterById(id) {
     return this.get("characters/" + id);
   }

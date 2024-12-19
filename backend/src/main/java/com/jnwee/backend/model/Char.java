@@ -11,8 +11,8 @@ public class Char {
     private String id;
 
     private String name;
-    private boolean dead;
     private String imageUrl;
+    private Status status;
 
     private LocalDateTime createdAt;
     private LocalDateTime diedAt;
@@ -27,11 +27,8 @@ public class Char {
             name = "no name entered";
         }
         this.name = name;
-        this.dead = false;
+        status = Status.ALIVE;
         this.createdAt = LocalDateTime.now();
-        if (dead) {
-            this.diedAt = LocalDateTime.now();
-        }
     }
 
     public String getId() {
@@ -47,14 +44,6 @@ public class Char {
             name = "no name entered";
         }
         this.name = name;
-    }
-
-    public boolean isDead() {
-        return this.dead;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
     }
 
     public String getImageUrl() {
@@ -73,12 +62,20 @@ public class Char {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getDiedAt() {
-        return diedAt;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setDiedAt(LocalDateTime diedAt) {
-        this.diedAt = diedAt;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setDiedAt(LocalDateTime time) {
+        this.diedAt = time;
+    }
+
+    public LocalDateTime getDiedAt() {
+        return this.diedAt;
     }
 
     @Override
@@ -87,7 +84,7 @@ public class Char {
             "Character nr %d with name %s and status dead: %s",
             this.id,
             this.name,
-            this.dead
+            this.status.toString()
         );
     }
 }

@@ -6,14 +6,17 @@ import CharacterRow from "@/components/CharacterRow";
 import LinkButton from "@/components/LinkButton";
 
 export default function CharactersPage() {
-  const [characters, setCharacters] = useState([]);
+  const [aliveCharacters, setAliveCharacters] = useState([]);
+  const [deadCharacters, setDeadCharacters] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const data = await CharacterService.getLightweightCharacters();
-        setCharacters(data);
+        const data = await CharacterService.getCharactersByStatus("ALIVE");
+        setAliveCharacters(data);
+        const data2 = await CharacterService.getCharactersByStatus("DEAD");
+        setDeadCharacters(data2);
       } catch (err) {
         setError(err.message);
       }
@@ -47,10 +50,19 @@ export default function CharactersPage() {
         <div>
           {error && <p className="text-danger text-center">{error}</p>}
 
-          {characters.length > 0 ? (
-            <CharacterRow characters={characters} />
+          {aliveCharacters.length > 0 ? (
+            <CharacterRow characters={aliveCharacters} />
           ) : (
             <p className="text-center">Pretty empty here right now.</p>
+          )}
+        </div>
+        <div className="mt-5">
+          {error && <p className="text-danger text-center">{error}</p>}
+
+          {deadCharacters.length > 0 ? (
+            <CharacterRow characters={deadCharacters} />
+          ) : (
+            <p className="text-center">No dead Characters yet. Good Job!</p>
           )}
         </div>
       </div>

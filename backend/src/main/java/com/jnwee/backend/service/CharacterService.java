@@ -1,6 +1,7 @@
 package com.jnwee.backend.service;
 
 import com.jnwee.backend.model.Char;
+import com.jnwee.backend.model.Status;
 import com.jnwee.backend.repository.CharacterRepository;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +53,10 @@ public class CharacterService {
         );
     }
 
+    public List<Char> getCharsByStatus(Status status) {
+        return characterRepository.findByStatus(status);
+    }
+
     public Char createCharacter(Char character) {
         return characterRepository.save(character);
     }
@@ -65,14 +71,15 @@ public class CharacterService {
             .orElseThrow(() ->
                 new IllegalArgumentException("Character not found")
             );
-
-        if (character.isDead()) {
-            throw new IllegalArgumentException("Character is already dead.");
+        if (character.getStatus() == Status.ALIVE) {
+            character.setStatus(Status.DEAD);
+            character.setDiedAt(LocalDateTime.now());
+            characterRepository.save(character);
+        } else {
+            throw new IllegalArgumentException(
+                "Character is not ALIVE and therefore can't die"
+            );
         }
-
-        // Mark the character as dead
-        character.setDead(true);
-        characterRepository.save(character);
     }
 
     public void deleteCharacter(String id) {

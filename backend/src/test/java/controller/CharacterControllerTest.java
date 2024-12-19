@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jnwee.backend.BackendApplication;
 import com.jnwee.backend.controller.CharacterController;
 import com.jnwee.backend.model.Char;
@@ -46,9 +45,7 @@ public class CharacterControllerTest {
             .perform(get("/api/characters/lightweight"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].name").value("Blackbeard"))
-            .andExpect(jsonPath("$[0].dead").value(false))
-            .andExpect(jsonPath("$[1].name").value("Jack Sparrow"))
-            .andExpect(jsonPath("$[1].dead").value(false));
+            .andExpect(jsonPath("$[1].name").value("Jack Sparrow"));
     }
 
     @Test
