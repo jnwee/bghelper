@@ -55,7 +55,6 @@ export default function CreateCharacterPage() {
       setImageFile(null);
       setPreviewUrl(null);
       router.push("/characters");
-      setMessage("Character created successfully! ⚔️");
     } catch (error) {
       console.error(error);
       setMessage(`Error: ${error.message}`);
