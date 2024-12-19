@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import CharacterService from "@/service/CharacterService";
 import "@/app/characters/create/create_character.css";
 import "@/app/css/buttons.css";
@@ -10,6 +11,8 @@ export default function CreateCharacterPage() {
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [message, setMessage] = useState("");
+
+  const router = useRouter();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -48,11 +51,11 @@ export default function CreateCharacterPage() {
         formData.append("image", imageFile);
         await CharacterService.uploadImage(createdCharacter.id, formData);
       }
-
-      setMessage("Character created successfully! ⚔️");
       setName("");
       setImageFile(null);
       setPreviewUrl(null);
+      router.push("/characters");
+      setMessage("Character created successfully! ⚔️");
     } catch (error) {
       console.error(error);
       setMessage(`Error: ${error.message}`);
