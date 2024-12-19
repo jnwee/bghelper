@@ -76,7 +76,16 @@ public class CharacterService {
     }
 
     public void deleteCharacter(String id) {
+        try {
+            getCharacterImage(id).getFile().delete();
+            logger.info("Image of character with id:" + id + " deleted");
+        } catch (IOException e) {
+            logger.info(
+                "Image of character with id:" + id + " couldn't be deleted"
+            );
+        }
         characterRepository.deleteById(id);
+        logger.info("Character with id:" + id + " deleted");
     }
 
     public String storeImage(String characterId, MultipartFile imageFile)
