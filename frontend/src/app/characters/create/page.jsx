@@ -38,7 +38,6 @@ export default function CreateCharacterPage() {
       // Step 1: Create the character
       const createdCharacter = await CharacterService.addCharacter({
         name,
-        dead: false,
       });
 
       if (!createdCharacter.id) {
