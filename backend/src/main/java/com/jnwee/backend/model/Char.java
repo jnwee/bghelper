@@ -22,12 +22,12 @@ public class Char {
     @param name Name of the character, can't be empty
     @param dead Determines if the character is dead, true = dead
     */
-    public Char(String name, boolean dead) {
+    public Char(String name) {
         if (name == null || name.isBlank()) {
             name = "no name entered";
         }
         this.name = name;
-        this.dead = dead;
+        this.dead = false;
         this.createdAt = LocalDateTime.now();
         if (dead) {
             this.diedAt = LocalDateTime.now();

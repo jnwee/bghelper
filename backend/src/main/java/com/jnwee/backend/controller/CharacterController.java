@@ -34,8 +34,7 @@ public class CharacterController {
     }
 
     @PostMapping
-    public Char createCharacter(@RequestParam("name") String name) {
-        Char character = new Char(name, false);
+    public Char createCharacter(@RequestBody Char character) {
         return characterService.createCharacter(character);
     }
 
