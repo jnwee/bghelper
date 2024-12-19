@@ -16,7 +16,7 @@
     justify-content: center;
     font-size: 1.5rem;
     position: absolute;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
     cursor: pointer;
     transition:
