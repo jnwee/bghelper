@@ -1,38 +1,19 @@
-"use client";
+import React from "react";
 
-import LinkButton from "@/components/LinkButton";
-
-export default function Home() {
+export default function AsciiArt({ scale = 1 }) {
   return (
-    <main className="d-flex justify-content-center align-items-center">
-      <div className="container text-center mt-5">
-        <h1 className="display-5">A BALDUR'S GATE COMPANION</h1>
-        <p className="lead mb-4">Keep track of your no-reload runs</p>
-
-        <div className="mb-3">
-          <LinkButton
-            href="/characters"
-            iconClass="bi-arrow-right" /* Bootstrap Icons class */
-            label="View Characters"
-          />
-
-          <LinkButton
-            href="/characters/create"
-            iconClass="bi-plus-circle" /* Another icon */
-            label="Add Character"
-          />
-        </div>
-
-        <pre
-          style={{
-            whiteSpace: "pre",
-            fontFamily: "'Courier New', Courier, monospace",
-            textAlign: "start",
-            lineHeight: "0.9",
-            overflowY: "hidden",
-          }}
-        >
-          {`
+    <div
+      className="ascii-art"
+      style={{
+        transform: `scale(${scale})`,
+        transformOrigin: "top left", // Scale from the top-left corner
+        fontFamily: "'Courier New', Courier, monospace",
+        whiteSpace: "pre",
+        lineHeight: "0.9",
+        textAlign: "start",
+      }}
+    >
+      {`
                                                                               +-+-+-+
                                                                           --#+++++#-++
                                                                         -+#+#+#+  ++#+++-
@@ -81,8 +62,6 @@ export default function Home() {
                                   ++-++#+--
                                   -++++-          "Man kann Nudeln machen warm, man kann Nudeln machen kalt."
 `}
-        </pre>
-      </div>
-    </main>
+    </div>
   );
 }
