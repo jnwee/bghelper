@@ -1,55 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CharacterCard from "@/components/CharacterCard";
 import "@/app/css/character_row.css";
 
 export default function CharacterRow({ characters }) {
-  const [startIndex, setStartIndex] = useState(0);
-  const itemsPerRow = 5;
+  const rowRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
+  const cardWidth = 200; // Fixed card width (adjust if necessary)
+  const gap = 16; // Gap between cards in pixels (adjust based on your CSS)
 
-  const visibleCharacters = characters.slice(
-    startIndex,
-    startIndex + itemsPerRow,
-  );
-
-  const handleNext = () => {
-    if (startIndex + itemsPerRow < characters.length) {
-      setStartIndex(startIndex + itemsPerRow);
+  // Update max scroll when characters or window size changes
+  useEffect(() => {
+    if (rowRef.current) {
+      const fullScrollWidth = rowRef.current.scrollWidth;
+      const visibleWidth = rowRef.current.clientWidth;
+      setMaxScroll(fullScrollWidth - visibleWidth);
     }
+  }, [characters]);
+
+  // Handle slider change
+  const handleSliderChange = (e) => {
+    const newScrollPosition = (e.target.value / 100) * maxScroll;
+    setScrollPosition(newScrollPosition);
+    rowRef.current.scrollTo({ left: newScrollPosition, behavior: "smooth" });
   };
 
+  // Move 5 cards to the right
+  const handleNext = () => {
+    const newScrollPosition = Math.min(
+      scrollPosition + (cardWidth + gap) * 5,
+      maxScroll,
+    );
+    setScrollPosition(newScrollPosition);
+    rowRef.current.scrollTo({ left: newScrollPosition, behavior: "smooth" });
+  };
+
+  // Move 5 cards to the left
   const handlePrevious = () => {
-    if (startIndex > 0) {
-      setStartIndex(startIndex - itemsPerRow);
-    }
+    const newScrollPosition = Math.max(
+      scrollPosition - (cardWidth + gap) * 5,
+      0,
+    );
+    setScrollPosition(newScrollPosition);
+    rowRef.current.scrollTo({ left: newScrollPosition, behavior: "smooth" });
   };
 
   return (
     <div className="character-row-container position-relative my-4">
-      {/* Previous Button */}
-      {startIndex > 0 && (
+      {/* Left Navigation Button */}
+      {scrollPosition > 0 && (
         <button className="btn-navigate btn-previous" onClick={handlePrevious}>
           <i className="bi bi-arrow-bar-left"></i>
         </button>
       )}
 
       {/* Character Row */}
-      <div className="character-row d-flex justify-content-between p-2">
-        {visibleCharacters.map((character) => (
-          <CharacterCard
-            key={character.id}
-            id={character.id}
-            name={character.name}
-            dead={character.dead}
-          />
+      <div
+        className="character-row d-flex p-2"
+        ref={rowRef}
+        style={{
+          overflowX: "hidden",
+          scrollBehavior: "smooth",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {characters.map((character) => (
+          <div key={character.id} className="character-card-wrapper">
+            <CharacterCard
+              id={character.id}
+              name={character.name}
+              dead={character.dead}
+            />
+          </div>
         ))}
       </div>
 
-      {/* Next Button */}
-      {startIndex + itemsPerRow < characters.length && (
+      {/* Right Navigation Button */}
+      {scrollPosition < maxScroll && (
         <button className="btn-navigate btn-next" onClick={handleNext}>
           <i className="bi bi-arrow-bar-right"></i>
         </button>
       )}
+
+      {/* Slider */}
+      <input
+        type="range"
+        className="character-row-slider mt-3"
+        min="0"
+        max="100"
+        step="1"
+        value={(scrollPosition / maxScroll) * 100 || 0}
+        onChange={handleSliderChange}
+      />
     </div>
   );
 }
