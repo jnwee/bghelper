@@ -15,5 +15,5 @@ public interface CharacterRepository extends MongoRepository<Char, String> {
         value = "{'status': ?0 }",
         fields = "{ 'id': 1, 'name': 1, 'dead': 1 }"
     )
-    List<Char> findByStatus(Status status);
+    List<Char> findByStatus(Status status, Sort sort);
 }

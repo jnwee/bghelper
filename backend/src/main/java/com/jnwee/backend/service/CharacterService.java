@@ -54,7 +54,14 @@ public class CharacterService {
     }
 
     public List<Char> getCharsByStatus(Status status) {
-        return characterRepository.findByStatus(status);
+        String sortBy = "createdAt";
+        if (status == Status.DEAD) {
+            sortBy = "diedAt";
+        }
+        return characterRepository.findByStatus(
+            status,
+            Sort.by(Direction.DESC, sortBy)
+        );
     }
 
     public Char createCharacter(Char character) {

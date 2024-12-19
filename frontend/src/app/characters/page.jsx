@@ -47,6 +47,8 @@ export default function CharactersPage() {
             />
           </div>
         </div>
+
+        <h2 className="text-center">Your Roster</h2>
         <div>
           {error && <p className="text-danger text-center">{error}</p>}
 
@@ -57,6 +59,8 @@ export default function CharactersPage() {
           )}
         </div>
         <div className="mt-5">
+          <h2 className="text-center">Graveyard</h2>
+
           {error && <p className="text-danger text-center">{error}</p>}
 
           {deadCharacters.length > 0 ? (
