@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import CharacterCard from "@/components/CharacterCard";
+import CharacterCard from "./CharacterCard";
 import "@/app/css/character_row.css";
 
 export default function CharacterRow({ characters }) {

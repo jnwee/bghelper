@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import CharacterService from "@/service/CharacterService";
-import CharacterRow from "@/components/CharacterRow";
+import CharacterRow from "./components/CharacterRow";
 import LinkButton from "@/components/LinkButton";
 
 export default function CharactersPage() {

@@ -1,12 +1,13 @@
 import React from "react";
 import "@/app/css/character_card.css";
+import CharacterService from "@/service/CharacterService";
 
 const CharacterCard = ({ id, name, status }) => {
   const handleClick = () => {
     window.location.assign(`/characters/${id}`);
   };
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/characters/${id}/image`;
+  const imageUrl = CharacterService.getCharacterImage(id);
 
   return (
     <div
