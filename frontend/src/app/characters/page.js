@@ -41,7 +41,7 @@ export default function CharactersPage() {
         leadText="All your characters in one place. Isn't this great?"
         leadFontSize="1.5rem"
       />
-      <ButtonRow alignment="center">
+      <ButtonRow>
         <LinkButton href="/" iconClass="bi-arrow-left" label="Home" />
         <LinkButton
           href="/characters/create"
