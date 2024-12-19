@@ -23,7 +23,7 @@ public class Char {
     */
     public Char(String name) {
         if (name == null || name.isBlank()) {
-            name = "no name entered";
+            throw new IllegalArgumentException("Name can't be empty");
         }
         this.name = name;
         status = Status.ALIVE;
@@ -36,13 +36,6 @@ public class Char {
 
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.isBlank()) {
-            name = "no name entered";
-        }
-        this.name = name;
     }
 
     public String getImageUrl() {
@@ -66,10 +59,20 @@ public class Char {
     }
 
     public void setStatus(Status status) {
+        if (status == Status.DEAD || status == Status.ASCENDED) {
+            throw new IllegalArgumentException(
+                "Character is " + status.name() + " which is final."
+            );
+        }
         this.status = status;
     }
 
     public void setDiedAt(LocalDateTime time) {
+        if (diedAt != null) {
+            throw new IllegalArgumentException(
+                "dietAt is already set and can't be set anew"
+            );
+        }
         this.diedAt = time;
     }
 
