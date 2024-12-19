@@ -25,20 +25,9 @@ export default function CharactersPage() {
   return (
     <main className="d-flex justify-content-center align-items-center">
       <div className="container mt-5">
-        <div>
-          <h1 className="mb-5 text-center">Characters</h1>
-
-          {error && <p className="text-danger text-center">{error}</p>}
-
-          {characters.length > 0 ? (
-            <CharacterRow characters={characters} />
-          ) : (
-            <p className="text-center">Pretty empty here right now.</p>
-          )}
-        </div>
-
+        <h1 className="mt-5 text-center">Characters</h1>
         <div className="d-flex justify-content-center align-items-center">
-          <div className="mt-3">
+          <div className="my-3">
             <LinkButton
               href="/"
               iconClass="bi-arrow-left" /* Bootstrap Icons class */
@@ -51,6 +40,15 @@ export default function CharactersPage() {
               label="Add Character"
             />
           </div>
+        </div>
+        <div>
+          {error && <p className="text-danger text-center">{error}</p>}
+
+          {characters.length > 0 ? (
+            <CharacterRow characters={characters} />
+          ) : (
+            <p className="text-center">Pretty empty here right now.</p>
+          )}
         </div>
       </div>
     </main>
