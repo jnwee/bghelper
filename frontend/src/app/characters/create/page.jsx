@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CharacterService from "@/service/CharacterService";
-import "@/app/characters/create/create_character.css";
+import "./create_character.css";
 import "@/app/css/buttons.css";
 
 export default function CreateCharacterPage() {

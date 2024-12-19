@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import "@/app/characters/[id]/character_page.css";
+import "./character_page.css";
 import CharacterService from "@/service/CharacterService";
 import "@/app/css/buttons.css";
 
@@ -14,7 +14,7 @@ export default function CharacterPage() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/characters/${character_id}/image`;
+  const imageUrl = CharacterService.getCharacterImage(character_id);
 
   const router = useRouter();
 
