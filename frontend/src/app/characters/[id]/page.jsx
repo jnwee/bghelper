@@ -106,7 +106,7 @@ export default function CharacterPage() {
           {/* Let Character Die Button */}
           {!character.dead && (
             <button className="action-button mt-3" onClick={handleLetDie}>
-              Let Character Die
+              LET CHARACTER DIE
             </button>
           )}
 

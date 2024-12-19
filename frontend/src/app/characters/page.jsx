@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import CharacterService from "@/service/CharacterService";
 import CharacterRow from "@/components/CharacterRow";
+import LinkButton from "@/components/LinkButton";
 
 export default function CharactersPage() {
   const [characters, setCharacters] = useState([]);
@@ -24,15 +25,33 @@ export default function CharactersPage() {
   return (
     <main className="d-flex justify-content-center align-items-center">
       <div className="container mt-5">
-        <h1 className="mb-5 text-center">Characters</h1>
+        <div>
+          <h1 className="mb-5 text-center">Characters</h1>
 
-        {error && <p className="text-danger text-center">{error}</p>}
+          {error && <p className="text-danger text-center">{error}</p>}
 
-        {characters.length > 0 ? (
-          <CharacterRow characters={characters} />
-        ) : (
-          <p className="text-center">Pretty empty here right now.</p>
-        )}
+          {characters.length > 0 ? (
+            <CharacterRow characters={characters} />
+          ) : (
+            <p className="text-center">Pretty empty here right now.</p>
+          )}
+        </div>
+
+        <div className="d-flex justify-content-center align-items-center">
+          <div className="mt-3">
+            <LinkButton
+              href="/"
+              iconClass="bi-arrow-left" /* Bootstrap Icons class */
+              label="Home"
+            />
+
+            <LinkButton
+              href="/characters/create"
+              iconClass="bi-plus-circle" /* Another icon */
+              label="Add Character"
+            />
+          </div>
+        </div>
       </div>
     </main>
   );
