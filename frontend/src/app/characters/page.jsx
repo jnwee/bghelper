@@ -25,7 +25,10 @@ export default function CharactersPage() {
   return (
     <main className="d-flex justify-content-center align-items-center">
       <div className="container mt-5">
-        <h1 className="mt-5 text-center">Characters</h1>
+        <h1 className="text-center">Characters</h1>
+        <p className="text-center mb-4">
+          All your characters in one place. Isn't this great?
+        </p>
         <div className="d-flex justify-content-center align-items-center">
           <div className="my-3">
             <LinkButton
