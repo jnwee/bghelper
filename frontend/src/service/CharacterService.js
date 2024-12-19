@@ -5,6 +5,47 @@ class CharacterService {
     this.baseUrl = BASE_URL;
   }
 
+  async getCharactersByStatus(status) {
+    if (!status) {
+      status = "ALIVE";
+    }
+    return this.get("characters/filter?status=" + status);
+  }
+
+  async getCharacterById(id) {
+    return this.get("characters/" + id);
+  }
+
+  async addCharacter(character) {
+    return this.post("characters", character);
+  }
+
+  async letCharacterDie(id) {
+    return this.patch("characters/" + id + "/die");
+  }
+
+  async uploadImage(characterId, formData) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/characters/${characterId}/upload`,
+      {
+        method: "POST",
+        body: formData, // FormData ensures multipart/form-data is used
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload image: ${response.statusText}`);
+    }
+  }
+
+  getCharacterImage(id) {
+    return this.baseUrl + "/characters/" + id + "/image";
+  }
+
+  async deleteCharacter(id) {
+    return this.delete("characters/" + id);
+  }
+
   async get(endpoint) {
     return this.request(endpoint, "GET");
   }
@@ -47,56 +88,6 @@ class CharacterService {
       );
       throw error; // Rethrow for caller handling
     }
-  }
-
-  // Specific Methods for Characters
-  async getAllCharacters() {
-    return this.get("characters");
-  }
-
-  async getLightweightCharacters() {
-    return this.get("characters/lightweight");
-  }
-
-  async getCharactersByStatus(status) {
-    if (!status) {
-      status = "ALIVE";
-    }
-    return this.get("characters/filter?status=" + status);
-  }
-
-  async getCharacterById(id) {
-    return this.get("characters/" + id);
-  }
-
-  async addCharacter(character) {
-    return this.post("characters", character);
-  }
-
-  async letCharacterDie(id) {
-    return this.patch("characters/" + id + "/die");
-  }
-
-  async uploadImage(characterId, formData) {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/characters/${characterId}/upload`,
-      {
-        method: "POST",
-        body: formData, // FormData ensures multipart/form-data is used
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error(`Failed to upload image: ${response.statusText}`);
-    }
-  }
-
-  getCharacterImage(id) {
-    return this.baseUrl + "/characters/" + id + "/image";
-  }
-
-  async deleteCharacter(id) {
-    return this.delete("characters/" + id);
   }
 }
 

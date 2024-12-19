@@ -37,22 +37,6 @@ public class CharacterService {
         this.characterRepository = characterRepository;
     }
 
-    /**
-     * Returns all Characters from newest to oldest
-     */
-    public List<Char> getAllCharacters() {
-        return characterRepository.findAll(
-            Sort.by(Direction.DESC, "createdAt")
-        );
-    }
-
-    public List<Char> getAllCharactersLightweight() {
-        logger.info("Characters fetched");
-        return characterRepository.findAllLightweight(
-            Sort.by(Direction.DESC, "createdAt")
-        );
-    }
-
     public List<Char> getCharsByStatus(Status status) {
         String sortBy = "createdAt";
         if (status == Status.DEAD) {
@@ -102,6 +86,8 @@ public class CharacterService {
         logger.info("Character with id:" + id + " deleted");
     }
 
+    //============== Characterportrait-related Methods ======================
+
     public String storeImage(String characterId, MultipartFile imageFile)
         throws IOException {
         // Create the directory if it doesn't exist
@@ -130,9 +116,6 @@ public class CharacterService {
         return filename; // Not the absolute path
     }
 
-    /**
-     * Updates the character's image URL
-     */
     public void updateCharacterImage(String id, String imageUrl) {
         Char character = characterRepository
             .findById(id)

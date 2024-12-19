@@ -24,16 +24,6 @@ public class CharacterController {
         this.characterService = characterService;
     }
 
-    @GetMapping
-    public List<Char> getAllCharacters() {
-        return characterService.getAllCharacters();
-    }
-
-    @GetMapping("/lightweight")
-    public List<Char> getLightweightCharacters() {
-        return characterService.getAllCharactersLightweight();
-    }
-
     @GetMapping("/filter")
     public ResponseEntity<List<Char>> getCharsByStatus(
         @RequestParam Status status
