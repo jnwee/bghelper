@@ -26,7 +26,7 @@ export default function CharactersPage() {
     <main className="d-flex justify-content-center align-items-center">
       <div className="container mt-5">
         <h1 className="text-center">Characters</h1>
-        <p className="text-center mb-4">
+        <p className="text-center mb-2">
           All your characters in one place. Isn't this great?
         </p>
         <div className="d-flex justify-content-center align-items-center">
