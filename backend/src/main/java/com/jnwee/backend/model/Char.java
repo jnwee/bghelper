@@ -20,7 +20,6 @@ public class Char {
     /**
     Char is a Player Character
     @param name Name of the character, can't be empty
-    @param dead Determines if the character is dead, true = dead
     */
     public Char(String name) {
         if (name == null || name.isBlank()) {

@@ -71,7 +71,7 @@ export default function CharacterRow({ characters }) {
             <CharacterCard
               id={character.id}
               name={character.name}
-              dead={character.dead}
+              status={character.status}
             />
           </div>
         ))}

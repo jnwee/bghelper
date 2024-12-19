@@ -1,7 +1,7 @@
 import React from "react";
 import "@/app/css/character_card.css";
 
-const CharacterCard = ({ id, name, dead }) => {
+const CharacterCard = ({ id, name, status }) => {
   const handleClick = () => {
     window.location.assign(`/characters/${id}`);
   };
@@ -20,11 +20,11 @@ const CharacterCard = ({ id, name, dead }) => {
       {imageUrl ? (
         <img
           src={imageUrl}
-          alt={name}
-          className={`character-image ${dead ? "greyed-out" : ""}`}
+          alt={"portrait not found"}
+          className={`character-image ${String(status) === "DEAD" ? "greyed-out" : ""}`}
         />
       ) : (
-        <div className="character-placeholder">No Image</div>
+        <div className="character-placeholder">No Portrait</div>
       )}
 
       {/* Character Name */}
