@@ -15,7 +15,7 @@ export default function Home() {
         leadText="Keep track of your no-reload runs"
         leadFontSize="1.5rem"
       />
-      <ButtonRow alignment="center">
+      <ButtonRow>
         <LinkButton
           href="/characters"
           iconClass="bi-arrow-right"
