@@ -6,15 +6,17 @@ export default function CharacterRow({ characters }) {
   const rowRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
-  const cardWidth = 200; // Fixed card width (adjust if necessary)
+  const [isScrollable, setIsScrollable] = useState(false);
+  const cardWidth = 200;
   const gap = 16; // Gap between cards in pixels (adjust based on your CSS)
 
-  // Update max scroll when characters or window size changes
+  // Update max scroll and detect if scrolling is needed
   useEffect(() => {
     if (rowRef.current) {
       const fullScrollWidth = rowRef.current.scrollWidth;
       const visibleWidth = rowRef.current.clientWidth;
       setMaxScroll(fullScrollWidth - visibleWidth);
+      setIsScrollable(fullScrollWidth > visibleWidth);
     }
   }, [characters]);
 
@@ -48,7 +50,7 @@ export default function CharacterRow({ characters }) {
   return (
     <div className="character-row-container position-relative my-4">
       {/* Left Navigation Button */}
-      {scrollPosition > 0 && (
+      {isScrollable && scrollPosition > 0 && (
         <button className="btn-navigate btn-previous" onClick={handlePrevious}>
           <i className="bi bi-arrow-bar-left"></i>
         </button>
@@ -76,22 +78,24 @@ export default function CharacterRow({ characters }) {
       </div>
 
       {/* Right Navigation Button */}
-      {scrollPosition < maxScroll && (
+      {isScrollable && scrollPosition < maxScroll && (
         <button className="btn-navigate btn-next" onClick={handleNext}>
           <i className="bi bi-arrow-bar-right"></i>
         </button>
       )}
 
-      {/* Slider */}
-      <input
-        type="range"
-        className="character-row-slider mt-3"
-        min="0"
-        max="100"
-        step="1"
-        value={(scrollPosition / maxScroll) * 100 || 0}
-        onChange={handleSliderChange}
-      />
+      {/* Slider (only appears if needed) */}
+      {isScrollable && (
+        <input
+          type="range"
+          className="character-row-slider mt-3"
+          min="0"
+          max="100"
+          step="1"
+          value={(scrollPosition / maxScroll) * 100 || 0}
+          onChange={handleSliderChange}
+        />
+      )}
     </div>
   );
 }
