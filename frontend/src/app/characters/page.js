@@ -37,9 +37,9 @@ export default function CharactersPage() {
     <PageContainer>
       <Header
         title="Characters"
-        useH2={true}
+        useH2={false}
         leadText="All your characters in one place. Isn't this great?"
-        leadFontSize="1rem"
+        leadFontSize="1.5rem"
       />
       <ButtonRow alignment="center">
         <LinkButton href="/" iconClass="bi-arrow-left" label="Home" />
