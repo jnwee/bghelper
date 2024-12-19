@@ -7,9 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 public interface CharacterRepository extends MongoRepository<Char, String> {
-    @Query(
-        value = "{}",
-        fields = "{ 'id': 1, 'name': 1, 'dead': 1, 'imageUrl': 1 }"
-    )
+    @Query(value = "{}", fields = "{ 'id': 1, 'name': 1, 'dead': 1 }")
     List<Char> findAllLightweight(Sort sort);
 }
