@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="bg-home">{children}</div>
+        <div>{children}</div>
       </body>
     </html>
   );
