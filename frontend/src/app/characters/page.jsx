@@ -8,15 +8,18 @@ import LinkButton from "@/components/LinkButton";
 export default function CharactersPage() {
   const [aliveCharacters, setAliveCharacters] = useState([]);
   const [deadCharacters, setDeadCharacters] = useState([]);
+  const [ascendedCharacters, setAscendedCharacters] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const data = await CharacterService.getCharactersByStatus("ALIVE");
+        var data = await CharacterService.getCharactersByStatus("ALIVE");
         setAliveCharacters(data);
-        const data2 = await CharacterService.getCharactersByStatus("DEAD");
-        setDeadCharacters(data2);
+        data = await CharacterService.getCharactersByStatus("DEAD");
+        setDeadCharacters(data);
+        data = await CharacterService.getCharactersByStatus("ASCENDED");
+        setAscendedCharacters(data);
       } catch (err) {
         setError(err.message);
       }
@@ -67,6 +70,19 @@ export default function CharactersPage() {
             <CharacterRow characters={deadCharacters} />
           ) : (
             <p className="text-center">No dead Characters yet. Good Job!</p>
+          )}
+        </div>
+        <div className="mt-5">
+          <h2 className="text-center">Hall of Ascended Characters</h2>
+
+          {error && <p className="text-danger text-center">{error}</p>}
+
+          {ascendedCharacters.length > 0 ? (
+            <CharacterRow characters={ascendedCharacters} />
+          ) : (
+            <p className="text-center">
+              Noone made it yet. But that's fine. Just keep at it.
+            </p>
           )}
         </div>
       </div>
