@@ -7,7 +7,7 @@ export default function CharacterRow({ characters }) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
   const [isScrollable, setIsScrollable] = useState(false);
-  const cardWidth = 200;
+  const cardWidth = 200; // width of the card (same as in character_card.css)
   const gap = 16; // Gap between cards in pixels (adjust based on your CSS)
 
   // Update max scroll and detect if scrolling is needed
