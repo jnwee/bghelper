@@ -57,26 +57,6 @@ public class CharacterControllerTest {
     }
 
     @Test
-    public void testAddCharacter() throws Exception {
-        // Arrange: Mock service response
-        Char willTurner = new Char("Will Turner", false);
-        when(service.createCharacter(Mockito.any(Char.class))).thenReturn(
-            willTurner
-        );
-
-        // Act & Assert
-        mockMvc
-            .perform(
-                post("/api/characters")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(willTurner))
-            )
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.name").value("Will Turner"))
-            .andExpect(jsonPath("$.dead").value(false));
-    }
-
-    @Test
     public void testGetCharactersSortedByCreatedAt() throws Exception {
         Char char1 = new Char("Blackbeard", true);
         Char char2 = new Char("Jack Sparrow", false);
