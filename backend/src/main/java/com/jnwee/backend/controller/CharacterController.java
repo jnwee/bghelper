@@ -1,6 +1,7 @@
 package com.jnwee.backend.controller;
 
 import com.jnwee.backend.model.Char;
+import com.jnwee.backend.model.Progress;
 import com.jnwee.backend.model.Status;
 import com.jnwee.backend.service.CharacterService;
 import java.io.FileNotFoundException;
@@ -25,11 +26,23 @@ public class CharacterController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Char>> getCharsByStatus(
-        @RequestParam Status status
+    public ResponseEntity<List<Char>> getCharactersByStatus(
+        @RequestParam(required = false) Status status,
+        @RequestParam(required = false) Progress progress
     ) {
-        List<Char> filteredChars = characterService.getCharsByStatus(status);
-        return ResponseEntity.ok(filteredChars);
+        if (status != null) {
+            List<Char> filteredChars = characterService.getCharactersByStatus(
+                status
+            );
+            return ResponseEntity.ok(filteredChars);
+        } else if (progress != null) {
+            List<Char> filteredChars = characterService.getCharactersByProgress(
+                progress
+            );
+            return ResponseEntity.ok(filteredChars);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping

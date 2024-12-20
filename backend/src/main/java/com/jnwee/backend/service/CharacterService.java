@@ -1,6 +1,7 @@
 package com.jnwee.backend.service;
 
 import com.jnwee.backend.model.Char;
+import com.jnwee.backend.model.Progress;
 import com.jnwee.backend.model.Status;
 import com.jnwee.backend.repository.CharacterRepository;
 import java.io.File;
@@ -37,7 +38,15 @@ public class CharacterService {
         this.characterRepository = characterRepository;
     }
 
-    public List<Char> getCharsByStatus(Status status) {
+    public List<Char> getCharactersByProgress(Progress progress) {
+        String sortBy = "createdAt";
+        return characterRepository.findByProgress(
+            progress,
+            Sort.by(Direction.DESC, sortBy)
+        );
+    }
+
+    public List<Char> getCharactersByStatus(Status status) {
         String sortBy = "createdAt";
         if (status == Status.DEAD) {
             sortBy = "diedAt";

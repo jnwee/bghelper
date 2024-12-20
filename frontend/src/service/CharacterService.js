@@ -5,6 +5,13 @@ class CharacterService {
     this.baseUrl = BASE_URL;
   }
 
+  async getCharactersByProgress(progress) {
+    if (!progress) {
+      progress = "BG1";
+    }
+    return this.get("characters/filter?progress=" + progress);
+  }
+
   async getCharactersByStatus(status) {
     if (!status) {
       status = "ALIVE";

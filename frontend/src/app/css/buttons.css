@@ -50,3 +50,28 @@
     margin-right: 0.5rem; /* Space between icon and text */
     font-size: 1rem; /* Adjust icon size */
 }
+
+.toggle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.9rem;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--background);
+    border: 1px solid var(--button-hover);
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    margin: 8px;
+}
+
+.toggle-button.hover {
+    background-color: var(--button-hover);
+    color: var(--background);
+}
+
+.toggle-button.active {
+    background-color: var(--button-hover);
+    color: var(--background);
+}
