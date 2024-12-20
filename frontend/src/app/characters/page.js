@@ -17,8 +17,6 @@ export default function CharactersPage() {
   const [bg2Characters, setBg2Characters] = useState([]);
   const [tobCharacters, setTobCharacters] = useState([]);
   const [filterByProgress, setFilterByProgress] = useState(false);
-  const [showAscended, setShowAscended] = useState(false);
-  const [showDead, setShowDead] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
