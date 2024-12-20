@@ -67,6 +67,7 @@ export default function CharactersPage() {
           text="Filter by Progress"
           isToggled={filterByProgress}
           onToggle={() => setFilterByProgress(!filterByProgress)}
+          iconClass="bi bi-arrow-repeat"
         />
       </ButtonRow>
 
