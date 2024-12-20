@@ -1,7 +1,13 @@
 import React from "react";
 import "@/app/css/buttons.css";
 
-export default function ToggleButton({ text, isToggled, onToggle, iconClass }) {
+export default function ToggleButton({
+  inactiveText,
+  activeText,
+  isToggled,
+  onToggle,
+  iconClass,
+}) {
   return (
     <button
       className={`toggle-button ${isToggled ? "active" : ""}`}
@@ -9,7 +15,7 @@ export default function ToggleButton({ text, isToggled, onToggle, iconClass }) {
     >
       {iconClass && <i className={`${iconClass} me-2`}></i>}{" "}
       {/* Bootstrap Icon */}
-      {isToggled ? `Hide ${text}` : `Show ${text}`}
+      {isToggled ? `${inactiveText}` : `${activeText}`}
     </button>
   );
 }

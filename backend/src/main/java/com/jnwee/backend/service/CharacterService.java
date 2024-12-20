@@ -42,6 +42,7 @@ public class CharacterService {
         String sortBy = "createdAt";
         return characterRepository.findByProgress(
             progress,
+            Status.DEAD,
             Sort.by(Direction.DESC, sortBy)
         );
     }

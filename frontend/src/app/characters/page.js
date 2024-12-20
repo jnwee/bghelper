@@ -64,7 +64,8 @@ export default function CharactersPage() {
       </ButtonRow>
       <ButtonRow>
         <ToggleButton
-          text="Filter by Progress"
+          inactiveText="Show all"
+          activeText="Show Graveyard"
           isToggled={filterByProgress}
           onToggle={() => setFilterByProgress(!filterByProgress)}
           iconClass="bi bi-arrow-repeat"

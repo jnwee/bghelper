@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface CharacterRepository extends MongoRepository<Char, String> {
     @Query(
-        value = "{ 'progress': ?0 }",
+        value = "{ 'progress': ?0, 'status': ?1 }",
         fields = "{ 'id': 1, 'name': 1, 'status': 1, 'progress': 1 }"
     )
-    List<Char> findByProgress(Progress progress, Sort sort);
+    List<Char> findByProgress(Progress progress, Status status, Sort sort);
 
     @Query(
         value = "{ 'status': ?0 }",
