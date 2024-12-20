@@ -45,6 +45,13 @@ public class CharacterController {
         }
     }
 
+    @GetMapping("/stats")
+    public ResponseEntity<int[]> getCharacterStats() {
+        return ResponseEntity.ok(
+            characterService.getCharacterCircleChartStats()
+        );
+    }
+
     @PostMapping
     public Char createCharacter(@RequestBody Char character) {
         return characterService.createCharacter(character);

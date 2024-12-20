@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,28 @@ public class CharacterService {
             status,
             Sort.by(Direction.DESC, sortBy)
         );
+    }
+
+    public int[] getCharacterCircleChartStats() {
+        int diedInBg1 = characterRepository
+            .findByProgress(Progress.BG1, Status.DEAD)
+            .size();
+        int diedInBg2 = characterRepository
+            .findByProgress(Progress.BG2, Status.DEAD)
+            .size();
+        int diedInTob = characterRepository
+            .findByProgress(Progress.TOB, Status.DEAD)
+            .size();
+        int ascended = characterRepository.findByStatus(Status.ASCENDED).size();
+
+        int[] stats = new int[4];
+
+        stats[0] = diedInBg1;
+        stats[1] = diedInBg2;
+        stats[2] = diedInTob;
+        stats[3] = ascended;
+
+        return stats;
     }
 
     public Char createCharacter(Char character) {

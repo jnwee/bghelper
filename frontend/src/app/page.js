@@ -7,12 +7,13 @@ import AsciiArt from "./components/AsciiArt";
 import PageContainer from "@/components/PageContainer";
 import FlexGrow from "@/components/FlexGrow";
 import ToggleButton from "@/components/ToggleButton";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CircleChart from "./components/CircleChart";
+import CharacterService from "@/service/CharacterService";
 
 export default function Home() {
+  const [stats, setStats] = useState([]);
   const [showStatistics, setShowStatistics] = useState(false);
-  const data = [11, 12, 4, 2];
   const labels = [
     "Baldur's Gate",
     "Shadows of Amn",
@@ -20,6 +21,18 @@ export default function Home() {
     "Ascended",
   ];
   const colors = ["#8D0B41", "#D39D55", "#D6CFB4", "#EEE7D5"];
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await CharacterService.getCharacterStats();
+        setStats(data);
+      } catch (error) {
+        console.error("Failed to fetch stats:", error);
+      }
+    };
+    fetchStats();
+  }, []);
 
   return (
     <PageContainer>
@@ -55,7 +68,7 @@ export default function Home() {
         </>
       ) : (
         <>
-          <CircleChart data={data} labels={labels} colors={colors} />
+          <CircleChart data={stats} labels={labels} colors={colors} />
         </>
       )}
     </PageContainer>

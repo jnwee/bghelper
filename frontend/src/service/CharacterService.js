@@ -19,6 +19,10 @@ class CharacterService {
     return this.get("characters/filter?status=" + status);
   }
 
+  async getCharacterStats() {
+    return this.get("characters/stats");
+  }
+
   async getCharacterById(id) {
     return this.get("characters/" + id);
   }

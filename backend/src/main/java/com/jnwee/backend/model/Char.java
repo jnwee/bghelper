@@ -24,7 +24,7 @@ public class Char {
     */
     public Char(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name can't be empty");
+            //throw new IllegalArgumentException("Name can't be empty");
         }
         this.name = name;
         status = Status.ALIVE;
