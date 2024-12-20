@@ -63,7 +63,7 @@
     cursor: pointer;
     border-radius: 0.25rem;
     transition: all 0.3s ease;
-    margin: 2px;
+    margin: 8px;
 }
 
 .toggle-button.active {

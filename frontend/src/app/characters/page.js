@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import ButtonRow from "@/components/ButtonRow";
 import CharacterSection from "./components/CharacterSection";
 import ToggleButton from "@/components/ToggleButton";
+import FlexGrow from "@/components/FlexGrow";
 
 export default function CharactersPage() {
   const [aliveCharacters, setAliveCharacters] = useState([]);
@@ -59,8 +60,7 @@ export default function CharactersPage() {
           iconClass="bi-plus-circle"
           label="Add Character"
         />
-      </ButtonRow>
-      <ButtonRow>
+        <FlexGrow />
         <ToggleButton
           inactiveText="Graveyard"
           activeText="All"
