@@ -8,7 +8,7 @@ export default function CharacterSection({
   fallbackMessage,
 }) {
   return (
-    <div className="mt-5">
+    <div className="mt-3">
       <h2 className="text-center">{title}</h2>
 
       {error && <p className="text-danger text-center">{error}</p>}

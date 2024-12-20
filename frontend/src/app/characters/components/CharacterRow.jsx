@@ -48,7 +48,7 @@ export default function CharacterRow({ characters }) {
   };
 
   return (
-    <div className="character-row-container position-relative my-4">
+    <div className="character-row-container position-relative my-1">
       {/* Left Navigation Button */}
       {isScrollable && scrollPosition > 0 && (
         <button className="btn-navigate btn-previous" onClick={handlePrevious}>
@@ -88,7 +88,7 @@ export default function CharacterRow({ characters }) {
       {isScrollable && (
         <input
           type="range"
-          className="character-row-slider mt-3"
+          className="character-row-slider mt-1"
           min="0"
           max="100"
           step="1"
