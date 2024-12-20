@@ -5,8 +5,22 @@ import Header from "@/components/Header";
 import ButtonRow from "@/components/ButtonRow";
 import AsciiArt from "./components/AsciiArt";
 import PageContainer from "@/components/PageContainer";
+import FlexGrow from "@/components/FlexGrow";
+import ToggleButton from "@/components/ToggleButton";
+import React, { useState } from "react";
+import CircleChart from "./components/CircleChart";
 
 export default function Home() {
+  const [showStatistics, setShowStatistics] = useState(false);
+  const data = [11, 12, 4, 2];
+  const labels = [
+    "Baldur's Gate",
+    "Shadows of Amn",
+    "Throne of Bhaal",
+    "Ascended",
+  ];
+  const colors = ["#8D0B41", "#D39D55", "#D6CFB4", "#EEE7D5"];
+
   return (
     <PageContainer>
       <Header
@@ -26,8 +40,24 @@ export default function Home() {
           iconClass="bi-plus-circle"
           label="Add Character"
         />
+        <FlexGrow />
+        <ToggleButton
+          inactiveText="Statistics"
+          activeText="Ascii"
+          isToggled={showStatistics}
+          onToggle={() => setShowStatistics(!showStatistics)}
+          iconClass="bi bi-arrow-repeat"
+        />
       </ButtonRow>
-      <AsciiArt scale={0.9} />
+      {!showStatistics ? (
+        <>
+          <AsciiArt scale={0.9} />
+        </>
+      ) : (
+        <>
+          <CircleChart data={data} labels={labels} colors={colors} />
+        </>
+      )}
     </PageContainer>
   );
 }
