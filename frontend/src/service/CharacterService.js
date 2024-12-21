@@ -35,6 +35,10 @@ class CharacterService {
     return this.patch("characters/" + id + "/die");
   }
 
+  async deleteCharacter(id) {
+    return this.delete("characters/" + id);
+  }
+
   async uploadImage(characterId, formData) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/characters/${characterId}/upload`,
@@ -51,10 +55,6 @@ class CharacterService {
 
   getCharacterImage(id) {
     return this.baseUrl + "/characters/" + id + "/image";
-  }
-
-  async deleteCharacter(id) {
-    return this.delete("characters/" + id);
   }
 
   async get(endpoint) {
