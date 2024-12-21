@@ -30,6 +30,7 @@ public class CharacterController {
         @RequestParam(required = false) Status status,
         @RequestParam(required = false) Progress progress
     ) {
+        // TODO: Rework this to works if status && progress != null
         if (status != null) {
             List<Char> filteredChars = characterService.getCharactersByStatus(
                 status
@@ -53,17 +54,23 @@ public class CharacterController {
     }
 
     @PostMapping
-    public Char createCharacter(@RequestBody Char character) {
-        return characterService.createCharacter(character);
+    public ResponseEntity<?> createCharacter(@RequestBody Char character) {
+        try {
+            return ResponseEntity.ok(
+                characterService.createCharacter(character)
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity.unprocessableEntity().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Char> getCharacterById(@PathVariable String id) {
-        Char character = characterService.getCharacterById(id);
-        if (character == null) {
+        try {
+            return ResponseEntity.ok(characterService.getCharacterById(id));
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(character);
     }
 
     @PatchMapping("/{id}/die")
@@ -78,6 +85,18 @@ public class CharacterController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 "An error occurred."
+            );
+        }
+    }
+
+    @PatchMapping("/{id}/advance")
+    public ResponseEntity<?> advanceCharacterProgress(@PathVariable String id) {
+        try {
+            // TODO
+            return null;
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                e
             );
         }
     }

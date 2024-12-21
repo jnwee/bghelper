@@ -11,8 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +38,11 @@ public class CharacterService {
     }
 
     public List<Char> getCharactersByProgress(Progress progress) {
+        logger.info(
+            "Characters filtered and fetched with progress: " +
+            progress.toString()
+        );
+
         String sortBy = "createdAt";
         return characterRepository.findByProgress(
             progress,
@@ -49,6 +52,10 @@ public class CharacterService {
     }
 
     public List<Char> getCharactersByStatus(Status status) {
+        logger.info(
+            "Characters filtered and fetched by status: " + status.toString()
+        );
+
         String sortBy = "createdAt";
         if (status == Status.DEAD) {
             sortBy = "diedAt";
@@ -78,32 +85,51 @@ public class CharacterService {
         stats[2] = diedInTob;
         stats[3] = ascended;
 
+        logger.info("Prepared statistics for circle charts: " + stats);
+
         return stats;
     }
 
-    public Char createCharacter(Char character) {
-        return characterRepository.save(character);
+    public String createCharacter(Char character) {
+        logger.info("New Character created");
+        try {
+            characterRepository.save(character);
+            return (
+                "Character " + character.getName() + " was saved successfully"
+            );
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Char getCharacterById(String id) {
-        return characterRepository.findById(id).orElse(null);
+        logger.info("Fetching Character with id: " + id);
+        return characterRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Character not found"));
     }
 
-    public void letCharacterDie(String id) {
+    public String letCharacterDie(String id) {
         Char character = characterRepository
             .findById(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("Character not found")
             );
-        if (character.getStatus() == Status.ALIVE) {
+        try {
             character.setStatus(Status.DEAD);
-            character.setDiedAt(LocalDateTime.now());
             characterRepository.save(character);
-        } else {
-            throw new IllegalArgumentException(
-                "Character is not ALIVE and therefore can't die"
-            );
+            return character.getName() + " is now dead";
+        } catch (Exception e) {
+            return e.getMessage();
         }
+    }
+
+    public void advanceCharacter(String id) {
+        Char character = characterRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new IllegalArgumentException("Character not found")
+            );
     }
 
     public void deleteCharacter(String id) {

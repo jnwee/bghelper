@@ -19,13 +19,10 @@ public class Char {
     private LocalDateTime diedAt;
 
     /**
-    Char is a Player Character
-    @param name Name of the character, can't be empty
-    */
+     * Char is a Player Character
+     * @param name Name of the character, can't be empty
+     */
     public Char(String name) {
-        if (name == null || name.isBlank()) {
-            //throw new IllegalArgumentException("Name can't be empty");
-        }
         this.name = name;
         status = Status.ALIVE;
         progress = Progress.BG1;
@@ -52,30 +49,20 @@ public class Char {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
-        if (this.status == Status.DEAD || status == Status.ASCENDED) {
+        if (this.status == Status.DEAD || this.status == Status.ASCENDED) {
             throw new IllegalArgumentException(
-                "Character is " + status.name() + " which is final."
+                this.name + " is " + this.status.name() + " which is final."
             );
+        }
+        if (status == Status.DEAD) {
+            this.diedAt = LocalDateTime.now();
         }
         this.status = status;
-    }
-
-    public void setDiedAt(LocalDateTime time) {
-        if (diedAt != null) {
-            throw new IllegalArgumentException(
-                "dietAt is already set on Character and can't be set anew"
-            );
-        }
-        this.diedAt = time;
     }
 
     public LocalDateTime getDiedAt() {
@@ -85,7 +72,7 @@ public class Char {
     public void increaseProgress() {
         if (this.status == Status.DEAD || this.status == Status.ASCENDED) {
             throw new IllegalArgumentException(
-                "Progress is fixed since Character is " + this.status.name()
+                "Progress is fixed since Character is " + this.status.toString()
             );
         }
         switch (this.progress) {
@@ -102,7 +89,7 @@ public class Char {
     @Override
     public String toString() {
         return String.format(
-            "Character nr %d with name %s and status dead: %s",
+            "Character nr %d with name %s and status: %s",
             this.id,
             this.name,
             this.status.toString()
