@@ -76,39 +76,33 @@ public class CharacterController {
     @PatchMapping("/{id}/die")
     public ResponseEntity<?> letCharacterDie(@PathVariable String id) {
         try {
-            characterService.letCharacterDie(id);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Character marked as dead");
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(characterService.letCharacterDie(id));
         } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                "An error occurred."
-            );
         }
     }
 
     @PatchMapping("/{id}/advance")
     public ResponseEntity<?> advanceCharacterProgress(@PathVariable String id) {
         try {
-            // TODO
-            return null;
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                e
-            );
+            return ResponseEntity.ok(characterService.advanceCharacter(id));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> deleteCharacter(
-        @PathVariable String id
-    ) {
-        characterService.deleteCharacter(id);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Character deleted successfully");
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> deleteCharacter(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(characterService.deleteCharacter(id));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                .body("Character couldn't be deleted");
+        }
     }
 
     /**

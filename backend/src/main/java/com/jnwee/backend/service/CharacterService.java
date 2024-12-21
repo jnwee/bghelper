@@ -103,13 +103,14 @@ public class CharacterService {
     }
 
     public Char getCharacterById(String id) {
-        logger.info("Fetching Character with id: " + id);
+        logger.info("Fetching Character with ID: " + id);
         return characterRepository
             .findById(id)
             .orElseThrow(() -> new RuntimeException("Character not found"));
     }
 
     public String letCharacterDie(String id) {
+        logger.info("Let Character with ID: " + id);
         Char character = characterRepository
             .findById(id)
             .orElseThrow(() ->
@@ -118,31 +119,41 @@ public class CharacterService {
         try {
             character.setStatus(Status.DEAD);
             characterRepository.save(character);
-            return character.getName() + " is now dead";
-        } catch (Exception e) {
-            return e.getMessage();
+            return character.getName() + " is now marked dead";
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void advanceCharacter(String id) {
+    public String advanceCharacter(String id) {
         Char character = characterRepository
             .findById(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("Character not found")
             );
+        try {
+            character.increaseProgress();
+            characterRepository.save(character);
+            return (
+                character.getName() + " was successfully progressed by one step"
+            );
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
-    public void deleteCharacter(String id) {
+    public String deleteCharacter(String id) {
+        logger.info("Delete Character with ID: " + id);
         try {
             getCharacterImage(id).getFile().delete();
-            logger.info("Image of character with id:" + id + " deleted");
+            logger.info("Image of character with id: " + id + " deleted");
         } catch (IOException e) {
             logger.info(
                 "Image of character with id:" + id + " couldn't be deleted"
             );
         }
         characterRepository.deleteById(id);
-        logger.info("Character with id:" + id + " deleted");
+        return ("Character with id:" + id + " deleted");
     }
 
     //============== Characterportrait-related Methods ======================
