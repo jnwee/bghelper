@@ -5,9 +5,14 @@ import { useRouter, useParams } from "next/navigation";
 import "./character_page.css";
 import CharacterService from "@/service/CharacterService";
 import "@/app/css/buttons.css";
+import Row from "@/components/Row";
+import Column from "@/components/Column";
+import ActionButton from "@/components/ActionButton";
+import CharacterOverview from "./components/CharacterOverview";
+import Header from "@/components/Header";
+import PageContainer from "@/components/PageContainer";
 
 export default function CharacterPage() {
-  // Use useParams() to get dynamic route params
   const params = useParams();
   const character_id = params.id;
 
@@ -48,7 +53,6 @@ export default function CharacterPage() {
       try {
         await CharacterService.letCharacterDie(character_id);
         alert(`${character.name} has been marked as dead.`);
-        // Refresh character data
         const updatedCharacter =
           await CharacterService.getCharacterById(character_id);
         setCharacter(updatedCharacter);
@@ -66,7 +70,6 @@ export default function CharacterPage() {
     ) {
       try {
         await CharacterService.deleteCharacter(character.id);
-
         router.push("/characters");
       } catch (error) {
         alert(`Failed to delete character: ${error.message}`);
@@ -75,46 +78,34 @@ export default function CharacterPage() {
   };
 
   return (
-    <div className="character-detail-container">
+    <PageContainer>
       {/* Header */}
-      <header className="character-header">
-        <h1>{character.name}</h1>
-      </header>
+      <Header title={character.name} useH2={true} />
 
-      {/* Three Columns */}
-      <div className="character-detail-columns">
-        {/* Column 1: Image */}
-        <div className="character-column">
-          {character.imageUrl ? (
-            <img
-              src={imageUrl}
-              alt={character.name}
-              className="character-image"
-            />
-          ) : (
-            <div className="character-placeholder">No Image</div>
-          )}
-        </div>
+      {/* Three-Column Layout */}
+      <Row className="h-100">
+        {/* Column 1: Character Overview */}
+        <Column colSize="col-md-4 d-flex align-items-start justify-content-center">
+          <CharacterOverview name={character.name} imageUrl={imageUrl} />
+        </Column>
 
-        {/* Column 2: Name */}
-        <div className="character-column">
-          <h2 className="character-name">{character.name}</h2>
-        </div>
-
-        {/* Column 3: Empty */}
-        <div className="character-column">
-          {/* Let Character Die Button */}
+        {/* Column 2: Actions */}
+        <Column colSize="col-md-4 align-items-start justify-content-center d-flex">
           {!character.dead && (
-            <button className="action-button mt-3" onClick={handleLetDie}>
-              LET CHARACTER DIE
-            </button>
+            <ActionButton
+              label={"Mark character as dead"}
+              onClick={handleLetDie}
+            />
           )}
+          <ActionButton
+            label={"Delete this character"}
+            onClick={handleDelete}
+          />
+        </Column>
 
-          <button className="action-button mt-3" onClick={handleDelete}>
-            DELETE THIS CHARACTER
-          </button>
-        </div>
-      </div>
-    </div>
+        {/* Column 3: Party */}
+        <Column colSize="col-md-4 d-flex flex-column align-items-center"></Column>
+      </Row>
+    </PageContainer>
   );
 }

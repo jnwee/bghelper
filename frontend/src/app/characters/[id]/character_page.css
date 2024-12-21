@@ -1,67 +1,19 @@
-/* Page Container */
 .character-detail-container {
-    width: 100%;
-    padding: 2rem;
-    background-color: var(--background);
-    color: var(--text-color);
+    height: 100vh; /* Full screen height */
 }
 
-/* Header */
 .character-header {
-    text-align: center;
     margin-bottom: 2rem;
 }
 
-.character-header h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-/* Three Columns Layout */
 .character-detail-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
-    gap: 1rem;
+    display: flex;
+    height: calc(100% - 60px); /* Fill remaining height after header */
 }
 
-/* Individual Column */
 .character-column {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    border: 2px solid var(--text-color);
-    border-radius: 10px;
-    padding: 1rem;
-    height: 300px; /* Set a fixed height for columns */
-    background-color: var(--background);
-}
-
-/* Character Image */
-.character-image {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-/* Placeholder for Missing Image */
-.character-placeholder {
-    width: 100%;
-    height: 100%;
-    background-color: #6c757d;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    color: white;
-    border-radius: 10px;
-    font-size: 1rem;
-}
-
-/* Character Name in Column */
-.character-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
 }
