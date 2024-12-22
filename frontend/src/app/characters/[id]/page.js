@@ -64,17 +64,14 @@ export default function CharacterPage() {
           setCharacter(updatedCharacter);
           showNotification("Character marked as dead succesfully!", "success");
         } catch (error) {
-          showNotification(
-            `Failed to let character die: ${error.message}`,
-            "danger",
-          );
+          showNotification(`Fail: ${error.message}`, "danger");
         }
       },
     );
   };
 
   const handleDelete = async () => {
-    showNotification("Failed to delete character.", "danger");
+    showNotification("Failed to delete character.", "success");
   };
 
   return (

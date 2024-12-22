@@ -1,46 +1,42 @@
-/* Notification Container (Top Right Corner) */
+/* Notification Container (Top Center) */
 .notification-container {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
+    top: 2rem; /* Distance from the top */
+    left: 50%; /* Start from the center */
+    transform: translateX(-50%); /* Shift back by half its width to center */
     z-index: 1050;
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center-align stacked toasts */
     gap: 10px;
 }
-
 /* Toast Notification */
 .notification.toast {
-    min-width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 600px;
     border-radius: 8px;
+    padding: 1rem;
+    background: var(--background);
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
     overflow: hidden;
     animation: fadeIn 0.5s ease;
 }
 
-.toast-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-}
-
-.toast-body {
-    padding: 1rem;
-}
-
 /* Colors Based on Type */
-.bg-success {
-    border-left: 5px solid #28a745;
+.custom-bg-success {
+    background: var(--background);
+    border: 2px solid var(--text-color);
 }
 
-.bg-danger {
-    border-left: 5px solid #dc3545;
+.custom-bg-danger {
+    background: var(--background);
+    border: 2px solid var(--danger-color);
 }
 
-.bg-info {
-    border-left: 5px solid #17a2b8;
+.custom-bg-info {
+    background: var(--background);
+    border: 2px solid var(--text-color);
 }
 
 /* Fade Animation */
