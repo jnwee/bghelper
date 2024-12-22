@@ -5,9 +5,7 @@ import com.jnwee.backend.model.Progress;
 import com.jnwee.backend.model.Status;
 import com.jnwee.backend.service.CharacterService;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -132,7 +130,7 @@ public class CharacterController {
         try {
             Resource image = characterService.getCharacterImage(id);
             return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG) // Adjust as needed
+                .contentType(MediaType.IMAGE_JPEG)
                 .body(image);
         } catch (FileNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

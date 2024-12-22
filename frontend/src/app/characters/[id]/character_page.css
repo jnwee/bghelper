@@ -8,7 +8,7 @@
 
 .character-detail-columns {
     display: flex;
-    height: calc(100% - 60px); /* Fill remaining height after header */
+    height: calc(100% - 60px);
 }
 
 .character-column {

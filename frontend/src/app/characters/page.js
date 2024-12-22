@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CharacterService from "@/service/CharacterService";
 import LinkButton from "@/components/LinkButton";
 import PageContainer from "@/components/PageContainer";
 import Header from "@/components/Header";
@@ -9,6 +8,7 @@ import ButtonRow from "@/components/ButtonRow";
 import CharacterSection from "./components/CharacterSection";
 import ToggleButton from "@/components/ToggleButton";
 import FlexGrow from "@/components/FlexGrow";
+import CharacterFilterService from "@/service/characters/CharacterFilterService";
 
 export default function CharactersPage() {
   const [aliveCharacters, setAliveCharacters] = useState([]);
@@ -23,17 +23,18 @@ export default function CharactersPage() {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const alive = await CharacterService.getCharactersByStatus("ALIVE");
-        const dead = await CharacterService.getCharactersByStatus("DEAD");
+        const alive =
+          await CharacterFilterService.getCharactersByStatus("ALIVE");
+        const dead = await CharacterFilterService.getCharactersByStatus("DEAD");
         const ascended =
-          await CharacterService.getCharactersByStatus("ASCENDED");
+          await CharacterFilterService.getCharactersByStatus("ASCENDED");
         setAliveCharacters(alive);
         setDeadCharacters(dead);
         setAscendedCharacters(ascended);
 
-        const bg1 = await CharacterService.getCharactersByProgress("BG1");
-        const bg2 = await CharacterService.getCharactersByProgress("BG2");
-        const tob = await CharacterService.getCharactersByProgress("TOB");
+        const bg1 = await CharacterFilterService.getCharactersByProgress("BG1");
+        const bg2 = await CharacterFilterService.getCharactersByProgress("BG2");
+        const tob = await CharacterFilterService.getCharactersByProgress("TOB");
         setBg1Characters(bg1);
         setBg2Characters(bg2);
         setTobCharacters(tob);

@@ -90,13 +90,10 @@ public class CharacterService {
         return stats;
     }
 
-    public String createCharacter(Char character) {
+    public Char createCharacter(Char character) {
         logger.info("New Character created");
         try {
-            characterRepository.save(character);
-            return (
-                "Character " + character.getName() + " was saved successfully"
-            );
+            return characterRepository.save(character);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         }

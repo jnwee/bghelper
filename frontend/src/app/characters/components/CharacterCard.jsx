@@ -1,13 +1,13 @@
 import React from "react";
 import "@/app/css/character_card.css";
-import CharacterService from "@/service/CharacterService";
+import ImageService from "@/service/ImageService";
 
 const CharacterCard = ({ id, name, status }) => {
   const handleClick = () => {
     window.location.assign(`/characters/${id}`);
   };
 
-  const imageUrl = CharacterService.getCharacterImage(id);
+  const imageUrl = ImageService.getCharacterPortrait(id);
 
   return (
     <div

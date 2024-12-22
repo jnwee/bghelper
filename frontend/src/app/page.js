@@ -9,7 +9,7 @@ import FlexGrow from "@/components/FlexGrow";
 import ToggleButton from "@/components/ToggleButton";
 import React, { useState, useEffect } from "react";
 import CircleChart from "./components/CircleChart";
-import CharacterService from "@/service/CharacterService";
+import CharacterFilterService from "@/service/characters/CharacterFilterService";
 
 export default function Home() {
   const [stats, setStats] = useState([]);
@@ -25,7 +25,7 @@ export default function Home() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const data = await CharacterService.getCharacterStats();
+        const data = await CharacterFilterService.getCharacterStats();
         setStats(data);
       } catch (error) {
         console.error("Failed to fetch stats:", error);

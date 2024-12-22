@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import CharacterService from "@/service/CharacterService";
 import Column from "@/components/Column";
 import Row from "@/components/Row";
 import "./create_character.css";
@@ -12,6 +11,8 @@ import Header from "@/components/Header";
 import Message from "@/components/Message";
 import CharacterForm from "./components/CharacterForm";
 import CharacterPreview from "./components/CharacterPreview";
+import CharacterService from "@/service/characters/CharacterService";
+import ImageService from "@/service/ImageService";
 
 export default function CreateCharacterPage() {
   const [name, setName] = useState("");
@@ -42,7 +43,6 @@ export default function CreateCharacterPage() {
         throw new Error("Name is required!");
       }
 
-      // Step 1: Create the character
       const createdCharacter = await CharacterService.addCharacter({
         name,
       });
@@ -51,11 +51,10 @@ export default function CreateCharacterPage() {
         throw new Error("Character creation failed. No ID returned.");
       }
 
-      // Step 2: Upload the image
       if (imageFile) {
         const formData = new FormData();
         formData.append("image", imageFile);
-        await CharacterService.uploadImage(createdCharacter.id, formData);
+        await ImageService.uploadCharacterImage(createdCharacter.id, formData);
       }
       setName("");
       setImageFile(null);

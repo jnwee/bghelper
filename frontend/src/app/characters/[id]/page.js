@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import "./character_page.css";
-import CharacterService from "@/service/CharacterService";
 import "@/app/css/buttons.css";
 import Row from "@/components/Row";
 import Column from "@/components/Column";
@@ -11,6 +10,8 @@ import ActionButton from "@/components/ActionButton";
 import CharacterOverview from "./components/CharacterOverview";
 import Header from "@/components/Header";
 import PageContainer from "@/components/PageContainer";
+import ImageService from "@/service/ImageService";
+import CharacterService from "@/service/characters/CharacterService";
 
 export default function CharacterPage() {
   const params = useParams();
@@ -19,7 +20,7 @@ export default function CharacterPage() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
 
-  const imageUrl = CharacterService.getCharacterImage(character_id);
+  const imageUrl = ImageService.getCharacterPortrait(character_id);
 
   const router = useRouter();
 
