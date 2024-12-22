@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useModal } from "@/context/ModalContext";
+import { useNotification } from "@/context/NotificationContext";
 import "./character_page.css";
 import "@/app/css/buttons.css";
 import Row from "@/components/Row";
@@ -15,6 +16,10 @@ import ImageService from "@/service/ImageService";
 import CharacterService from "@/service/characters/CharacterService";
 
 export default function CharacterPage() {
+  const router = useRouter();
+  const { showModal } = useModal();
+  const { showNotification } = useNotification();
+
   const params = useParams();
   const character_id = params.id;
 
@@ -22,9 +27,6 @@ export default function CharacterPage() {
   const [error, setError] = useState(null);
 
   const imageUrl = ImageService.getCharacterPortrait(character_id);
-
-  const router = useRouter();
-  const { showModal } = useModal();
 
   useEffect(() => {
     const fetchCharacter = async () => {
@@ -60,26 +62,19 @@ export default function CharacterPage() {
           const updatedCharacter =
             await CharacterService.getCharacterById(character_id);
           setCharacter(updatedCharacter);
+          showNotification("Character marked as dead succesfully!", "success");
         } catch (error) {
-          alert(`Failed to let character die: ${error.message}`);
+          showNotification(
+            `Failed to let character die: ${error.message}`,
+            "danger",
+          );
         }
       },
     );
   };
 
   const handleDelete = async () => {
-    if (
-      confirm(
-        `Are you sure you want to delete ${character.name}? This action cannot be undone.`,
-      )
-    ) {
-      try {
-        await CharacterService.deleteCharacter(character.id);
-        router.push("/characters");
-      } catch (error) {
-        alert(`Failed to delete character: ${error.message}`);
-      }
-    }
+    showNotification("Failed to delete character.", "danger");
   };
 
   return (

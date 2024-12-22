@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@/app/globals.css";
 import { ModalProvider } from "@/context/ModalContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 
 export const metadata = {
   title: "bghelper",
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ModalProvider>
-          <div>{children}</div>
+          <NotificationProvider>
+            <div>{children}</div>
+          </NotificationProvider>
         </ModalProvider>
       </body>
     </html>
