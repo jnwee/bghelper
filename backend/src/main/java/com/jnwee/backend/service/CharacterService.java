@@ -106,7 +106,7 @@ public class CharacterService {
             .orElseThrow(() -> new RuntimeException("Character not found"));
     }
 
-    public String letCharacterDie(String id) {
+    public Char letCharacterDie(String id) {
         logger.info("Let Character with ID: " + id);
         Char character = characterRepository
             .findById(id)
@@ -115,14 +115,13 @@ public class CharacterService {
             );
         try {
             character.setStatus(Status.DEAD);
-            characterRepository.save(character);
-            return character.getName() + " is now marked dead";
+            return characterRepository.save(character);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public String advanceCharacter(String id) {
+    public Char advanceCharacter(String id) {
         Char character = characterRepository
             .findById(id)
             .orElseThrow(() ->
@@ -130,10 +129,7 @@ public class CharacterService {
             );
         try {
             character.increaseProgress();
-            characterRepository.save(character);
-            return (
-                character.getName() + " was successfully progressed by one step"
-            );
+            return characterRepository.save(character);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e.getMessage());
         }
