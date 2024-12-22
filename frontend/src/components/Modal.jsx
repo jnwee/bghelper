@@ -2,6 +2,7 @@
 
 import React from "react";
 import "@/app/css/modal_dialog.css";
+import "@/app/css/buttons.css";
 
 export default function Modal({ show, title, children, onClose, onConfirm }) {
   if (!show) return null;
@@ -19,10 +20,10 @@ export default function Modal({ show, title, children, onClose, onConfirm }) {
         <div className="modal-body">{children}</div>
 
         <div className="modal-footer">
-          <button className="btn btn-secondary" onClick={onClose}>
+          <button className="link-button" onClick={onClose}>
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={onConfirm}>
+          <button className="action-button" onClick={onConfirm}>
             Confirm
           </button>
         </div>

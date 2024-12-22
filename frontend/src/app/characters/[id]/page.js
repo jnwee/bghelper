@@ -51,7 +51,7 @@ export default function CharacterPage() {
 
   const handleLetDie = async () => {
     showModal(
-      "Delete Character",
+      "Kill Character",
       <p>
         Are you sure you want to mark {character.name} as dead? This action
         cannot be undone.
