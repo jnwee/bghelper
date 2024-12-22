@@ -71,7 +71,13 @@ export default function CharacterPage() {
   };
 
   const handleDelete = async () => {
-    showNotification("Failed to delete character.", "success");
+    try {
+      await CharacterService.deleteCharacter(character_id);
+      router.push("/characters");
+      showNotification("Character was deleted succesfully!", "success");
+    } catch (error) {
+      showNotification("Failed to delete character.", "danger");
+    }
   };
 
   return (

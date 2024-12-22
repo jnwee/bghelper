@@ -17,6 +17,8 @@
     padding: 1rem;
     background: var(--background);
     text-align: center;
+    align-items: end;
+    justify-items: end;
     font-weight: 500;
     font-size: 20px;
     overflow: hidden;
