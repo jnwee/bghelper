@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import LinkButton from "@/components/LinkButton";
-import PageContainer from "@/components/PageContainer";
+import Button from "@/components/Button";
+import PageContainer from "@/components/container/PageContainer";
 import Header from "@/components/Header";
-import ButtonRow from "@/components/ButtonRow";
+import ButtonRow from "@/components/container/ButtonRow";
 import CharacterSection from "./components/CharacterSection";
-import ToggleButton from "@/components/ToggleButton";
-import FlexGrow from "@/components/FlexGrow";
 import CharacterFilterService from "@/service/characters/CharacterFilterService";
 
 export default function CharactersPage() {
@@ -55,14 +53,21 @@ export default function CharactersPage() {
         leadFontSize="1.5rem"
       />
       <ButtonRow>
-        <LinkButton href="/" iconClass="bi-arrow-left" label="Home" />
-        <LinkButton
+        <Button
+          variant="link"
+          href="/"
+          iconClass="bi-arrow-left"
+          label="Home"
+        />
+        <Button
+          variant="link"
           href="/characters/create"
           iconClass="bi-plus-circle"
           label="Add Character"
         />
-        <FlexGrow />
-        <ToggleButton
+        <div className="d-flex flex-grow-1" />
+        <Button
+          variant="toggle"
           inactiveText="Graveyard"
           activeText="All"
           isToggled={filterByProgress}
