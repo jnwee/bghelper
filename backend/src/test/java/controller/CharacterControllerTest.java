@@ -1,21 +1,9 @@
 package controller;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.jnwee.backend.BackendApplication;
 import com.jnwee.backend.controller.CharacterController;
-import com.jnwee.backend.model.Char;
-import com.jnwee.backend.repository.CharacterRepository;
-import com.jnwee.backend.service.CharacterService;
-import java.util.Arrays;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(CharacterController.class)
 @ContextConfiguration(classes = BackendApplication.class)
