@@ -42,7 +42,7 @@ export default function CharacterPage() {
   }, [character_id]);
 
   if (error) {
-    showNotification("Error fetching Character from database", "danger");
+    showNotification("Error fetching Character from database.", "danger");
     return <p className="text-center">{error}</p>;
   }
 
@@ -59,11 +59,10 @@ export default function CharacterPage() {
       </p>,
       async () => {
         try {
-          await CharacterService.letCharacterDie(character_id);
           const updatedCharacter =
-            await CharacterService.getCharacterById(character_id);
+            await CharacterService.letCharacterDie(character_id);
           setCharacter(updatedCharacter);
-          showNotification("Character marked as dead succesfully!", "success");
+          showNotification("Character marked as dead succesfully.", "success");
         } catch (error) {
           showNotification(`Fail: ${error.message}`, "danger");
         }
@@ -72,7 +71,14 @@ export default function CharacterPage() {
   };
 
   const handleProgress = async () => {
-    await CharacterService.advanceCharacter(character_id);
+    try {
+      const updatedCharacter =
+        await CharacterService.advanceCharacter(character_id);
+      setCharacter(updatedCharacter);
+      showNotification("Character advanced succesfully.", "success");
+    } catch (error) {
+      showNotification(`Fail: ${error.message}`, "danger");
+    }
   };
 
   const handleDelete = async () => {
@@ -86,7 +92,7 @@ export default function CharacterPage() {
         try {
           await CharacterService.deleteCharacter(character_id);
           router.push("/characters");
-          showNotification("Character was deleted succesfully!", "success");
+          showNotification("Character was deleted succesfully.", "success");
         } catch (error) {
           showNotification("Failed to delete character.", "danger");
         }
@@ -123,8 +129,10 @@ export default function CharacterPage() {
 
         {/* Column 2: Actions */}
         <Column colSize="col-md-4">
-          <ProgressDiagram currentStep={2} onAdvance={handleProgress} />
-          {!character.dead && (
+          {character.status === "ALIVE" && (
+            <ProgressDiagram currentStep={2} onAdvance={handleProgress} />
+          )}
+          {character.status === "ALIVE" && (
             <Button
               variant="action"
               label={"Mark as dead"}

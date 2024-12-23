@@ -1,7 +1,6 @@
 import React from "react";
-import ActionButton from "@/components/ActionButton";
-import ButtonRow from "@/components/ButtonRow";
-import LinkButton from "@/components/LinkButton";
+import ButtonRow from "@/components/container/ButtonRow";
+import Button from "@/components/Button";
 
 export default function CharacterForm({
   name,
@@ -40,8 +39,18 @@ export default function CharacterForm({
 
       <ButtonRow>
         {/* Submit Button */}
-        <LinkButton href="/characters" iconClass="bi-arrow-left" label="Back" />
-        <ActionButton type="submit" label="Create Character" className="" />
+        <Button
+          variant="link"
+          href="/characters"
+          iconClass="bi-arrow-left"
+          label="Back"
+        />
+        <Button
+          variant="action"
+          type="submit"
+          label="Create Character"
+          className=""
+        />
       </ButtonRow>
     </form>
   );

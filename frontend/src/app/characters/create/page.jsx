@@ -2,23 +2,21 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Column from "@/components/Column";
-import Row from "@/components/Row";
-import "./create_character.css";
-import "@/app/css/buttons.css";
-import PageContainer from "@/components/PageContainer";
-import Header from "@/components/Header";
-import Message from "@/components/Message";
-import CharacterForm from "./components/CharacterForm";
-import CharacterPreview from "./components/CharacterPreview";
+
 import CharacterService from "@/service/characters/CharacterService";
 import ImageService from "@/service/ImageService";
+
+import "./create_character.css";
+import PageContainer from "@/components/container/PageContainer";
+import Header from "@/components/Header";
+import Column from "@/components/container/Column";
+import CharacterForm from "./components/CharacterForm";
+import CharacterPreview from "./components/CharacterPreview";
 
 export default function CreateCharacterPage() {
   const [name, setName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [message, setMessage] = useState("");
 
   const router = useRouter();
 
@@ -62,26 +60,21 @@ export default function CreateCharacterPage() {
       router.push("/characters");
     } catch (error) {
       console.error(error);
-      setMessage(`Error: ${error.message}`);
     }
   };
 
   return (
     <PageContainer>
       <Header title="Create Character" useH2={false} />
-      <Message
-        text={message}
-        type={message.startsWith("Error") ? "error" : "success"}
-      />
 
-      <Row>
+      <div className="row h-100">
         {/* Left Column: Preview */}
-        <Column className="justify-content-center d-flex">
+        <Column colSize="col-md-6">
           <CharacterPreview previewUrl={previewUrl} name={name} />
         </Column>
 
         {/* Right Column: Form */}
-        <Column className="justify-content-center flex">
+        <Column colSize="col-md-6">
           <CharacterForm
             name={name}
             setName={setName}
@@ -89,7 +82,7 @@ export default function CreateCharacterPage() {
             onSubmit={handleSubmit}
           />
         </Column>
-      </Row>
+      </div>
     </PageContainer>
   );
 }
