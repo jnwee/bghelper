@@ -23,6 +23,7 @@ export default function CharacterPage() {
 
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
+  const [progressState, setProgressState] = useState(2);
 
   const params = useParams();
   const character_id = params.id;
@@ -33,6 +34,21 @@ export default function CharacterPage() {
       try {
         const data = await CharacterService.getCharacterById(character_id);
         setCharacter(data);
+        switch (data.progress) {
+          case "BG1":
+            setProgressState(2);
+            break;
+          case "BG2":
+            setProgressState(3);
+            break;
+          case "TOB":
+            data.status === "ASCENDED"
+              ? setProgressState(5)
+              : setProgressState(4);
+            break;
+          default:
+            setProgressState(2);
+        }
       } catch (err) {
         setError(err.message);
       }
@@ -75,6 +91,7 @@ export default function CharacterPage() {
       const updatedCharacter =
         await CharacterService.advanceCharacter(character_id);
       setCharacter(updatedCharacter);
+      setProgressState(progressState + 1);
       showNotification("Character advanced succesfully.", "success");
     } catch (error) {
       showNotification(`Fail: ${error.message}`, "danger");
@@ -130,7 +147,10 @@ export default function CharacterPage() {
         {/* Column 2: Actions */}
         <Column colSize="col-md-4">
           {character.status === "ALIVE" && (
-            <ProgressDiagram currentStep={2} onAdvance={handleProgress} />
+            <ProgressDiagram
+              currentStep={progressState}
+              onAdvance={handleProgress}
+            />
           )}
           {character.status === "ALIVE" && (
             <Button

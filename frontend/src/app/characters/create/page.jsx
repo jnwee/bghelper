@@ -34,8 +34,6 @@ export default function CreateCharacterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
-
     try {
       if (!name) {
         throw new Error("Name is required!");

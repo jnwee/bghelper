@@ -13,12 +13,12 @@ export default function ProgressDiagram({ currentStep, onAdvance }) {
   // Positions for SVG elements
   const positions = steps.map((_, index) => ({
     x: 150,
-    y: 100 + index * 100,
+    y: index * 100,
   }));
 
   return (
     <div style={{ textAlign: "center", marginTop: "0px" }}>
-      <svg width="300" height="500">
+      <svg width="300" height="425">
         {/* Arrows Connecting Steps */}
         {positions.map((pos, index) => {
           if (index === 0) return null; // Skip first element (no arrow above it)
