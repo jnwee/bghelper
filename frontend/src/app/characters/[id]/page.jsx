@@ -111,9 +111,9 @@ export default function CharacterPage() {
       </ButtonRow>
 
       {/* Three-Column Layout */}
-      <div className="row h-100">
+      <div className="row h-100 mt-5">
         {/* Column 1: Character Overview */}
-        <Column colSize="col-md-4 d-flex align-items-start justify-content-center">
+        <Column colSize="col-md-4">
           <CharacterOverview name={character.name} imageUrl={imageUrl} />
         </Column>
 
@@ -124,6 +124,7 @@ export default function CharacterPage() {
               variant="action"
               label={"Mark as dead"}
               onClick={handleLetDie}
+              iconClass="bi-fire"
             />
           )}
         </Column>

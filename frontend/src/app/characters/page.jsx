@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import Button from "@/components/Button";
 import PageContainer from "@/components/container/PageContainer";
 import Header from "@/components/Header";
@@ -71,7 +72,7 @@ export default function CharactersPage() {
           inactiveText="Graveyard"
           activeText="All"
           isToggled={filterByProgress}
-          onToggle={() => setFilterByProgress(!filterByProgress)}
+          onClick={() => setFilterByProgress(!filterByProgress)}
           iconClass="bi bi-arrow-repeat"
         />
       </ButtonRow>

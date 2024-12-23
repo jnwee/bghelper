@@ -1,19 +1,19 @@
 "use client";
 
-import LinkButton from "@/components/LinkButton";
-import Header from "@/components/Header";
-import ButtonRow from "@/components/ButtonRow";
-import AsciiArt from "./components/AsciiArt";
-import PageContainer from "@/components/PageContainer";
-import FlexGrow from "@/components/FlexGrow";
-import ToggleButton from "@/components/ToggleButton";
 import React, { useState, useEffect } from "react";
+
+import Header from "@/components/Header";
+import ButtonRow from "@/components/container/ButtonRow";
+import AsciiArt from "./components/AsciiArt";
+import PageContainer from "@/components/container/PageContainer";
 import CircleChart from "./components/CircleChart";
 import CharacterFilterService from "@/service/characters/CharacterFilterService";
+import Button from "@/components/Button";
 
 export default function Home() {
   const [stats, setStats] = useState([]);
   const [showStatistics, setShowStatistics] = useState(false);
+
   const labels = [
     "Baldur's Gate",
     "Shadows of Amn",
@@ -43,18 +43,21 @@ export default function Home() {
         leadFontSize="1.5rem"
       />
       <ButtonRow>
-        <LinkButton
+        <Button
+          variant="link"
           href="/characters"
           iconClass="bi-arrow-right"
           label="View Characters"
         />
-        <LinkButton
+        <Button
+          variant="link"
           href="/characters/create"
           iconClass="bi-plus-circle"
           label="Add Character"
         />
-        <FlexGrow />
-        <ToggleButton
+        <div className="d-flex flex-grow-1" />
+        <Button
+          variant="toggle"
           inactiveText="Statistics"
           activeText="Ascii"
           isToggled={showStatistics}

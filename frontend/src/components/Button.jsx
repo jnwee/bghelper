@@ -17,11 +17,9 @@ export default function Button({
   // Render LinkButton
   if (variant === "link") {
     return (
-      <Link href={href} passHref>
-        <a className={`link-button ${className}`}>
-          {iconClass && <i className={`icon ${iconClass} me-2`}></i>}
-          {label}
-        </a>
+      <Link href={href} className="link-button">
+        {iconClass && <i className={`icon ${iconClass} me-2`}></i>}
+        {label}
       </Link>
     );
   }
@@ -30,7 +28,7 @@ export default function Button({
   if (variant === "toggle") {
     return (
       <button
-        className={`toggle-button ${isToggled ? "active" : ""} ${className}`}
+        className={`toggle-button ${isToggled ? "active" : ""}`}
         onClick={onClick}
       >
         {iconClass && <i className={`${iconClass} me-2`}></i>}
@@ -43,7 +41,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`action-button d-flex align-items-center justify-content-center ${className}`}
+      className={`action-button`}
       onClick={onClick}
       disabled={disabled}
     >

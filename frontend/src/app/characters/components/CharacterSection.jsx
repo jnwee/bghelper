@@ -16,7 +16,7 @@ export default function CharacterSection({
       {characters.length > 0 ? (
         <CharacterRow characters={characters} />
       ) : (
-        <p className="text-center">{fallbackMessage}</p>
+        <p className="text-center m-3">{fallbackMessage}</p>
       )}
     </div>
   );

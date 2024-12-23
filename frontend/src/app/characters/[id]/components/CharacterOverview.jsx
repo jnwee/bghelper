@@ -9,7 +9,9 @@ export default function CharacterOverview({ name, imageUrl }) {
       ) : (
         <div className="character-placeholder">No Image</div>
       )}
-      <h2 className="character-name">{name}</h2>
+      <p className="mt-4">Human</p>
+      <p className="mt-2">Fighter/Thief</p>
+      <p className="mt-2">Chaotic Neutral</p>
     </div>
   );
 }
