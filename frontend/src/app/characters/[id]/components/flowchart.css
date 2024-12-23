@@ -1,0 +1,27 @@
+/* Flowchart Base Styling */
+svg {
+    display: block;
+    margin: 0 auto;
+}
+
+rect {
+    transition: fill 0.3s ease;
+}
+
+rect.active {
+    display: none;
+}
+
+rect.completed {
+    fill: var(--background);
+    stroke: var(--text-color);
+    stroke-width: 1px;
+    rx: 0px;
+}
+
+rect.inactive {
+    fill: var(--button-hover);
+    stroke: var(--text-color);
+    stroke-width: 1px;
+    rx: 5px;
+}

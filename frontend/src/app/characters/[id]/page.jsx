@@ -8,13 +8,13 @@ import { useNotification } from "@/context/NotificationContext";
 import ImageService from "@/service/ImageService";
 import CharacterService from "@/service/characters/CharacterService";
 
-import "./character_page.css";
 import Column from "@/components/container/Column";
 import Button from "@/components/Button";
 import CharacterOverview from "./components/CharacterOverview";
 import Header from "@/components/Header";
 import PageContainer from "@/components/container/PageContainer";
 import ButtonRow from "@/components/container/ButtonRow";
+import ProgressDiagram from "./components/ProgressDiagram";
 
 export default function CharacterPage() {
   const router = useRouter();
@@ -71,6 +71,10 @@ export default function CharacterPage() {
     );
   };
 
+  const handleProgress = async () => {
+    await CharacterService.advanceCharacter(character_id);
+  };
+
   const handleDelete = async () => {
     showModal(
       "Delete Character",
@@ -119,6 +123,7 @@ export default function CharacterPage() {
 
         {/* Column 2: Actions */}
         <Column colSize="col-md-4">
+          <ProgressDiagram currentStep={2} onAdvance={handleProgress} />
           {!character.dead && (
             <Button
               variant="action"
