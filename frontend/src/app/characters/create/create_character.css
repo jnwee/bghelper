@@ -56,6 +56,37 @@
     opacity: 0.5;
 }
 
+.custom-select {
+    width: 335px;
+    height: 40px;
+    border: 2px solid var(--text-color);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--text-color);
+    text-align: center;
+    user-select: none; /* Standard */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    outline: none;
+}
+
+.custom-dropdown {
+    background: var(--background);
+    border: 2px solid var(--text-color);
+    overflow: hidden;
+    user-select: none;
+}
+
+.custom-dropdown-item {
+    color: var(--text-color);
+}
+
+.custom-dropdown-item:hover {
+    color: var(--background);
+    background: var(--button-hover);
+}
+
 /* Portrait File Input */
 .portrait-label {
     font-size: 1rem;

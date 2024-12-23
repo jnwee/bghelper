@@ -14,6 +14,7 @@ export default function CharacterForm({
   const [characterClasses, setCharacterClasses] = useState([]);
   const [filteredClasses, setFilteredClasses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedClass, setSelectedClass] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const inputRef = useRef(null);
 
@@ -32,12 +33,19 @@ export default function CharacterForm({
   }, []);
 
   const formatClassName = (cls) => {
-    return cls.replace(/_/g, " ").replace(/7/g, "/");
+    return cls
+      .replace(/_/g, " ")
+      .replace(/7/g, "/")
+      .toLowerCase()
+      .replace(/(^|[ /])[a-z]/g, (match) => match.toUpperCase());
   };
 
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
+    if (term === "") {
+      setSelectedClass(null);
+    }
     const filtered = characterClasses.filter((cls) =>
       formatClassName(cls).toLowerCase().includes(term.toLowerCase()),
     );
@@ -47,6 +55,7 @@ export default function CharacterForm({
 
   const handleSelect = (cls) => {
     setSearchTerm(formatClassName(cls));
+    setSelectedClass(cls);
     setDropdownVisible(false);
   };
 
@@ -60,12 +69,25 @@ export default function CharacterForm({
       !e.relatedTarget ||
       !e.relatedTarget.classList.contains("dropdown-item")
     ) {
+      if (!characterClasses.includes(selectedClass)) {
+        setSearchTerm(""); // Reset input if invalid selection
+        setSelectedClass(null);
+      }
       setDropdownVisible(false);
     }
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      name: name,
+      characterClass: selectedClass, // Ensure correct key for backend
+    };
+    onSubmit(formData);
+  };
+
   return (
-    <form onSubmit={onSubmit} className="d-flex flex-column gap-3">
+    <form onSubmit={handleFormSubmit} className="d-flex flex-column gap-3">
       {/* Name Input */}
       <input
         type="text"
@@ -92,9 +114,9 @@ export default function CharacterForm({
         />
         {dropdownVisible && (
           <div
-            className="dropdown-menu show w-100"
+            className="dropdown-menu show w-100 custom-dropdown"
             style={{
-              maxHeight: "200px",
+              maxHeight: "500px",
               overflowY: "auto",
               position: "absolute",
               top: "100%",
@@ -103,7 +125,7 @@ export default function CharacterForm({
             {filteredClasses.map((cls) => (
               <div
                 key={cls}
-                className="dropdown-item"
+                className="dropdown-item custom-dropdown-item"
                 onMouseDown={() => handleSelect(cls)}
               >
                 {formatClassName(cls)}
