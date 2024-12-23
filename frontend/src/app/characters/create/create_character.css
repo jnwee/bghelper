@@ -47,13 +47,13 @@
     outline: none;
     color: var(--text-color);
     font-size: 1rem;
-    width: 100%;
+    width: 400px;
     padding: 0.5rem;
 }
 
 .custom-input::placeholder {
     color: var(--text-color);
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
 /* Portrait File Input */

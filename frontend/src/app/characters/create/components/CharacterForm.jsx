@@ -45,12 +45,7 @@ export default function CharacterForm({
           iconClass="bi-arrow-left"
           label="Back"
         />
-        <Button
-          variant="action"
-          type="submit"
-          label="Create Character"
-          className=""
-        />
+        <Button variant="action" type="submit" label="Create Character" />
       </ButtonRow>
     </form>
   );

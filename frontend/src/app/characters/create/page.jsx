@@ -65,14 +65,14 @@ export default function CreateCharacterPage() {
     <PageContainer>
       <Header title="Create Character" useH2={false} />
 
-      <div className="row h-100">
+      <div className="row h-100 mt-5">
         {/* Left Column: Preview */}
-        <Column colSize="col-md-6">
+        <Column colSize="col-6">
           <CharacterPreview previewUrl={previewUrl} name={name} />
         </Column>
 
         {/* Right Column: Form */}
-        <Column colSize="col-md-6">
+        <Column colSize="col-6">
           <CharacterForm
             name={name}
             setName={setName}
