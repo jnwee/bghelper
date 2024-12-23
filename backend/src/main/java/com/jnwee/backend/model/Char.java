@@ -14,6 +14,9 @@ public class Char {
     private String imageUrl;
     private Status status;
     private Progress progress;
+    private Race race;
+    private CharacterClass characterClass;
+    private Alignment alignment;
 
     private LocalDateTime createdAt;
     private LocalDateTime diedAt;
@@ -22,8 +25,16 @@ public class Char {
      * Char is a Player Character
      * @param name Name of the character, can't be empty
      */
-    public Char(String name) {
+    public Char(
+        String name,
+        Race race,
+        CharacterClass characterClass,
+        Alignment alignment
+    ) {
         this.name = name;
+        this.race = race;
+        this.characterClass = characterClass;
+        this.alignment = alignment;
         status = Status.ALIVE;
         progress = Progress.BG1;
         this.createdAt = LocalDateTime.now();
@@ -35,6 +46,18 @@ public class Char {
 
     public String getName() {
         return this.name;
+    }
+
+    public Race getRace() {
+        return this.race;
+    }
+
+    public CharacterClass getCharacterClass() {
+        return this.characterClass;
+    }
+
+    public Alignment getAlignment() {
+        return this.alignment;
     }
 
     public String getImageUrl() {
