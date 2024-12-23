@@ -34,7 +34,6 @@
     background-color: var(--button-hover);
     color: var(--background);
     border: 1px solid var(--button-hover);
-    text-transform: uppercase;
     cursor: pointer;
     border-radius: 0.25rem;
     transition: all 0.3s ease;

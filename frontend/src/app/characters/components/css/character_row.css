@@ -78,14 +78,14 @@
     width: 25px; /* Adjust size to match your icon */
     height: 25px;
     border-radius: 50%;
-    background: url("./bgee_icon.png") no-repeat center center;
+    background: url("@/assets/bgee_icon.png") no-repeat center center;
     border-color: var(--background);
     background-size: contain; /* Ensure the image fits inside the thumb */
     cursor: pointer;
 }
 
 .character-row-slider::-webkit-slider-thumb:hover {
-    background: url("./bgee_hover_icon.png") no-repeat center center;
+    background: url("@/assets/bgee_hover_icon.png") no-repeat center center;
     background-size: contain;
     border-color: var(--background);
 }
@@ -94,14 +94,14 @@
     width: 50px; /* Adjust size to match your icon */
     height: 50px;
     border-radius: 50%;
-    background: url("./bgee_icon.png") no-repeat center center;
+    background: url("@/assets/bgee_icon.png") no-repeat center center;
     border-color: var(--background);
     background-size: contain;
     cursor: pointer;
 }
 
 .character-row-slider::-moz-range-thumb:hover {
-    background: url("./bgee_hover_icon.png") no-repeat center center;
+    background: url("@/assets/bgee_hover_icon.png") no-repeat center center;
     background-size: contain;
     border-color: var(--background);
 }

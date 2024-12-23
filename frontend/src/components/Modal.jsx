@@ -1,8 +1,8 @@
 "use client"; // This ensures it's treated as a client component
 
 import React from "react";
-import "@/app/css/modal_dialog.css";
-import "@/app/css/buttons.css";
+import "./css/modal_dialog.css";
+import "./css/buttons.css";
 
 export default function Modal({ show, title, children, onClose, onConfirm }) {
   if (!show) return null;

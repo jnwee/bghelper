@@ -1,5 +1,5 @@
 import React from "react";
-import "@/app/css/character_card.css";
+import "./css/character_card.css";
 import ImageService from "@/service/ImageService";
 
 const CharacterCard = ({ id, name, status }) => {

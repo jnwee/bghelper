@@ -4,28 +4,28 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useModal } from "@/context/ModalContext";
 import { useNotification } from "@/context/NotificationContext";
-import "./character_page.css";
-import "@/app/css/buttons.css";
-import Row from "@/components/Row";
-import Column from "@/components/Column";
-import ActionButton from "@/components/ActionButton";
-import CharacterOverview from "./components/CharacterOverview";
-import Header from "@/components/Header";
-import PageContainer from "@/components/PageContainer";
+
 import ImageService from "@/service/ImageService";
 import CharacterService from "@/service/characters/CharacterService";
+
+import "./character_page.css";
+import Column from "@/components/container/Column";
+import Button from "@/components/Button";
+import CharacterOverview from "./components/CharacterOverview";
+import Header from "@/components/Header";
+import PageContainer from "@/components/container/PageContainer";
+import ButtonRow from "@/components/container/ButtonRow";
 
 export default function CharacterPage() {
   const router = useRouter();
   const { showModal } = useModal();
   const { showNotification } = useNotification();
 
-  const params = useParams();
-  const character_id = params.id;
-
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
 
+  const params = useParams();
+  const character_id = params.id;
   const imageUrl = ImageService.getCharacterPortrait(character_id);
 
   useEffect(() => {
@@ -42,7 +42,8 @@ export default function CharacterPage() {
   }, [character_id]);
 
   if (error) {
-    return <p className="text-danger text-center">{error}</p>;
+    showNotification("Error fetching Character from database", "danger");
+    return <p className="text-center">{error}</p>;
   }
 
   if (!character) {
@@ -71,44 +72,65 @@ export default function CharacterPage() {
   };
 
   const handleDelete = async () => {
-    try {
-      await CharacterService.deleteCharacter(character_id);
-      router.push("/characters");
-      showNotification("Character was deleted succesfully!", "success");
-    } catch (error) {
-      showNotification("Failed to delete character.", "danger");
-    }
+    showModal(
+      "Delete Character",
+      <p>
+        Are you sure you want to delete {character.name}? This action cannot be
+        undone.
+      </p>,
+      async () => {
+        try {
+          await CharacterService.deleteCharacter(character_id);
+          router.push("/characters");
+          showNotification("Character was deleted succesfully!", "success");
+        } catch (error) {
+          showNotification("Failed to delete character.", "danger");
+        }
+      },
+    );
   };
 
   return (
     <PageContainer>
-      {/* Header */}
-      <Header title={character.name} useH2={true} />
+      <Header title={character.name} useH2={false} />
+
+      <ButtonRow>
+        <Button
+          variant="link"
+          href="/characters"
+          label={"Back"}
+          iconClass="bi-arrow-left"
+        />
+        <div className="d-flex flex-grow-1" />
+        <Button
+          variant="action"
+          onClick={handleDelete}
+          label={"Delete character"}
+          iconClass="bi-recycle"
+        />
+      </ButtonRow>
 
       {/* Three-Column Layout */}
-      <Row className="h-100">
+      <div className="row h-100">
         {/* Column 1: Character Overview */}
         <Column colSize="col-md-4 d-flex align-items-start justify-content-center">
           <CharacterOverview name={character.name} imageUrl={imageUrl} />
         </Column>
 
         {/* Column 2: Actions */}
-        <Column colSize="col-md-4 align-items-start justify-content-center d-flex">
+        <Column colSize="col-md-4">
           {!character.dead && (
-            <ActionButton
-              label={"Mark character as dead"}
+            <Button
+              variant="action"
+              label={"Mark as dead"}
               onClick={handleLetDie}
             />
           )}
-          <ActionButton
-            label={"Delete this character"}
-            onClick={handleDelete}
-          />
         </Column>
 
         {/* Column 3: Party */}
-        <Column colSize="col-md-4 d-flex flex-column align-items-center"></Column>
-      </Row>
+        <Column colSize="col-md-4"></Column>
+      </div>
     </PageContainer>
   );
 }

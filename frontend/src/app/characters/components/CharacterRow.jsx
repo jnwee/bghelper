@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import CharacterCard from "./CharacterCard";
-import "@/app/css/character_row.css";
+import "./css/character_row.css";
 
 export default function CharacterRow({ characters }) {
   const rowRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
   const [isScrollable, setIsScrollable] = useState(false);
-  const cardWidth = 200; // width of the card (same as in character_card.css)
-  const gap = 16; // Gap between cards in pixels (adjust based on your CSS)
+  const cardWidth = 200;
+  const gap = 16;
 
   // Update max scroll and detect if scrolling is needed
   useEffect(() => {

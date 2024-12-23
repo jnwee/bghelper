@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import "@/app/css/notifications.css";
+import "./css/notifications.css";
 
 const NotificationContext = createContext();
 
@@ -10,7 +10,7 @@ export const useNotification = () => useContext(NotificationContext);
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
-  const showNotification = (message, type = "success", duration = 4000) => {
+  const showNotification = (message, type = "success", duration = 6000) => {
     const id = Date.now();
     const newNotification = { id, message, type };
 
