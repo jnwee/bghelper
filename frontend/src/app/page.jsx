@@ -61,7 +61,7 @@ export default function Home() {
           inactiveText="Statistics"
           activeText="Ascii"
           isToggled={showStatistics}
-          onToggle={() => setShowStatistics(!showStatistics)}
+          onClick={() => setShowStatistics(!showStatistics)}
           iconClass="bi bi-arrow-repeat"
         />
       </ButtonRow>

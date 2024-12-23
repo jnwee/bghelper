@@ -14,7 +14,7 @@ import CharacterOverview from "./components/CharacterOverview";
 import Header from "@/components/Header";
 import PageContainer from "@/components/container/PageContainer";
 import ButtonRow from "@/components/container/ButtonRow";
-import ProgressDiagram from "./components/ProgressDiagram";
+import CharacterActions from "./components/CharacterActions";
 
 export default function CharacterPage() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function CharacterPage() {
 
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
-  const [progressState, setProgressState] = useState(2);
+  const [hasNotified, setHasNotified] = useState(false);
 
   const params = useParams();
   const character_id = params.id;
@@ -34,69 +34,27 @@ export default function CharacterPage() {
       try {
         const data = await CharacterService.getCharacterById(character_id);
         setCharacter(data);
-        switch (data.progress) {
-          case "BG1":
-            setProgressState(2);
-            break;
-          case "BG2":
-            setProgressState(3);
-            break;
-          case "TOB":
-            data.status === "ASCENDED"
-              ? setProgressState(5)
-              : setProgressState(4);
-            break;
-          default:
-            setProgressState(2);
-        }
+        setError(null);
+        setHasNotified(false);
       } catch (err) {
         setError(err.message);
+        if (!hasNotified) {
+          showNotification("Error fetching Character from database.", "danger");
+          setHasNotified(true);
+        }
       }
     };
 
     fetchCharacter();
-  }, [character_id]);
+  }, [character_id, hasNotified, showNotification]);
 
   if (error) {
-    showNotification("Error fetching Character from database.", "danger");
     return <p className="text-center">{error}</p>;
   }
 
   if (!character) {
     return <p className="text-center">Loading...</p>;
   }
-
-  const handleLetDie = async () => {
-    showModal(
-      "Kill Character",
-      <p>
-        Are you sure you want to mark {character.name} as dead? This action
-        cannot be undone.
-      </p>,
-      async () => {
-        try {
-          const updatedCharacter =
-            await CharacterService.letCharacterDie(character_id);
-          setCharacter(updatedCharacter);
-          showNotification("Character marked as dead succesfully.", "success");
-        } catch (error) {
-          showNotification(`Fail: ${error.message}`, "danger");
-        }
-      },
-    );
-  };
-
-  const handleProgress = async () => {
-    try {
-      const updatedCharacter =
-        await CharacterService.advanceCharacter(character_id);
-      setCharacter(updatedCharacter);
-      setProgressState(progressState + 1);
-      showNotification("Character advanced succesfully.", "success");
-    } catch (error) {
-      showNotification(`Fail: ${error.message}`, "danger");
-    }
-  };
 
   const handleDelete = async () => {
     showModal(
@@ -146,20 +104,7 @@ export default function CharacterPage() {
 
         {/* Column 2: Actions */}
         <Column colSize="col-md-4">
-          {character.status === "ALIVE" && (
-            <ProgressDiagram
-              currentStep={progressState}
-              onAdvance={handleProgress}
-            />
-          )}
-          {character.status === "ALIVE" && (
-            <Button
-              variant="action"
-              label={"Mark as dead"}
-              onClick={handleLetDie}
-              iconClass="bi-fire"
-            />
-          )}
+          <CharacterActions character={character} onUpdate={setCharacter} />
         </Column>
 
         {/* Column 3: Party */}
