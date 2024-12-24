@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useNotification } from "@/context/NotificationContext";
 
 import CharacterService from "@/service/characters/CharacterService";
 import ImageService from "@/service/ImageService";
@@ -14,11 +15,12 @@ import CharacterForm from "./components/CharacterForm";
 import CharacterPreview from "./components/CharacterPreview";
 
 export default function CreateCharacterPage() {
+  const router = useRouter();
+  const { showNotification } = useNotification();
+
   const [name, setName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-
-  const router = useRouter();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -32,15 +34,33 @@ export default function CreateCharacterPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (formData) => {
     try {
-      if (!name) {
-        throw new Error("Name is required!");
+      if (!formData.name || formData.name.trim() === "") {
+        showNotification("Character's name can't be empty", "danger");
+        return;
+      }
+
+      if (!formData.race || formData.race.trim() === "") {
+        showNotification("Character's race can't be empty", "danger");
+        return;
+      }
+
+      if (!formData.characterClass || formData.characterClass.trim() === "") {
+        showNotification("Character's class/kit can't be empty", "danger");
+        return;
+      }
+
+      if (!formData.alignment || formData.alignment.trim() === "") {
+        showNotification("Character's alignment can't be empty", "danger");
+        return;
       }
 
       const createdCharacter = await CharacterService.addCharacter({
-        name,
+        name: formData.name,
+        race: formData.race,
+        characterClass: formData.characterClass,
+        alignment: formData.alignment,
       });
 
       if (!createdCharacter.id) {

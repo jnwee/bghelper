@@ -12,6 +12,8 @@
     border-radius: 0.25rem;
     transition: all 0.3s ease;
     margin: 8px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .link-button:hover {
@@ -38,6 +40,8 @@
     border-radius: 0.25rem;
     transition: all 0.3s ease;
     margin: 8px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .action-button:hover {
@@ -63,6 +67,8 @@
     border-radius: 0.25rem;
     transition: all 0.3s ease;
     margin: 8px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .toggle-button.active {

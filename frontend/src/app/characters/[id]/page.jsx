@@ -46,7 +46,7 @@ export default function CharacterPage() {
     };
 
     fetchCharacter();
-  }, [character_id, hasNotified, showNotification]);
+  }, [character_id]);
 
   if (error) {
     return <p className="text-center">{error}</p>;
@@ -66,6 +66,7 @@ export default function CharacterPage() {
       async () => {
         try {
           await CharacterService.deleteCharacter(character_id);
+          await new Promise((resolve) => setTimeout(resolve, 300));
           router.push("/characters");
           showNotification("Character was deleted succesfully.", "success");
         } catch (error) {
@@ -99,7 +100,12 @@ export default function CharacterPage() {
       <div className="row h-100 mt-5">
         {/* Column 1: Character Overview */}
         <Column colSize="col-md-4">
-          <CharacterOverview name={character.name} imageUrl={imageUrl} />
+          <CharacterOverview
+            race={character.race}
+            characterClass={character.characterClass}
+            alignment={character.alignment}
+            imageUrl={imageUrl}
+          />
         </Column>
 
         {/* Column 2: Actions */}

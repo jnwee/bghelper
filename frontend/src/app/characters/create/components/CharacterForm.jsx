@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { fetchCharacterClasses } from "@/service/EnumService";
+import {
+  fetchCharacterClasses,
+  fetchCharacterRaces,
+  fetchCharacterAlignments,
+} from "@/service/EnumService";
 
 import dynamic from "next/dynamic";
 const Select = dynamic(() => import("react-select"), { ssr: false });
@@ -15,12 +19,17 @@ export default function CharacterForm({
   onSubmit,
 }) {
   const [characterClasses, setCharacterClasses] = useState([]);
+  const [characterRaces, setCharacterRaces] = useState([]);
+  const [characterAlignments, setCharacterAlignments] = useState([]);
   const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedRace, setSelectedRace] = useState(null);
+  const [selectedAlignment, setSelectedAlignment] = useState(null);
 
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      width: "335px",
+      minWidth: "300px",
+      height: "40px",
       borderRadius: "8px",
       border: "2px solid",
       borderColor: "var(--button-hover)",
@@ -76,69 +85,104 @@ export default function CharacterForm({
     }),
   };
 
+  const formatLabel = (value) => {
+    return value
+      .replace(/_/g, " ")
+      .replace(/7/g, "/")
+      .toLowerCase()
+      .replace(/(^|[ /])[a-z]/g, (match) => match.toUpperCase());
+  };
+
   useEffect(() => {
-    const fetchClasses = async () => {
+    const fetchData = async () => {
       try {
-        const data = await fetchCharacterClasses();
-        const options = data.map((cls) => ({
-          value: cls,
-          label: cls
-            .replace(/_/g, " ")
-            .replace(/7/g, "/")
-            .toLowerCase()
-            .replace(/(^|[ /])[a-z]/g, (match) => match.toUpperCase()),
-        }));
-        setCharacterClasses(options);
+        const [classesData, racesData, alignmentsData] = await Promise.all([
+          fetchCharacterClasses(),
+          fetchCharacterRaces(),
+          fetchCharacterAlignments(),
+        ]);
+
+        setCharacterClasses(
+          classesData.map((cls) => ({ value: cls, label: formatLabel(cls) })),
+        );
+        setCharacterRaces(
+          racesData.map((race) => ({ value: race, label: formatLabel(race) })),
+        );
+        setCharacterAlignments(
+          alignmentsData.map((alignment) => ({
+            value: alignment,
+            label: formatLabel(alignment),
+          })),
+        );
       } catch (error) {
-        console.error("Error fetching character classes", error);
+        console.error("Error fetching character data", error);
       }
     };
 
-    fetchClasses();
+    fetchData();
   }, []);
-
-  const handleClassChange = (selectedOption) => {
-    setSelectedClass(selectedOption);
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = {
       name: name,
-      characterClass: selectedClass ? selectedClass.value : null, // Send the value to the backend
+      characterClass: selectedClass ? selectedClass.value : null,
+      race: selectedRace ? selectedRace.value : null,
+      alignment: selectedAlignment ? selectedAlignment.value : null,
     };
     onSubmit(formData);
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="d-flex flex-column gap-3">
-      {/* Name Input */}
+    <form onSubmit={handleFormSubmit} className="d-flex flex-column gap-4">
       <input
         type="text"
         className="custom-input"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        required
       />
 
-      {/* Test React-Select */}
-      <div className="d-flex align-items-center gap-2">
+      <div className="d-flex align-items-center justify-content-end gap-2">
+        <label htmlFor="raceSelect">Race:</label>
+        <Select
+          id="raceSelect"
+          options={characterRaces}
+          value={selectedRace}
+          onChange={setSelectedRace}
+          isClearable
+          placeholder="Select a race..."
+          styles={customStyles}
+        />
+      </div>
+
+      <div className="d-flex align-items-center justify-content-end gap-2">
         <label htmlFor="classSelect">Class:</label>
         <Select
           id="classSelect"
           options={characterClasses}
           value={selectedClass}
-          onChange={handleClassChange}
+          onChange={setSelectedClass}
           isClearable
-          placeholder="Type or select a class..."
+          placeholder="Select a class..."
           styles={customStyles}
-          classNamePrefix="custom-select"
         />
       </div>
 
-      {/* File Input */}
-      <div className="d-flex align-items-center gap-2">
+      <div className="d-flex align-items-center justify-content-end gap-2">
+        <label htmlFor="alignmentSelect">Alignment:</label>
+        <Select
+          id="alignmentSelect"
+          options={characterAlignments}
+          value={selectedAlignment}
+          onChange={setSelectedAlignment}
+          isClearable
+          placeholder="Select an alignment..."
+          styles={customStyles}
+        />
+      </div>
+
+      <div className="d-flex align-items-center justify-content-end gap-2">
         <label htmlFor="image" className="portrait-label">
           Portrait:
         </label>
@@ -162,6 +206,7 @@ export default function CharacterForm({
           iconClass="bi-arrow-left"
           label="Back"
         />
+        <div className="d-flex flex-grow-1" />
         <Button variant="action" type="submit" label="Create Character" />
       </ButtonRow>
     </form>
