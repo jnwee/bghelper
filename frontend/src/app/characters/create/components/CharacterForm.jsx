@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { fetchCharacterClasses } from "@/service/EnumService";
 
+import dynamic from "next/dynamic";
+const Select = dynamic(() => import("react-select"), { ssr: false });
+
 import ButtonRow from "@/components/container/ButtonRow";
 import Button from "@/components/Button";
 
@@ -12,18 +15,80 @@ export default function CharacterForm({
   onSubmit,
 }) {
   const [characterClasses, setCharacterClasses] = useState([]);
-  const [filteredClasses, setFilteredClasses] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedClass, setSelectedClass] = useState(null);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const inputRef = useRef(null);
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      width: "335px",
+      borderRadius: "8px",
+      border: "2px solid",
+      borderColor: "var(--button-hover)",
+      boxShadow: "none",
+      backgroundColor: "var(--background)",
+      "&:hover": {
+        borderColor: "var(--text-color)",
+      },
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "var(--text-color)", // Text color of the selected item
+      fontWeight: "500",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected
+        ? "var(--button-hover)"
+        : state.isFocused
+          ? "var(--button-hover)"
+          : "var(--background)",
+      color: state.isSelected
+        ? "var(--background)"
+        : state.isFocused
+          ? "var(--background)"
+          : "var(--text-color)",
+      padding: 10,
+    }),
+    menu: (provided) => ({
+      ...provided,
+      margin: 0,
+      backgroundColor: "var(--background)", // Background color for the entire menu
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: 0,
+      backgroundColor: "var(--background)", // Removes white bars at top/bottom
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: "var(--text-color)", // Color of the dropdown arrow
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: "var(--text-color)", // Color of the clear (x) icon
+      "&:hover": {
+        color: "var(--danger-color)",
+      },
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: "none",
+    }),
+  };
 
   useEffect(() => {
     const fetchClasses = async () => {
       try {
         const data = await fetchCharacterClasses();
-        setCharacterClasses(data);
-        setFilteredClasses(data);
+        const options = data.map((cls) => ({
+          value: cls,
+          label: cls
+            .replace(/_/g, " ")
+            .replace(/7/g, "/")
+            .toLowerCase()
+            .replace(/(^|[ /])[a-z]/g, (match) => match.toUpperCase()),
+        }));
+        setCharacterClasses(options);
       } catch (error) {
         console.error("Error fetching character classes", error);
       }
@@ -32,56 +97,15 @@ export default function CharacterForm({
     fetchClasses();
   }, []);
 
-  const formatClassName = (cls) => {
-    return cls
-      .replace(/_/g, " ")
-      .replace(/7/g, "/")
-      .toLowerCase()
-      .replace(/(^|[ /])[a-z]/g, (match) => match.toUpperCase());
-  };
-
-  const handleSearch = (e) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-    if (term === "") {
-      setSelectedClass(null);
-    }
-    const filtered = characterClasses.filter((cls) =>
-      formatClassName(cls).toLowerCase().includes(term.toLowerCase()),
-    );
-    setFilteredClasses(filtered);
-    setDropdownVisible(true);
-  };
-
-  const handleSelect = (cls) => {
-    setSearchTerm(formatClassName(cls));
-    setSelectedClass(cls);
-    setDropdownVisible(false);
-  };
-
-  const handleFocus = () => {
-    setDropdownVisible(true);
-    setFilteredClasses(characterClasses);
-  };
-
-  const handleBlur = (e) => {
-    if (
-      !e.relatedTarget ||
-      !e.relatedTarget.classList.contains("dropdown-item")
-    ) {
-      if (!characterClasses.includes(selectedClass)) {
-        setSearchTerm(""); // Reset input if invalid selection
-        setSelectedClass(null);
-      }
-      setDropdownVisible(false);
-    }
+  const handleClassChange = (selectedOption) => {
+    setSelectedClass(selectedOption);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = {
       name: name,
-      characterClass: selectedClass, // Ensure correct key for backend
+      characterClass: selectedClass ? selectedClass.value : null, // Send the value to the backend
     };
     onSubmit(formData);
   };
@@ -98,41 +122,19 @@ export default function CharacterForm({
         required
       />
 
-      {/* Class Select */}
-      <div className="d-flex align-items-center gap-2 position-relative">
+      {/* Test React-Select */}
+      <div className="d-flex align-items-center gap-2">
         <label htmlFor="classSelect">Class:</label>
-        <input
-          type="text"
+        <Select
           id="classSelect"
-          className="custom-select"
-          placeholder="Type to filter..."
-          value={searchTerm}
-          onChange={handleSearch}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          ref={inputRef}
+          options={characterClasses}
+          value={selectedClass}
+          onChange={handleClassChange}
+          isClearable
+          placeholder="Type or select a class..."
+          styles={customStyles}
+          classNamePrefix="custom-select"
         />
-        {dropdownVisible && (
-          <div
-            className="dropdown-menu show w-100 custom-dropdown"
-            style={{
-              maxHeight: "500px",
-              overflowY: "auto",
-              position: "absolute",
-              top: "100%",
-            }}
-          >
-            {filteredClasses.map((cls) => (
-              <div
-                key={cls}
-                className="dropdown-item custom-dropdown-item"
-                onMouseDown={() => handleSelect(cls)}
-              >
-                {formatClassName(cls)}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* File Input */}

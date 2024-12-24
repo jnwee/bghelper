@@ -56,35 +56,13 @@
     opacity: 0.5;
 }
 
-.custom-select {
-    width: 335px;
-    height: 40px;
-    border: 2px solid var(--text-color);
-    border-radius: 8px;
-    background: var(--background);
+.custom-select__control input {
+    caret-color: var(--text-color);
+}
+
+.custom-select__placeholder {
     color: var(--text-color);
-    text-align: center;
-    user-select: none; /* Standard */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    outline: none;
-}
-
-.custom-dropdown {
-    background: var(--background);
-    border: 2px solid var(--text-color);
-    overflow: hidden;
-    user-select: none;
-}
-
-.custom-dropdown-item {
-    color: var(--text-color);
-}
-
-.custom-dropdown-item:hover {
-    color: var(--background);
-    background: var(--button-hover);
+    opacity: 0.5;
 }
 
 /* Portrait File Input */
