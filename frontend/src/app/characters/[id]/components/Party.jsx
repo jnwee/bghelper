@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNotification } from "@/context/NotificationContext";
 
 import CompanionCard from "./CompanionCard";
@@ -18,6 +18,11 @@ export default function Party({
   const [showSelect, setShowSelect] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
+  // Sync state with new initialParty when gameVersion changes
+  useEffect(() => {
+    setParty(initialParty || [null, null, null, null, null]);
+  }, [initialParty]);
+
   const handleCompanionClick = (index) => {
     setSelectedIndex(index);
     setShowSelect(true);
@@ -31,11 +36,9 @@ export default function Party({
         selectedIndex,
         companion,
       );
-      // Fetch updated character data
       const updatedCharacter =
         await CharacterService.getCharacterById(characterId);
 
-      // Update party state locally
       const updatedParty =
         gameVersion === "bg1"
           ? updatedCharacter.partyBg1
@@ -43,10 +46,7 @@ export default function Party({
 
       setParty(updatedParty);
       setShowSelect(false);
-
-      // Pass updated character to parent to trigger rerender
       onUpdate(updatedCharacter);
-
       showNotification("Companion set successfully", "success");
     } catch (error) {
       showNotification("Failed to update companion: " + error, "danger");

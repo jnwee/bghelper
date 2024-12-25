@@ -1,3 +1,25 @@
 package com.jnwee.backend.model;
 
-public enum CompanionBg2 {}
+public enum CompanionBg2 {
+    AERIE,
+    ANOMEN,
+    CERND,
+    DORN,
+    EDWIN,
+    HAER_DALIS,
+    IMOEN,
+    JAHEIRA,
+    JAN,
+    KELDORN,
+    KORGAN,
+    MAZZY,
+    MINSC,
+    NALIA,
+    NEERA,
+    RASAAD,
+    SAREVOK,
+    VALYGAR,
+    VICONIA,
+    WILSON,
+    YOSHIMO,
+}

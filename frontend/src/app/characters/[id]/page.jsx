@@ -130,12 +130,21 @@ export default function CharacterPage() {
 
         {/* Column 3: Party */}
         <Column colSize="col-md-4">
-          <Party
-            gameVersion={showBg2 ? "bg2" : "bg1"}
-            characterId={character_id}
-            initialParty={showBg2 ? character.partyBg2 : character.partyBg1}
-            onUpdate={handleUpdate}
-          />
+          {showBg2 ? (
+            <Party
+              gameVersion={"bg2"}
+              characterId={character_id}
+              initialParty={character.partyBg2}
+              onUpdate={handleUpdate}
+            />
+          ) : (
+            <Party
+              gameVersion={"bg1"}
+              characterId={character_id}
+              initialParty={character.partyBg1}
+              onUpdate={handleUpdate}
+            />
+          )}
         </Column>
       </div>
     </PageContainer>
