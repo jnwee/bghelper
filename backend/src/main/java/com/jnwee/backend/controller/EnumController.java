@@ -2,6 +2,8 @@ package com.jnwee.backend.controller;
 
 import com.jnwee.backend.model.Alignment;
 import com.jnwee.backend.model.CharacterClass;
+import com.jnwee.backend.model.CompanionBg1;
+import com.jnwee.backend.model.CompanionBg2;
 import com.jnwee.backend.model.Race;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,20 @@ public class EnumController {
     public ResponseEntity<List<String>> getCharacterAlignments() {
         return ResponseEntity.ok(
             Arrays.stream(Alignment.values()).map(Enum::name).toList()
+        );
+    }
+
+    @GetMapping("/companions/bg1")
+    public ResponseEntity<List<String>> getBG1Companions() {
+        return ResponseEntity.ok(
+            Arrays.stream(CompanionBg1.values()).map(Enum::name).toList()
+        );
+    }
+
+    @GetMapping("/companions/bg2")
+    public ResponseEntity<List<String>> getBG2Companions() {
+        return ResponseEntity.ok(
+            Arrays.stream(CompanionBg2.values()).map(Enum::name).toList()
         );
     }
 }

@@ -21,3 +21,15 @@ export async function fetchCharacterAlignments() {
 
   return await response;
 }
+
+export async function fetchCompanionsByGame(gameVersion) {
+  if (!gameVersion) {
+    gameVersion = "bg1";
+  }
+
+  const response = ApiService.get("enums/companions/" + gameVersion);
+  // if (!response.ok) {
+  //   throw new Error("Failed to fetch " + gameVersion + " companions");
+  // }
+  return await response;
+}

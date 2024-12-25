@@ -15,6 +15,8 @@ import Header from "@/components/Header";
 import PageContainer from "@/components/container/PageContainer";
 import ButtonRow from "@/components/container/ButtonRow";
 import CharacterActions from "./components/CharacterActions";
+import Party from "./components/Party";
+import "./character.css";
 
 export default function CharacterPage() {
   const router = useRouter();
@@ -114,7 +116,9 @@ export default function CharacterPage() {
         </Column>
 
         {/* Column 3: Party */}
-        <Column colSize="col-md-4"></Column>
+        <Column colSize="col-md-4">
+          <Party gameVersion={"bg1"} characterId={character_id} />
+        </Column>
       </div>
     </PageContainer>
   );
