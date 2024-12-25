@@ -17,6 +17,8 @@ public class Char {
     private Race race;
     private CharacterClass characterClass;
     private Alignment alignment;
+    private CompanionBg1[] partyBg1;
+    private CompanionBg2[] partyBg2;
 
     private LocalDateTime createdAt;
     private LocalDateTime diedAt;
@@ -37,6 +39,8 @@ public class Char {
         this.alignment = alignment;
         status = Status.ALIVE;
         progress = Progress.BG1;
+        this.partyBg1 = new CompanionBg1[5];
+        this.partyBg2 = new CompanionBg2[5];
         this.createdAt = LocalDateTime.now();
     }
 
@@ -107,6 +111,46 @@ public class Char {
 
     public Progress getProgress() {
         return this.progress;
+    }
+
+    public void setCompanionBg1(CompanionBg1 companion, Integer index) {
+        if (index > 4 || index < 0) {
+            throw new IllegalArgumentException(
+                "Companion index can't be larger than 4"
+            );
+        }
+        for (CompanionBg1 party : partyBg1) {
+            if (companion == party) {
+                throw new IllegalArgumentException(
+                    "Companions can only be in the party once"
+                );
+            }
+        }
+        partyBg1[index] = companion;
+    }
+
+    public CompanionBg1[] getPartyBg1() {
+        return this.partyBg1;
+    }
+
+    public void setCompanionBg2(CompanionBg2 companion, Integer index) {
+        if (index > 4 || index < 0) {
+            throw new IllegalArgumentException(
+                "Companion index can't be larger than 4"
+            );
+        }
+        for (CompanionBg2 party : partyBg2) {
+            if (companion == party) {
+                throw new IllegalArgumentException(
+                    "Companions can only be in the party once"
+                );
+            }
+        }
+        partyBg2[index] = companion;
+    }
+
+    public CompanionBg2[] getPartyBg2() {
+        return this.partyBg2;
     }
 
     @Override

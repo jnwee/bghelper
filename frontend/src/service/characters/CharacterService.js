@@ -3,7 +3,7 @@ import ApiService from "../ApiService";
 class CharacterService {
   async setCharacterCompanion(characterId, gameVersion, index, companion) {
     return ApiService.patch(
-      `/characters/${characterId}/${gameVersion}/${index}`,
+      `characters/${characterId}/${gameVersion}/${index}`,
       companion,
     );
   }

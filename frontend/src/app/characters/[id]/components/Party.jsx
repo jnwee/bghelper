@@ -1,10 +1,20 @@
 import React, { useState } from "react";
+import { useNotification } from "@/context/NotificationContext";
+
 import CompanionCard from "./CompanionCard";
 import CompanionSelect from "./CompanionSelect";
 import CharacterService from "@/service/characters/CharacterService";
 
-export default function Party({ gameVersion, characterId }) {
-  const [party, setParty] = useState([null, null, null, null, null]);
+export default function Party({
+  gameVersion,
+  characterId,
+  initialParty,
+  onUpdate,
+}) {
+  const { showNotification } = useNotification();
+  const [party, setParty] = useState(
+    initialParty || [null, null, null, null, null],
+  );
   const [showSelect, setShowSelect] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -21,19 +31,30 @@ export default function Party({ gameVersion, characterId }) {
         selectedIndex,
         companion,
       );
-      if (response.ok) {
-        const updatedParty = [...party];
-        updatedParty[selectedIndex] = companion;
-        setParty(updatedParty);
-      }
+      // Fetch updated character data
+      const updatedCharacter =
+        await CharacterService.getCharacterById(characterId);
+
+      // Update party state locally
+      const updatedParty =
+        gameVersion === "bg1"
+          ? updatedCharacter.partyBg1
+          : updatedCharacter.partyBg2;
+
+      setParty(updatedParty);
       setShowSelect(false);
+
+      // Pass updated character to parent to trigger rerender
+      onUpdate(updatedCharacter);
+
+      showNotification("Companion set successfully", "success");
     } catch (error) {
-      console.error("Failed to update companion", error);
+      showNotification("Failed to update companion: " + error, "danger");
     }
   };
 
   return (
-    <div className="party-overview d-flex gap-3 flex-wrap">
+    <div className="party-overview d-flex gap-3 flex-wrap justify-content-center">
       {party.map((companion, index) => (
         <CompanionCard
           key={index}
@@ -48,7 +69,7 @@ export default function Party({ gameVersion, characterId }) {
           gameVersion={gameVersion}
           selectedCompanions={party}
           onSelect={handleCompanionSelect}
-          onClose={() => setShowSelect(false)} // Close modal without selection
+          onClose={() => setShowSelect(false)}
         />
       )}
     </div>

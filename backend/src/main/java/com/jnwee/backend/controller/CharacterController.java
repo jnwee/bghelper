@@ -93,6 +93,30 @@ public class CharacterController {
         }
     }
 
+    @PatchMapping("/{characterId}/{gameVersion}/{index}")
+    public ResponseEntity<?> putCompanionOnCharacterParty(
+        @PathVariable String characterId,
+        @PathVariable String gameVersion,
+        @PathVariable Integer index,
+        @RequestBody String companion
+    ) {
+        try {
+            companion = companion.replaceAll("^\"|\"$", "");
+            return ResponseEntity.ok(
+                characterService.addCompanionToCharacter(
+                    characterId,
+                    gameVersion,
+                    index,
+                    companion
+                )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCharacter(@PathVariable String id) {
         try {

@@ -20,7 +20,7 @@ public enum CompanionBg1 {
     MINSC,
     MONTARON,
     NEERA,
-    QUAYlE,
+    QUAYLE,
     RASAAD,
     SAFANA,
     SHARTEEL,

@@ -1,6 +1,8 @@
 package com.jnwee.backend.service;
 
 import com.jnwee.backend.model.Char;
+import com.jnwee.backend.model.CompanionBg1;
+import com.jnwee.backend.model.CompanionBg2;
 import com.jnwee.backend.model.Progress;
 import com.jnwee.backend.model.Status;
 import com.jnwee.backend.repository.CharacterRepository;
@@ -12,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -133,6 +136,58 @@ public class CharacterService {
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public Char addCompanionToCharacter(
+        String id,
+        String gameVersion,
+        Integer index,
+        String companion
+    ) {
+        logger.info(
+            "addCompanionToCharacter - game: " +
+            gameVersion +
+            " - companion: " +
+            companion
+        );
+        Char character = characterRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new IllegalArgumentException("Character not found")
+            );
+        CompanionBg1 companionBg1 = null;
+        if (gameVersion.trim().toLowerCase(Locale.GERMAN).equals("bg1")) {
+            logger.info("inside bg1 if!");
+            try {
+                companionBg1 = CompanionBg1.valueOf(companion);
+            } catch (Exception e) {
+                throw new RuntimeException("Not a valid BG1 companion");
+            }
+            try {
+                character.setCompanionBg1(companionBg1, index);
+                logger.info("companion set for bg1!");
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            logger.info("return right after here!!");
+            return characterRepository.save(character);
+        } else if (
+            gameVersion.trim().toLowerCase(Locale.GERMAN).equals("bg2")
+        ) {
+            CompanionBg2 companionBg2 = null;
+            try {
+                companionBg2 = CompanionBg2.valueOf(companion);
+            } catch (Exception e) {
+                throw new RuntimeException("Not a valid BG2 companion");
+            }
+            try {
+                character.setCompanionBg2(companionBg2, index);
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            return characterRepository.save(character);
+        }
+        throw new RuntimeException("Unknown Error.");
     }
 
     public String deleteCharacter(String id) {

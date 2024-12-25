@@ -26,6 +26,7 @@ export default function CharacterPage() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
   const [hasNotified, setHasNotified] = useState(false);
+  const [showBg2, setShowBg2] = useState(false);
 
   const params = useParams();
   const character_id = params.id;
@@ -49,6 +50,10 @@ export default function CharacterPage() {
 
     fetchCharacter();
   }, [character_id]);
+
+  const handleUpdate = (updatedCharacter) => {
+    setCharacter({ ...updatedCharacter });
+  };
 
   if (error) {
     return <p className="text-center">{error}</p>;
@@ -91,6 +96,14 @@ export default function CharacterPage() {
         />
         <div className="d-flex flex-grow-1" />
         <Button
+          variant="toggle"
+          inactiveText="Baldur's Gate II"
+          activeText="Baldur's Gate I"
+          isToggled={showBg2}
+          onClick={() => setShowBg2(!showBg2)}
+          iconClass="bi-arrow-repeat"
+        />
+        <Button
           variant="action"
           onClick={handleDelete}
           label={"Delete character"}
@@ -117,7 +130,12 @@ export default function CharacterPage() {
 
         {/* Column 3: Party */}
         <Column colSize="col-md-4">
-          <Party gameVersion={"bg1"} characterId={character_id} />
+          <Party
+            gameVersion={showBg2 ? "bg2" : "bg1"}
+            characterId={character_id}
+            initialParty={showBg2 ? character.partyBg2 : character.partyBg1}
+            onUpdate={handleUpdate}
+          />
         </Column>
       </div>
     </PageContainer>
