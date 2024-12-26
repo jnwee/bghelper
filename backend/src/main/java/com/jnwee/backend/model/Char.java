@@ -19,6 +19,7 @@ public class Char {
     private Alignment alignment;
     private CompanionBg1[] partyBg1;
     private CompanionBg2[] partyBg2;
+    private String deathNote;
 
     private LocalDateTime createdAt;
     private LocalDateTime diedAt;
@@ -42,6 +43,7 @@ public class Char {
         this.partyBg1 = new CompanionBg1[5];
         this.partyBg2 = new CompanionBg2[5];
         this.createdAt = LocalDateTime.now();
+        this.deathNote = "";
     }
 
     public String getId() {
@@ -151,6 +153,22 @@ public class Char {
 
     public CompanionBg2[] getPartyBg2() {
         return this.partyBg2;
+    }
+
+    public void setDeathNote(String text) {
+        if (this.status != Status.DEAD) {
+            throw new IllegalArgumentException(
+                "Can't add death note to character who's not dead"
+            );
+        }
+        this.deathNote = text;
+    }
+
+    public String getDeathNote() {
+        if (this.deathNote == null) {
+            this.deathNote = "";
+        }
+        return this.deathNote;
     }
 
     @Override

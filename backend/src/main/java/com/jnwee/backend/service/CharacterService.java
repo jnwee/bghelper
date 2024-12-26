@@ -190,6 +190,23 @@ public class CharacterService {
         throw new RuntimeException("Unknown Error.");
     }
 
+    public Char editDeathNoteOnCharacter(String characterId, String text) {
+        Char character = characterRepository
+            .findById(characterId)
+            .orElseThrow(() ->
+                new IllegalArgumentException("Character not found")
+            );
+        if (text == null) {
+            text = "";
+        }
+        try {
+            character.setDeathNote(text);
+            return characterRepository.save(character);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     public String deleteCharacter(String id) {
         logger.info("Delete Character with ID: " + id);
         try {

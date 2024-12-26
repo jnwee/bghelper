@@ -117,6 +117,25 @@ public class CharacterController {
         }
     }
 
+    @PatchMapping("/{characterId}/deathNote")
+    public ResponseEntity<?> editDeathNoteOnCharacter(
+        @PathVariable String characterId,
+        @RequestBody String text
+    ) {
+        text = text.startsWith("\"") && text.endsWith("\"")
+            ? text.substring(1, text.length() - 1)
+            : text;
+        try {
+            return ResponseEntity.ok(
+                characterService.editDeathNoteOnCharacter(characterId, text)
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCharacter(@PathVariable String id) {
         try {

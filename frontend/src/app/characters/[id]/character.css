@@ -22,3 +22,27 @@
 .companion-name {
     color: var(--text-color);
 }
+
+.death-note-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.death-note-read {
+    background-color: var(--background);
+    padding: 15px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+}
+
+.death-note-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--text-color);
+    background: var(--background-dark);
+    color: var(--text-color);
+    border-radius: 5px;
+    resize: vertical;
+}

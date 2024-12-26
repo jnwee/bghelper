@@ -8,6 +8,10 @@ class CharacterService {
     );
   }
 
+  async setCharacterDeathNote(characterId, text) {
+    return ApiService.patch(`characters/${characterId}/deathNote`, text);
+  }
+
   async getCharacterById(id) {
     return ApiService.get(`characters/${id}`);
   }

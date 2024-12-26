@@ -17,6 +17,7 @@ import ButtonRow from "@/components/container/ButtonRow";
 import CharacterActions from "./components/CharacterActions";
 import Party from "./components/Party";
 import "./character.css";
+import DeathNote from "./components/DeathNote";
 
 export default function CharacterPage() {
   const router = useRouter();
@@ -126,6 +127,15 @@ export default function CharacterPage() {
         {/* Column 2: Actions */}
         <Column colSize="col-md-4">
           <CharacterActions character={character} onUpdate={setCharacter} />
+          {character.status == "DEAD" && (
+            <>
+              <h3 className="mt-4">Death Reason</h3>
+              <DeathNote
+                characterId={character.id}
+                initialText={character.deathNote.replace(/\\n/g, "\n")}
+              />
+            </>
+          )}
         </Column>
 
         {/* Column 3: Party */}
