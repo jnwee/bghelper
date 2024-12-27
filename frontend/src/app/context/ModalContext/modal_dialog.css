@@ -14,34 +14,11 @@
 
 /* Modal Content */
 .modal-content {
-    background: var(--background);
-    border: 2px solid var(--button-hover);
+    background: var(--background-dark);
+    border: 2px solid var(--text-color);
     padding: 1.5rem;
     width: 500px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.3s ease;
-}
-
-.modal-header,
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-title {
-    margin: 0;
-}
-
-.close-btn {
-    font-size: 1.5rem;
-    background: transparent;
-    color: var(--button-hover);
-    border: none;
-    cursor: pointer;
-}
-
-.modal-body {
-    padding: 1rem 0;
 }

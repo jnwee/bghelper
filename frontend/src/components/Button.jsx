@@ -1,9 +1,9 @@
 import React from "react";
-import Link from "next/link"; // For Next.js routing
-import "./css/buttons.css";
+import Link from "next/link";
+import "./button.css";
 
 export default function Button({
-  variant = "action", // action | link | toggle
+  variant = "action", // action | link | toggle | close
   type = "button",
   href = "#",
   label,
@@ -14,34 +14,44 @@ export default function Button({
   activeText,
   inactiveText,
 }) {
-  // Render LinkButton
   if (variant === "link") {
     return (
-      <Link href={href} className="link-button">
+      <Link href={href} className="button link-button">
         {iconClass && <i className={`icon ${iconClass} me-2`}></i>}
         {label}
       </Link>
     );
   }
 
-  // Render ToggleButton
   if (variant === "toggle") {
     return (
       <button
-        className={`toggle-button ${isToggled ? "active" : ""}`}
+        className={`button toggle-button ${isToggled ? "active" : ""}`}
         onClick={onClick}
       >
         {iconClass && <i className={`${iconClass} me-2`}></i>}
-        {isToggled ? inactiveText : activeText}
+        {isToggled ? activeText : inactiveText}
       </button>
     );
   }
 
-  // Render ActionButton (default)
+  if (variant === "close") {
+    return (
+      <button
+        type="button"
+        className="button close-button"
+        onClick={onClick}
+        aria-label="Close"
+      >
+        <i className="bi bi-x-square"></i>
+      </button>
+    );
+  }
+
   return (
     <button
       type={type}
-      className={`action-button`}
+      className={`button action-button`}
       onClick={onClick}
       disabled={disabled}
     >

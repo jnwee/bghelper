@@ -1,7 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import "./css/notifications.css";
+
+import "./notifications.css";
+import Button from "@/components/Button";
 
 const NotificationContext = createContext();
 
@@ -38,7 +40,11 @@ export const NotificationProvider = ({ children }) => {
             className={`notification toast show custom-bg-${notification.type}`}
             onClick={() => dismissNotification(notification.id)}
           >
-            {notification.message}
+            <p>{notification.message}</p>
+            <Button
+              variant="close"
+              onClick={() => dismissNotification(notification.id)}
+            />
           </div>
         ))}
       </div>

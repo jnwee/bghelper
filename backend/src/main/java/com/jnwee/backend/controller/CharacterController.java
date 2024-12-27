@@ -93,7 +93,7 @@ public class CharacterController {
         }
     }
 
-    @PatchMapping("/{characterId}/{gameVersion}/{index}")
+    @PatchMapping("/{characterId}/addCompanion/{gameVersion}/{index}")
     public ResponseEntity<?> putCompanionOnCharacterParty(
         @PathVariable String characterId,
         @PathVariable String gameVersion,

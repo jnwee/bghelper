@@ -9,10 +9,6 @@ export async function fetchCharacterClasses() {
 export async function fetchCharacterRaces() {
   const response = ApiService.get("enums/races");
 
-  /*if (!response.ok) {
-    throw new Error(`Failed to fetch races list: ${response.statusText}`);
-    } idk why this doesn't work */
-
   return await response;
 }
 
@@ -28,8 +24,6 @@ export async function fetchCompanionsByGame(gameVersion) {
   }
 
   const response = ApiService.get("enums/companions/" + gameVersion);
-  // if (!response.ok) {
-  //   throw new Error("Failed to fetch " + gameVersion + " companions");
-  // }
+
   return await response;
 }

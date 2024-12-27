@@ -1,12 +1,10 @@
-// context/ModalContext.js
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import Modal from "@/components/Modal";
+import Modal from "./Modal";
 
 const ModalContext = createContext();
 
-// Custom hook to access modal context
 export const useModal = () => useContext(ModalContext);
 
 export const ModalProvider = ({ children }) => {
@@ -17,7 +15,6 @@ export const ModalProvider = ({ children }) => {
     onConfirm: null,
   });
 
-  // Show modal with dynamic content
   const showModal = (title, content, onConfirm) => {
     setModal({
       show: true,
@@ -27,12 +24,10 @@ export const ModalProvider = ({ children }) => {
     });
   };
 
-  // Hide modal
   const hideModal = () => {
     setModal({ ...modal, show: false });
   };
 
-  // Confirm and close
   const handleConfirm = () => {
     if (modal.onConfirm) modal.onConfirm();
     hideModal();
