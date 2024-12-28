@@ -17,7 +17,7 @@ export default function Button({
   if (variant === "link") {
     return (
       <Link href={href} className="button link-button">
-        {iconClass && <i className={`icon ${iconClass} me-2`}></i>}
+        {iconClass && <i className={`icon ${iconClass}`}></i>}
         {label}
       </Link>
     );
@@ -29,7 +29,7 @@ export default function Button({
         className={`button toggle-button ${isToggled ? "active" : ""}`}
         onClick={onClick}
       >
-        {iconClass && <i className={`${iconClass} me-2`}></i>}
+        {iconClass && <i className={`icon ${iconClass}`}></i>}
         {isToggled ? activeText : inactiveText}
       </button>
     );
@@ -55,7 +55,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      {iconClass && <i className={`${iconClass} me-2`}></i>}
+      {iconClass && <i className={`${iconClass}`}></i>}
       {label}
     </button>
   );

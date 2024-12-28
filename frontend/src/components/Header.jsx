@@ -9,7 +9,7 @@ export default function Header({
   const HeadingTag = `h${Math.min(Math.max(level, 1), 6)}`;
 
   return (
-    <div className="header text-center">
+    <>
       <HeadingTag className="display-5">{title}</HeadingTag>
 
       {leadText && (
@@ -17,6 +17,6 @@ export default function Header({
           {leadText}
         </p>
       )}
-    </div>
+    </>
   );
 }

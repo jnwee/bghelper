@@ -1,18 +1,22 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
+
+import CharacterFilterService from "@/services/characters/CharacterFilterService";
 
 import Header from "@/components/Header";
 import ButtonRow from "@/components/container/ButtonRow";
-import AsciiArt from "./components/AsciiArt";
 import PageContainer from "@/components/container/PageContainer";
-import CircleChart from "./components/CircleChart";
-import CharacterFilterService from "@/service/characters/CharacterFilterService";
 import Button from "@/components/Button";
+
+import CircleChart from "./components/CircleChart";
+import AsciiArt from "./components/AsciiArt";
 
 export default function Home() {
   const [stats, setStats] = useState([]);
   const [showStatistics, setShowStatistics] = useState(false);
+  const { showNotification } = useNotification();
 
   const labels = [
     "Baldur's Gate",
@@ -20,7 +24,7 @@ export default function Home() {
     "Throne of Bhaal",
     "Ascended",
   ];
-  const colors = ["#8D0B41", "#D39D55", "#D6CFB4", "#EEE7D5"];
+  const chartColors = ["#8D0B41", "#D39D55", "#D6CFB4", "#EEE7D5"];
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -28,7 +32,10 @@ export default function Home() {
         const data = await CharacterFilterService.getCharacterStats();
         setStats(data);
       } catch (error) {
-        console.error("Failed to fetch stats:", error);
+        showNotification(
+          error.message || error.status + "Failed to fetch stats",
+          "danger",
+        );
       }
     };
     fetchStats();
@@ -38,11 +45,11 @@ export default function Home() {
     <PageContainer>
       <Header
         title="A BALDUR'S GATE COMPANION"
-        useH2={false}
+        level={1}
         leadText="Keep track of your no-reload runs"
         leadFontSize="1.5rem"
       />
-      <ButtonRow>
+      <ButtonRow leftCount={2}>
         <Button
           variant="link"
           href="/characters"
@@ -55,7 +62,6 @@ export default function Home() {
           iconClass="bi-plus-circle"
           label="Add Character"
         />
-        <div className="d-flex flex-grow-1" />
         <Button
           variant="toggle"
           inactiveText="Statistics"
@@ -71,7 +77,7 @@ export default function Home() {
         </>
       ) : (
         <>
-          <CircleChart data={stats} labels={labels} colors={colors} />
+          <CircleChart data={stats} labels={labels} colors={chartColors} />
         </>
       )}
     </PageContainer>

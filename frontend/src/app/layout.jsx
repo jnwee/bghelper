@@ -2,8 +2,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@/app/globals.css";
-import { ModalProvider } from "@/context/ModalContext";
-import { NotificationProvider } from "@/context/NotificationContext";
+import { ModalProvider } from "@/context/ModalContext/ModalContext";
+import { NotificationProvider } from "@/context/NotificationContext/NotificationContext";
 
 export const metadata = {
   title: "bghelper",
