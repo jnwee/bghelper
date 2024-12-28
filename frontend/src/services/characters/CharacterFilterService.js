@@ -1,4 +1,4 @@
-import ApiService from "@/services/ApiService";
+import ApiService from "../ApiService";
 
 class CharacterFilterService {
   async getCharactersByProgress(progress = "BG1") {

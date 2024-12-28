@@ -1,5 +1,3 @@
-import ApiService from "@/service/ApiService";
-
 class ImageService {
   getCharacterPortrait(characterId) {
     return `${process.env.NEXT_PUBLIC_API_URL}/characters/${characterId}/image`;
