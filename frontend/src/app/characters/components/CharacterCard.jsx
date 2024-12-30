@@ -1,6 +1,6 @@
 import React from "react";
 import "./css/character_card.css";
-import ImageService from "@/service/ImageService";
+import ImageService from "@/services/ImageService";
 
 const CharacterCard = ({ id, name, status }) => {
   const handleClick = () => {

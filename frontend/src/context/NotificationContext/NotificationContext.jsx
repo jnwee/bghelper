@@ -12,7 +12,7 @@ export const useNotification = () => useContext(NotificationContext);
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
-  const showNotification = (message, type = "success", duration = 1000000) => {
+  const showNotification = (message, type = "success", duration = 8000) => {
     const id = Date.now();
     const newNotification = { id, message, type };
 

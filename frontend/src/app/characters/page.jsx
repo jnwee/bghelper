@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
+
+import CharacterFilterService from "@/services/characters/CharacterFilterService";
 
 import Button from "@/components/Button";
 import PageContainer from "@/components/container/PageContainer";
 import Header from "@/components/Header";
 import ButtonRow from "@/components/container/ButtonRow";
 import CharacterSection from "./components/CharacterSection";
-import CharacterFilterService from "@/service/characters/CharacterFilterService";
 
 export default function CharactersPage() {
   const [aliveCharacters, setAliveCharacters] = useState([]);
@@ -17,7 +19,8 @@ export default function CharactersPage() {
   const [bg2Characters, setBg2Characters] = useState([]);
   const [tobCharacters, setTobCharacters] = useState([]);
   const [filterByProgress, setFilterByProgress] = useState(false);
-  const [error, setError] = useState(null);
+
+  const { showNotification } = useNotification();
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -37,8 +40,8 @@ export default function CharactersPage() {
         setBg1Characters(bg1);
         setBg2Characters(bg2);
         setTobCharacters(tob);
-      } catch (err) {
-        setError(err.message);
+      } catch (error) {
+        showNotification(error.message, "danger");
       }
     };
 
@@ -49,11 +52,11 @@ export default function CharactersPage() {
     <PageContainer>
       <Header
         title="Characters"
-        useH2={false}
+        level={1}
         leadText="All your characters in one place. Isn't this great?"
         leadFontSize="1.5rem"
       />
-      <ButtonRow>
+      <ButtonRow leftCount={2}>
         <Button
           variant="link"
           href="/"
@@ -66,7 +69,6 @@ export default function CharactersPage() {
           iconClass="bi-plus-circle"
           label="Add Character"
         />
-        <div className="d-flex flex-grow-1" />
         <Button
           variant="toggle"
           inactiveText="Graveyard"
@@ -83,7 +85,6 @@ export default function CharactersPage() {
           <CharacterSection
             title="Challengers"
             characters={aliveCharacters}
-            error={error}
             fallbackMessage="Pretty empty here right now."
           />
 
@@ -91,7 +92,6 @@ export default function CharactersPage() {
           <CharacterSection
             title="Graveyard"
             characters={deadCharacters}
-            error={error}
             fallbackMessage="No dead Characters yet. Good Job!"
           />
 
@@ -99,7 +99,6 @@ export default function CharactersPage() {
           <CharacterSection
             title="Hall of Ascended Characters"
             characters={ascendedCharacters}
-            error={error}
             fallbackMessage="Noone made it yet. But that's fine. Just keep at it."
           />
         </>
@@ -109,7 +108,6 @@ export default function CharactersPage() {
           <CharacterSection
             title="Throne of Bhaal"
             characters={tobCharacters}
-            error={error}
             fallbackMessage="Noone here."
           />
 
@@ -117,7 +115,6 @@ export default function CharactersPage() {
           <CharacterSection
             title="Baldur's Gate II"
             characters={bg2Characters}
-            error={error}
             fallbackMessage="Noone here."
           />
 
@@ -125,7 +122,6 @@ export default function CharactersPage() {
           <CharacterSection
             title="Baldur's Gate I"
             characters={bg1Characters}
-            error={error}
             fallbackMessage="Noone here."
           />
         </>
