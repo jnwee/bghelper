@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useNotification } from "@/context/NotificationContext";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
 
-import CharacterService from "@/service/characters/CharacterService";
-import ImageService from "@/service/ImageService";
+import CharacterService from "@/services/characters/CharacterService";
+import ImageService from "@/services/ImageService";
 
 import "./create_character.css";
 import PageContainer from "@/components/container/PageContainer";
@@ -25,6 +25,11 @@ export default function CreateCharacterPage() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > 5000000) {
+        showNotification("File is too large (max 5MB).", "danger");
+        return;
+      }
+
       setImageFile(file);
 
       // Generate preview
@@ -36,26 +41,6 @@ export default function CreateCharacterPage() {
 
   const handleSubmit = async (formData) => {
     try {
-      if (!formData.name || formData.name.trim() === "") {
-        showNotification("Character's name can't be empty", "danger");
-        return;
-      }
-
-      if (!formData.race || formData.race.trim() === "") {
-        showNotification("Character's race can't be empty", "danger");
-        return;
-      }
-
-      if (!formData.characterClass || formData.characterClass.trim() === "") {
-        showNotification("Character's class/kit can't be empty", "danger");
-        return;
-      }
-
-      if (!formData.alignment || formData.alignment.trim() === "") {
-        showNotification("Character's alignment can't be empty", "danger");
-        return;
-      }
-
       const createdCharacter = await CharacterService.addCharacter({
         name: formData.name,
         race: formData.race,
@@ -75,15 +60,15 @@ export default function CreateCharacterPage() {
       setName("");
       setImageFile(null);
       setPreviewUrl(null);
-      router.push("/characters");
+      router.push("/characters/" + createdCharacter.id);
     } catch (error) {
-      console.error(error);
+      showNotification(error.message);
     }
   };
 
   return (
     <PageContainer>
-      <Header title="Create Character" useH2={false} />
+      <Header title={name ? name : "Create Character"} useH2={false} />
 
       <div className="row h-100 mt-5">
         {/* Left Column: Preview */}

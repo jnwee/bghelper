@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { useModal } from "@/context/ModalContext";
-import { useNotification } from "@/context/NotificationContext";
+import { useModal } from "@/context/ModalContext/ModalContext";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
 
-import ImageService from "@/service/ImageService";
-import CharacterService from "@/service/characters/CharacterService";
+import ImageService from "@/services/ImageService";
+import CharacterService from "@/services/characters/CharacterService";
 
 import Column from "@/components/container/Column";
 import Button from "@/components/Button";

@@ -34,6 +34,12 @@ public class Char {
         CharacterClass characterClass,
         Alignment alignment
     ) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Name can't be empty");
+        }
+        // if (race == null || characterClass == null || alignment == null) {
+        //     throw new IllegalArgumentException("Character must have a race, class and alignment");
+        // }
         this.name = name;
         this.race = race;
         this.characterClass = characterClass;

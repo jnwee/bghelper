@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNotification } from "@/context/NotificationContext";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
 
 import CompanionCard from "./CompanionCard";
 import CompanionSelect from "./CompanionSelect";
-import CharacterService from "@/service/characters/CharacterService";
+import CharacterService from "@/services/characters/CharacterService";
 
 export default function Party({
   gameVersion,

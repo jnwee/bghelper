@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import ProgressDiagram from "./ProgressDiagram";
-import { useModal } from "@/context/ModalContext";
-import { useNotification } from "@/context/NotificationContext";
-import CharacterService from "@/service/characters/CharacterService";
+import { useModal } from "@/context/ModalContext/ModalContext";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
+import CharacterService from "@/services/characters/CharacterService";
 
 export default function CharacterActions({ character, onUpdate }) {
   const { showModal } = useModal();

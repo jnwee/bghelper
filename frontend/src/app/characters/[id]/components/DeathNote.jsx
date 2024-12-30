@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNotification } from "@/context/NotificationContext";
-import CharacterService from "@/service/characters/CharacterService";
+import { useNotification } from "@/context/NotificationContext/NotificationContext";
+import CharacterService from "@/services/characters/CharacterService";
 import Button from "@/components/Button";
 
 export default function DeathNote({ characterId, initialText }) {

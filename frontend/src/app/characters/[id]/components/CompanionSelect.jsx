@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CompanionCard from "./CompanionCard";
-import { fetchCompanionsByGame } from "@/service/EnumService";
+import { fetchCompanionsByGame } from "@/services/EnumService";
 
 import "./companion_select.css";
 
