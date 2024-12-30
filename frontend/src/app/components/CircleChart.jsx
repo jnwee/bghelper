@@ -1,48 +1,40 @@
 import React from "react";
-import "./circle_chart.css";
+import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 export default function CircleChart({ data, labels, colors }) {
-  const total = data.reduce((sum, value) => sum + value, 0);
-
-  // Calculate percentages and offsets
-  const percentages = data.map((value) => (value / total) * 100);
-  const gradientStops = percentages.reduce((acc, percent, index) => {
-    const previousStop = acc.length > 0 ? acc[acc.length - 1].stop : 0;
-    const newStop = previousStop + percent;
-    acc.push({ color: colors[index], stop: newStop });
-    return acc;
-  }, []);
-
-  // Generate conic-gradient CSS value
-  const conicGradient = gradientStops
-    .map(
-      ({ color, stop }, index) =>
-        `${color} ${stop - percentages[index]}% ${stop}%`,
-    )
-    .join(", ");
+  const chartData = data.map((value, index) => ({
+    name: labels[index],
+    value: value,
+  }));
 
   return (
-    <div className="circle-chart-wrapper">
-      {/* Chart */}
-      <div
-        className="circle-chart"
-        style={{
-          background: `conic-gradient(${conicGradient})`,
-        }}
-      ></div>
-
-      {/* Labels */}
-      <div className="chart-labels">
-        {labels.map((label, index) => (
-          <div key={index} className="chart-label">
-            <span
-              className="label-color"
-              style={{ backgroundColor: colors[index] }}
-            ></span>
-            {label}
-          </div>
-        ))}
-      </div>
+    <div style={{ width: "100%", height: "70vh" }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={chartData}
+            cx="50%"
+            cy="50%"
+            outerRadius="90%"
+            fill="#8884d8"
+            dataKey="value"
+            stroke="none"
+          >
+            {data.map((_, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={colors[index % colors.length]}
+              />
+            ))}
+          </Pie>
+          <Legend
+            verticalAlign="bottom"
+            height={36}
+            iconType="circle"
+            formatter={(value, entry) => <span>{entry.payload.name}</span>}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }
