@@ -43,7 +43,7 @@ export default function Button({
         onClick={onClick}
         aria-label="Close"
       >
-        <i className="bi bi-x-square"></i>
+        <i className="icon bi-x"></i>
       </button>
     );
   }

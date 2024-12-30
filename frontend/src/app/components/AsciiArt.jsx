@@ -6,8 +6,7 @@ export default function AsciiArt({ scale = 1 }) {
       className="ascii-art"
       style={{
         transform: `scale(${scale})`,
-        transformOrigin: "top left", // Scale from the top-left corner
-        fontFamily: "'Courier New', Courier, monospace",
+        transformOrigin: "top left",
         whiteSpace: "pre",
         lineHeight: "0.9",
         textAlign: "start",

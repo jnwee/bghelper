@@ -12,7 +12,7 @@ export const useNotification = () => useContext(NotificationContext);
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
-  const showNotification = (message, type = "success", duration = 6000) => {
+  const showNotification = (message, type = "success", duration = 1000000) => {
     const id = Date.now();
     const newNotification = { id, message, type };
 
@@ -37,10 +37,10 @@ export const NotificationProvider = ({ children }) => {
         {notifications.map((notification) => (
           <div
             key={notification.id}
-            className={`notification toast show custom-bg-${notification.type}`}
+            className={`notification show custom-bg-${notification.type}`}
             onClick={() => dismissNotification(notification.id)}
           >
-            <p>{notification.message}</p>
+            <p className="notification-content">{notification.message}</p>
             <Button
               variant="close"
               onClick={() => dismissNotification(notification.id)}
