@@ -8,7 +8,6 @@ export default function CharacterPreview({ previewUrl, name }) {
       ) : (
         <div className="preview-placeholder">No Image</div>
       )}
-      <div className="preview-name">{name || "Name"}</div>
     </div>
   );
 }

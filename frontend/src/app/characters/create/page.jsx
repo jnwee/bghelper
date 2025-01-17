@@ -68,7 +68,7 @@ export default function CreateCharacterPage() {
 
   return (
     <PageContainer>
-      <Header title={name ? name : "Create Character"} useH2={false} />
+      <Header title={name ? name : "Create Character"} level={1} />
 
       <div className="row h-100 mt-5">
         {/* Left Column: Preview */}
